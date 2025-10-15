@@ -5,18 +5,16 @@
   year: 2025,
   author: "Jan Prokůpek",
   abstract-cs: par([
-    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli. Úvod krátce popisuje problémy aktuálního systému,
-    které vychovatelé používají a jejich potenciální řešení.
-    V teoretické části budou shrnuty technologie, které byly při vývoji použity a důvody, proč byly vybrány pro vývoj. Praktická část pojednává
+    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce
+    popisuje aktuální řešení a problémy s ním spojené. V teoretické části jsou shrnuty technologie, které byly při vývoji použity a důvody, proč byly vybrány pro vývoj. Praktická část pojednává
     o shrnutí vlastní implementace projektu, strategiích, které byly při vývoji použity a průběhem nasazením aplikace na server
     Střední průmyslové školy Třebíč.
   ]),
   abstract-en: par([
-    The graduation thesis aims to facilitate the application process for students and the management of applications by caregivers.
-    The introduction describes the problems of the current solution and ways to improve or resolve them.
-    The theoretical part summarizes the technologies used in development and the reasons why they were chosen for development.
-    The practical part deals with the project's own implementation, strategies used during development, and the process of deploying the application to the server
-    of the school.
+    The graduation thesis aims to simplify the process of student registration and application management for educators by creating an application for managing the registration process.
+    The introduction briefly describes the current solution and the problems associated with it.
+    The theoretical part summarizes the technologies used during development and explains the reasons why they were chosen.
+    The practical part discusses the implementation of the project itself, the strategies used during development, and the process of deploying the application on the server of the Secondary Technical School in Třebíč.
   ]),
   keywords-cs: par([
     přihlašovací formulář, domov mládeže, webová aplikace
@@ -26,7 +24,7 @@
   ]),
   acknowledgements: par([
     Děkuji vedoucímu práce Ing. Matěji Brožkovi za cenné rady a odborné vedení při
-    zpracování této práce. Dále děkuji Tomáši Kebrlovi za rady a pomoc v procesu vývoje.
+    zpracování této práce.
   ]),
   assignment: [
     #par([
@@ -49,21 +47,17 @@
 
 #par([
   Správa přihlašovacích formulářů do domova mládeže je často náročný a časově intenzivní proces, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se
-  žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro administrátory domova mládeže.
+  žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže.
+  Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které
+  byly vyplňovány ručně a poslány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání
+  přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy
+  se snaží tato práce řešit vytvořením specializované webové aplikace.
 ])
 
 #par([
-  V současné době je správa přihlášek často řešena pomocí postupů, které nepřináší
-  vychovatelům dostatečnou efektivitu, přehlednost a možnost práce s daty. Často
-  se setkávají s opakujícími se problémy, které jsou řešeny manuálně, což vede
-  ke zbytečné administrativní zátěži a potenciálním chybám.
-])
-
-#par([
-  Ultimátním cílem této práce je vytvořit webovou aplikaci, která umožní
-  vychovatelům efektivně a optimálně spravovat přihlašovací proces, přijaté
-  žádosti a komunikaci se žadateli. Žadatelům pak poskytne přehledný a
-  transparentní způsob sledování stavu jejich přihlášky.
+  Mezi primární funkce aplikace patří možnost vytváření a správu přihlášek žadateli, kteří budou moci sledovat stav své žádosti v reálném čase. Vychovatelé na domově mládeže pak získají
+  nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě
+  bodů, které budou automaticky uděleny na základě odpovědí na otázky.
 ])
 
 #pagebreak()
