@@ -47,17 +47,22 @@
 
 #par([
   Správa přihlašovacích formulářů do domova mládeže je často náročný a časově intenzivní proces, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se
-  žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže.
+  žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci za použití
+  moderních technologií, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže.
   Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které
-  byly vyplňovány ručně a poslány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání
+  byly vyplňovány ručně a posílány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání
   přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy
   se snaží tato práce řešit vytvořením specializované webové aplikace.
 ])
 
 #par([
   Mezi primární funkce aplikace patří možnost vytváření a správu přihlášek žadateli, kteří budou moci sledovat stav své žádosti v reálném čase. Vychovatelé na domově mládeže pak získají
-  nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě
-  bodů, které budou automaticky uděleny na základě odpovědí na otázky.
+  nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě bodů, které budou automaticky uděleny na základě odpovědí na otázky.
+])
+
+#par([
+  Výsledná aplikace by měla být přínostná pro všechny strany, jmenovitě pro žadatele, kteří získají
+  pohodlnou a transparentní cestu k podání přihlášky, a pro vychovatele, kteří budou mít efektivní nástroj pro správu a zpracování přihlášek.
 ])
 
 #pagebreak()
