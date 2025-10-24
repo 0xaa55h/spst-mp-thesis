@@ -1,3 +1,5 @@
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+
 #let thesis = (
   name: "Webová aplikace pro přihlášky do domova mládeže",
   major: "Informační technologie",
@@ -127,14 +129,112 @@ můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na
 - Generování a archivace přijatých přihlášek společně s možností exportu do PDF.
 - Možnost úpravy formuláře pro přihlášení dle aktuálních potřeb.
 - Zabezpečení přístupu k administrátorským funkcím pomocí autentizačního systému s RBAC #footnote([
-  Role-Based Access Control @decoding-rbac
-]), který zajistí různé úrovně přístupu pro různé role vychovatelů.
+    Role-Based Access Control je systém pro efektivní správu přístupu k zabezpečeným informacím pomocí rolí a oprávnění. @decoding-rbac
+  ]), který zajistí různé úrovně přístupu pro různé role vychovatelů.
 
-== Ideální proces přihlašování
+#pagebreak()
+
+// TODO: Add image/graph here
 
 = Technologie použité při vývoji
+
+Při vývoji moderní webové aplikace je klíčové zvolit technologie, které kromě splnění požadavků na funkcionalitu zajistí i dlouhodobou udržitelnost, škálovatelnost a bezpečnost aplikace. Následující technologie byly vybrány na
+základě jejich výhod a existujících zkušeností.
+
+== TypeScript
+
+TypeScript je programovací jazyk, který je nadstavbou JavaScriptu a přidává mu statické typování. To přidává řadu výhod, jako např. bezpečné typy, či lepší čitelnost kódu. @typescriptlang
+
+#figure(
+  ```ts
+  const greeting: string = "Ahoj, Světe!";
+  console.log(greeting);
+  ```,
+  kind: "code",
+  caption: "Ukázka kódu v TypeScriptu",
+)
+
+Díky TypeScriptu je možné odhalit chyby již během vývoje, což vede k vyšší kvalitě kódu a snížení počtu chyb v produkčním prostředí. TypeScript je svými funkcemi také podporován
+ve většině moderních vývojových nástrojů, což usnadňuje práci vývojářům.
+
 == Next.js
+
+Next.js je webový framework, který je postaven na Reactu a umožňuje tvorbu kompletních webových aplikací s podporou pokročilých funkcí, jako je *Server-Side Rendering* (SSR), nebo
+*Server Actions* @nextjs
+
+#pagebreak()
+
+=== React
+
+React je knihovna pro tvorbu uživatelských rozhraní, který umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu. @reactjs
+Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci
+v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
+
+React umožňuje tvorbu _znovupoužitelných komponent_. Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderním Reactu je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data(_props_, také známo v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
+
+Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi JSX, ta umožňuje
+kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
+
+#figure(
+  ```tsx
+  // hello-world.tsx
+  "use client";
+  import React from "react";
+
+  function HelloWorld() {
+    const [greeting, setGreeting] = React.useState("Ahoj, Světe!");
+
+    return (
+      <div>
+        <h1>{greeting}</h1>
+        <button onClick={() => setGreeting("Ahoj, Next.js!")}>
+          Změnit pozdrav
+        </button>
+      </div>
+    );
+  }
+  ```,
+  kind: "code",
+  caption: "Ukázka komponenty v Reactu",
+)
+
+=== Server Actions v Next.js
+
+Server Actions nahrazují potřebu vytváření samostatné API, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
+volat přímo z komponent na straně klienta. Next.js interně automaticky vytvoří potřebné API na pozadí.@nextjs-server-actions
+
+Jako příklad můžeme vytvořit jednoduchou funkci, jejíž úkolem bude vrátit aktuální čas ze serveru. Server Actions jsou definovány v souborech které začínájí direktivou `"use server"`.
+
+#figure(
+  ```tsx
+  "use server";
+
+  export async function getServerTime() {
+    return new Date().toISOString();
+  }
+  ```,
+  kind: "code",
+  caption: "Ukázka Server Action v Next.js",
+)
+
+Funkci lze následně importovat a volat přímo z komponenty na straně klienta.
+
+#figure(
+  ```tsx
+  "use client";
+  import React from "react";
+  import { getServerTime } from ...;
+
+  function TestovaciKomponenta() {
+    const cas = React.use(getServerTime());
+
+    return <div>Aktuální čas ze serveru: {cas}</div>;
+  }
+  ```,
+  kind: "code",
+  caption: "Ukázka komponenty v Next.js využívající Server Action",
+)
+
 == PostgreSQL
 == Prisma ORM
-== TypeScript
 == TailwindCSS
