@@ -160,7 +160,7 @@ ve většině moderních vývojových nástrojů, což usnadňuje práci vývoj�
 == Next.js
 
 Next.js je webový framework, který je postaven na Reactu a umožňuje tvorbu kompletních webových aplikací s podporou pokročilých funkcí, jako je *Server-Side Rendering* (SSR), nebo
-*Server Actions* @nextjs
+*Server Actions*. @nextjs
 
 #pagebreak()
 
@@ -170,7 +170,7 @@ React je knihovna pro tvorbu uživatelských rozhraní, který umožňuje vytvá
 Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci
 v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
 
-React umožňuje tvorbu _znovupoužitelných komponent_. Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderním Reactu je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data(_props_, také známo v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
+React umožňuje tvorbu _znovupoužitelných komponent_. Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderním Reactu je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data(_props_, též známo v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
 
 Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi JSX, ta umožňuje
 kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
@@ -198,9 +198,61 @@ kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je 
   caption: "Ukázka komponenty v Reactu",
 )
 
+=== React Server Components
+
+React Server Components (RSC) je speciální typ komponenty v React, která umožňuje
+vykonávání kódu komponenty na serveru místo v prohlížeči.
+V Next.js lze rozlišit RSC a běžné komponenty na straně klienty pomocí direktivy `"use client"` umístěné na začátku souboru. Pokud tato direktiva chybí, automaticky se React automaticky považuje všechny komponenty definované v daném souboru jako serverové komponenty.
+@react-server-components
+
+Tento speciální typ komponenty umožňuje vývojářům přistupovat ke zdrojům na serveru,
+jako je databáze nebo souborový systém přímo z komponenty, aniž by bylo nutné vytvářet
+API rozhraní pro komunikaci. Jednou z úskalí RSC je, že tyto komponenty nemohou používat
+interaktivní prvky(např. `onClick` události nebo `useState` hook).
+
+Využití samotné RSC také prodlužuje dobu načítání stránky, protože React čeká na
+dokončení obsluhy serverové komponenty před tím, než odešle výsledná data do prohlížeče klientovi. Pro zvýšení uživatelské přivětivosti (UX) existuje proto tzv. _Suspense_
+komponenta, ta dokáže zobrazit náhradní obsah (např. indikátor načítání) zatímco server čeká na dokončení vykonání RSC.
+
+#figure(
+  ```tsx
+  // server-component.tsx
+  import React from "react";
+
+  async function ServerComponent() {
+    const data = await fetchDataFromDatabase();
+
+    return (
+      <div>
+        <h1>Data ze serveru:</h1>
+        <pre>{JSON.stringify(data, null, 2)}</pre>
+      </div>
+    );
+  }
+
+  function Page() {
+    return (
+      <div>
+        <h1>Moje stránka s RSC</h1>
+        <React.Suspense fallback={
+          <div>Načítání dat ze serveru...</div>
+        }>
+          <ServerComponent />
+        </React.Suspense>
+      </div>
+    )
+  }
+
+  ```,
+  kind: "code",
+  caption: "Ukázka React Server Component a jejího použití s Suspense",
+)
+
+#pagebreak()
+
 === Server Actions v Next.js
 
-Server Actions nahrazují potřebu vytváření samostatné API, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
+Server Actions(česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné API na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
 volat přímo z komponent na straně klienta. Next.js interně automaticky vytvoří potřebné API na pozadí.@nextjs-server-actions
 
 Jako příklad můžeme vytvořit jednoduchou funkci, jejíž úkolem bude vrátit aktuální čas ze serveru. Server Actions jsou definovány v souborech které začínájí direktivou `"use server"`.
@@ -235,6 +287,50 @@ Funkci lze následně importovat a volat přímo z komponenty na straně klienta
   caption: "Ukázka komponenty v Next.js využívající Server Action",
 )
 
-== PostgreSQL
+#pagebreak()
+
 == Prisma ORM
+
+Prisma je moderní ORM (Object-Relational Mapping) nástroj pro TypeScript,
+který slouží k interakcemi s databází za pomocí automaticky generovaného
+typovaného API. @prisma-orm
+
+Jedná se o jednu z nejpopulárnějších možností pro práci s databázemi v TypeScriptu,
+a díky své jednoduchosti pro vykonávání jednoduchých CRUD operací byla ideální volbou
+pro tento projekt.
+
+Každý projekt definuje své schéma databáze v souboru zakončeného příponou `.prisma`.
+Tento soubor obsahuje modely, které reprezentují tabulky a jejich vztahy v databázi.
+Prisma následně na základě tohoto schématu generuje typované API pro interakci s databází.
+
+#figure(
+  ```prisma
+  model User {
+    id       Int      @id @default(autoincrement())
+    email    String   @unique
+    name     String?
+  }
+  ```,
+  kind: "code",
+  caption: [Ukázka schématu databáze v Prisma ORM s modelem `User`],
+)
+
+#figure(
+  ```ts
+  const prisma = new PrismaClient();
+  await prisma.user.create({
+    data: {
+      email: "<email>",
+      name: "<name>"
+    }
+  });
+  ```,
+  kind: "code",
+  caption: [Ukázka použití generovaného kódu pro práci s modelem `User`],
+)
+
+Prisma podporuje širokou škálu databázových systému, včetně PostgreSQL, MySQL, SQLite a dalších. @prisma-orm
+
+=== PostgreSQL
+
 == TailwindCSS
