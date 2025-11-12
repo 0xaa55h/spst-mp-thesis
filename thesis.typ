@@ -136,6 +136,76 @@ můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na
 
 // TODO: Add image/graph here
 
+= Architektura webové aplikace
+
+Vývoj jakékoliv aplikace by měl začít návrhem její architektury. Ta dokáže přibližně
+nastínit, jak do sebe budou jednotlivé části aplikace zapadat a také se od ní odvíjí
+výběr technologií, které budou při vývoji použity. Pro webové aplikace je de-facto standardem architektura *client-server*, která dělí aplikaci na dvě hlavní části -- klientskou a serverovou.
+
+#figure(
+  image("res/client-server.png", width: 75%),
+  caption: "Vizualizace client-server architektury",
+)
+
+== Klient
+
+Klientská část aplikace je zodpovědná za interakce s uživatelem. V případě webové aplikace
+se jedná kód, který běží přímo v prohlížeči uživatele. Jejím hlavním úkolem je zobrazit
+uživatelské rozhraní a zpracovávat interakce způsobené uživatelem.
+
+== Server
+
+Serverová část aplikace běží na vzdáleném zařízení (serveru) a je zodpovědná primárně
+za úkony, které považujeme za nebezpečné při vykonávání na straně klienta, jako je
+např. přístup k databázi, validace dat, autentizace uživatelů či vnitřní logika aplikace.
+Server je také zodpovědný za poskytnutí dat samotné webové stránky (HTML, CSS, JavaScript), které následně klient uživateli zobrazí a umožní mu s nimi interagovat.
+
+== Komunikace mezi klientem a serverem
+
+Klient a server spolu může komunikovat několika protokoly, mezi nejpopulárnější patří HTTP/HTTPS,
+GraphQL či WebSocket. Pro většinu webových aplikací, je však nejvhodnější volbou využití HTTP/HTTPS protokolu. Tento protokol umožňuje klientovi odesílat požadavky na server a přijímat odpovědi, což je ideální pro většinu scénářů webových aplikací.
+
+#figure(
+  image("res/http.png", width: 75%),
+  caption: "Vizualizace komunikace mezi klientem a serverem pomocí HTTP protokolu",
+)
+
+Každý požadavek odeslaný klientem obsahuje metodu (mezi nejběžněji používané patří GET, POST, PUT a DELETE), URL adresu, hlavičky a případné tělo požadavku #footnote("Tělo požadavku je obvykle přítomno u metod jako POST a PUT, které odesílají data na server."). Server následně zpracuje požadavek a vrátí odpověď obsahující stavový kód, hlavičky a případně tělo odpovědi s daty.
+
+#pagebreak()
+
+== Autentizace a autorizace
+
+Pro zabezpečení přístupu k funkcím, jež jsou určeny pouze pro oprávněné klienty (uživatele), je potřebná implementace systému pro autentizaci a autorizace. Autentizace
+je proces ověření identity uživatele, zatímco autorizace určuje, jaké akce může autentizovaný uživatel provádět.
+
+V dnešní době dělíme autentizaci na 2 primární typy -- *session-based authentication* a *JWT (JSON Web Tokens)*. Často se však můžeme setkat i termíny jako je *stateful* a *stateless authentication*, tyto termíny však přímo popisují, zda server uchovává stav
+o přihlášeném uživateli (stateful) nebo nikoliv (stateless).
+
+=== JWT (JSON Web Tokens)
+
+JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na 2 hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token(obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token
+je zašifrován za pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům. 
+
+Oproti session-based autentizace má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli.
+
+#figure(
+  image("res/jwt.png", width: 90%),
+  caption: "Vizualizace JWT autentizace",
+)
+
+=== Session-based authentication
+
+Druhým hojně užívaným způsobem pro autentizaci je tzv. session-base autentizace. Tento
+styl je oproti JWT *stateful*, ukládá tedy stav přihlášeného uživatele na serveru (v databázi). Při přihlášení klient odešle požadavek na server s přihlašovacími údaji. Server ověří tyto údaje a pokud jsou správné, vytvoří novou session (relaci) pro uživatele a vygeneruje unikátní identifikátor session (session ID). Tento identifikátor je následně odeslán zpět klientovi, který si ho uloží do cookies. Při každém dalším požadavku na server klient automaticky přiloží cookies obsahující session ID. Server následně ověří platnost session ID (např. kontrolou, zda session stále existuje v databázi) a pokud je platné, povolí přístup k požadovaným zdrojům.
+
+#figure(
+  image("res/session.png", width: 90%),
+  caption: "Vizualizace session-based autentizace",
+)
+
+#pagebreak()
+
 = Technologie použité při vývoji
 
 Při vývoji moderní webové aplikace je klíčové zvolit technologie, které kromě splnění požadavků na funkcionalitu zajistí i dlouhodobou udržitelnost, škálovatelnost a bezpečnost aplikace. Následující technologie byly vybrány na
@@ -331,6 +401,17 @@ Prisma následně na základě tohoto schématu generuje typované API pro inter
 
 Prisma podporuje širokou škálu databázových systému, včetně PostgreSQL, MySQL, SQLite a dalších. @prisma-orm
 
+#pagebreak()
+
 === PostgreSQL
 
+PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí
+Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či Full-Text Search.
+
 == TailwindCSS
+
+TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé
+a efektivní vytváření uživatelských rozhraní za pomocí tříd s předdefinovanými styly. @tailwindcss
+
+TailwindCSS umožňuje vývojářům vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají
+různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
