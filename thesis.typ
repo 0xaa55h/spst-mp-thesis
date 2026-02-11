@@ -6,17 +6,13 @@
   class: "ITB4",
   year: 2025,
   author: "Jan Prokůpek",
+  date: datetime.today().display("[day]. [month padding:none]. [year]"),
   abstract-cs: [
-    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce
-    popisuje aktuální řešení a problémy s ním spojené. V teoretické části jsou shrnuty technologie, které byly při vývoji použity a důvody, proč byly vybrány pro vývoj. Praktická část pojednává
-    o shrnutí vlastní implementace projektu, strategiích, které byly při vývoji použity a průběhem nasazením aplikace na server
-    Střední průmyslové školy Třebíč.
+    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce popisuje aktuální řešení a problémy s ním spojené. V teoretické části jsou shrnuty technologie, které byly při vývoji použity a důvody, proč byly vybrány pro vývoj. Praktická část pojednává o shrnutí vlastní implementace projektu, strategiích, které byly při vývoji použity a průběhem nasazením aplikace na server Střední průmyslové školy Třebíč.
   ],
   abstract-en: [
-    The graduation thesis aims to simplify the process of student registration and application management for educators by creating an application for managing the registration process.
-    The introduction briefly describes the current solution and the problems associated with it.
-    The theoretical part summarizes the technologies used during development and explains the reasons why they were chosen.
-    The practical part discusses the implementation of the project itself, the strategies used during development, and the process of deploying the application on the server of the Secondary Technical School in Třebíč.
+    The graduation thesis aims to simplify the process of student registration and application management for educators by creating an application for managing the registration process. The introduction briefly describes the current solution and the problems associated with it.
+    The theoretical part summarizes the technologies used during development and explains the reasons why they were chosen. The practical part discusses the implementation of the project itself, the strategies used during development, and the process of deploying the application on the server of the Secondary Technical School in Třebíč.
   ],
   keywords-cs: [
     přihlašovací formulář, domov mládeže, webová aplikace, React, Next.js
@@ -197,19 +193,62 @@
 
     == TypeScript
 
-    TypeScript je programovací jazyk, který je nadstavbou JavaScriptu a přidává mu statické typování. To přidává řadu výhod, jako např. bezpečné typy, či lepší čitelnost kódu @typescriptlang.
+    TypeScript je staticky typované rozšíření JavaScriptu, které přidává podporu pro typy, třídy, rozhraní a další funkce, které lze běžně najít ve striktně staticky a objektově orientovaných jazycích. Přidává silnou typovou kontrolu, která se prosazuje již přes samotnou transpilací kódu do JavaScriptu, což pomáhá odhalit chyby již během vývoje a zvyšuje kvalitu kódu @typescriptlang.
+
+    TypeScript byl zvolen pro tento projekt z několika důvodů. Prvním z nich je fakt, že je hojně využíván v moderním webovém vývoji, což zajišťuje širokou podporu a množství knihoven a nástrojů, které jsou s ním kompatibilní @stackoverflow-survey-git. Dále přináší výhody v podobě lepší čitelnosti a údržby kódu, což je klíčové pro dlouhodobou udržitelnost projektu. TypeScript také umožňuje využívat pokročilé funkce a syntaxi, které nejsou nativně podporovány v JavaScriptu, což může zefektivnit vývoj a zlepšit celkovou strukturu kódu.
+
+    === Typy a rozhraní
+
+    Jak již bylo v na začátku kapitoly zmíněno, TypeScript přináší do JavaScriptu rozsáhlo podporu typů. Typy jsou definovány pomocí klíčového slova `type` a umožňují vývojářům definovat vlastní datové struktury, které mohou být použity k zajištění správnosti dat v aplikaci. Mezi vybrané základní předdefinované datové typy pak patří:
+
+    - `string` pro textové řetězce
+    - `number` pro číselné hodnoty
+    - `boolean` pro logické hodnoty (true/false)
+    - `array` pro pole hodnot
+    - `enum` pro výčtové typy
+    - `any` pro hodnoty, které mohou být jakéhokoliv typu #footnote([Použití typu `any` se nedoporučuje @ts-dos-donts. Jeho použití vede k vypnutí statické kontroly typů pro danou proměnnou, což může vést k chybám, které by jinak mohli být odhaleny během vývoje.]),
+    - `void` pro funkce, které nevracejí žádnou hodnotu
+    - `null` a `undefined` pro reprezentaci neexistujících nebo nedefinovaných hodnot
+
+    Pomocí TypeScript lze však specifikovat i složitější datové struktury. Typy lze kombinovat pomocí logických operátorů `&` (průnik typů) a `|` (sjednocení typů). Komplexní datové struktury lze pak definovat pomocí rozhraních (`interface`), které či `type` aliasů, které umožňují definovat strukturu objektů a jejich vlastností.
+
+    #figure(```ts
+    interface User {
+      id: number;
+      name: string;
+    }
+    type UserId = User["id"];
+    ```, caption: [Ukázka práce s rozhraními -- definice rozhraní a typu odkazujícího na vlastnost rozhraní]),
+
+    === Transpilace
+
+    Pojmem _transpilace_ se rozumí proces převodu kódu z jednoho programovacího jazyka do druhého. V případě TypeScriptu se jedná o převod kódu napsaného v TypeScriptu zpět do běžného JavaScriptu, který lze následně vykonávat nativně v prohlížeči či v serverovém prostředí (Node.js, Bun...). Transpilace umožňuje vývojářům využívat pokročilé funkce a syntaxi TypeScriptu, zatímco výsledný kód zůstává kompatibilní s širokou škálou prostředí, která podporují JavaScript.
+
+    #figure(image("assets/transpilation-process.png"), caption: [
+      Vizualizace procesu transpilace TypeScriptu do JavaScriptu
+    ])
+
+    === Standard ECMAScript
+
+    Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi některé moderní funkce, které standard ECMAScript přinesl v posledních letech, zejména patří šipkové funkce, třídy, moduly, podpora asynchroního programování @ecma262_es6.
 
     #figure(
-      ```ts
-      const greeting: string = "Ahoj, Světe!";
-      console.log(greeting);
-      ```,
-      kind: "raw",
-      caption: "Ukázka kódu v TypeScriptu",
+      table(
+        columns: 3,
+        align: center + horizon,
+        [*Funkce*], [*TypeScript*], [*JavaScript*],
+        [Statické typování], [ano], [ne],
+        [Podpora pro rozhraní a typy], [ano], [ne],
+        [Podpora pro moderní syntaxi], [ano], [částečně],
+        [Zachycení chyb během vývoje], [ano], [ne],
+        [Kompatibilita s prohlížeči], [ne], [ano],
+        [Nastavení], [z počátku], [žádné],
+        [Hromadné změny kódu], [ano], [složitější],
+      ),
+      caption: [
+        Porovnání vybraných aspektů skriptovacích jazyků a srovnání TypeScriptu a JavaScriptu
+      ],
     )
-
-    Díky TypeScriptu je možné odhalit chyby již během vývoje, což vede k vyšší kvalitě kódu a snížení počtu chyb v produkčním prostředí. TypeScript je svými funkcemi také podporován
-    ve většině moderních vývojových nástrojů, což usnadňuje práci vývojářům.
 
     == Next.js
 
@@ -380,16 +419,13 @@
 
     === PostgreSQL
 
-    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí
-    Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (Full-textové vyhledávání). Tyto funkce dělají PostgreSQL ideální volbou pro moderní webové aplikace.
+    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (Full-textové vyhledávání). Tyto funkce dělají PostgreSQL ideální volbou pro moderní webové aplikace.
 
     == TailwindCSS
 
-    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé
-    a efektivní vytváření uživatelských rozhraní za pomocí tříd s předdefinovanými styly @tailwindcss.
+    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé a efektivní vytváření uživatelských rozhraní za pomocí tříd s předdefinovanými styly @tailwindcss.
 
-    TailwindCSS umožňuje vývojářům vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají
-    různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
+    TailwindCSS umožňuje vývojářům vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
 
     = Implementace webové aplikace
 
@@ -397,9 +433,35 @@
 
     Jak již bylo zmíněno v kapitole o použitých technologiích, pro práci s databází byla zvolena ORM Prisma. Samotný databázový model pak vychází z výchozího modelu používaného knihovnou Better Auth (viz @auth-betterauth). Tento model byl následně rozšířen o další sloupce a tabulky, které byly za potřebí pro implementaci webové aplikace.
 
-    *TODO DOPLNIT SCHEMA DATABAZE*
+    #figure(image("assets/prisma-erd.svg"), caption: [
+      Databázový model aplikace jako Entity-Relationship Diagram
+    ])
 
-    Pro validaci většiny vstupních dat (klientských i serverových), která jsou později zasazena do databázového modelu byla použita knihovna Zod #footnote("https://zod.dev/"). Ta umožňuje definovat schémata pro validaci dat a poskytuje jednoduché API pro ověřování datových struktur. Zod je plně kompatibilní s TypeScriptem a je použit jak na straně klienta, tak i na straně serveru. Na straně serveru je Zod použit primárně v kombinaci s Next-Safe-Action (viz @nsa-middleware) pro validaci dat přicházejících z klienta.
+    Mezi některé důležité tabulky v modelu patří:
+    - `User` -- tabulka pro ukládání informací o uživatelích, jako je e-mail, heslo, role a další.
+    - `Application` -- tabulka pro ukládání informací o přihláškách, jako je stav přihlášky, datum podání, a další.
+    - `ApplicationConfig` -- tabulka pro ukládání konfiguračních nastavení aplikace, jako jsou stav přijímání přihlášek, datum uzávěrky apod.
+    - `Person` -- tabulka pro ukládání informací o osobách, které jsou spojeny s přihláškami (např. žadatel a zák. zástupce).
+
+    == Kontrola a validace dat
+
+    Protože jsou data zadaná uživateli často náchylná k chybovosti, je důležité zabezpečit formuláře a API rozhraní kontrolou a validací vstupních dat. Validaci je důležité provádět duálně -- jak na straně klienta (pro rychlou odezvu bez nutnosti komunikace se serverem), tak i na straně serveru (pro zajištění bezpečnosti a integrity dat). Důvodem pro dvojitý přístup k validaci je fakt, že validace na straně klienta může být snadno obejita (např. pomocí nástrojů pro vývojáře v prohlížeči), zatímco validace na straně serveru obejita být nemůže a zajišťuje správnost dat, která jsou uložena v databázi.
+
+    Pro práci s validací dat byla zvolena knihovna Zod #footnote("https://zod.dev/"). Pomocí Zodu lze jednoduče definovat schéma pro validaci dat a následně použít toto schéma pro validaci dat jak na straně klienta, tak i na straně serveru. Zod umožňuje definovat jak komplexní, tak jednoduché datové struktury, je jednoduše použitelný a nabízí širokou škálu vestavěných validací pro různé datové typy (např. e-mail, URL, čísla, atd.). Zod zároveň využívá výhod TypeScriptu a z modelu lze automaticky odvodit typy, což zajišťuje konzistenci mezi validací a typovou kontrolou v celé aplikaci @zod.
+
+    #figure(
+      ```ts
+      import { z } from "zod";
+
+      const userSchema = z.object({
+        email: z.string().email(),
+        password: z.string().min(8),
+        name: z.string().optional(),
+      });
+      type User = z.infer<typeof userSchema>;
+      ```,
+      caption: [Příklad užití knihovny Zod],
+    )
 
     == Inicializace aplikace
 
@@ -462,9 +524,7 @@
 
     == Rozhraní pro vychovatele
 
-    Rozhraním pro vychovatele se rozumí administrativní část aplikace, která umožňuje spravovat přihlášky a vykonávat další administrativní úkony.
-    Toto rozhraní je pouhým rozšířením uživatelského rozhraní pro žadatele, tímpádem
-    má vychovatel stále přístup k podávání přihlášek a ostatním úkonům, které by za normálních okolností žadatel měl.
+    Rozhraním pro vychovatele se rozumí administrativní část aplikace, která umožňuje spravovat přihlášky a vykonávat další administrativní úkony. Toto rozhraní je pouhým rozšířením uživatelského rozhraní pro žadatele, tímpádem má vychovatel stále přístup k podávání přihlášek a ostatním úkonům, které by za normálních okolností žadatel měl.
 
     === Nastavení chování aplikace
 
@@ -494,10 +554,6 @@
 
     Sekce pro správu uživatelských účtů. Uživatelé mohou být přidáváni, odebíráni a lze upravovat jejich role.
 
-    ==== Sekce "E-maily"
-
-    Sekce pro správu e-mailových šablon, které jsou používány pro komunikaci s žadateli. Lze také nastavit výchozího odesílatele a předmět, se kterým bude e-mail odeslán. Je nutno podotknout, že tato část neslouží pro nastavení připojení k SMTP serveru, to je řešeno pomocí konfiguračních proměnných v souboru `.env`.
-
     === Zobrazení přijatých přihlášek
 
     Vychovatelé mají přístup k přehlednému seznamu všech přihlášek. Seznam je zde implementován pomocí přehledné tabulky s podporou stránkování, filtrování a vyhledávání. Každá přihláška je zobrazena v řádku tabulky s možností rozkliknutí pro zobrazení detailních informací o přihlášce. Z této stránky lze také přihlášky mazat.
@@ -508,19 +564,18 @@
 
     ==== Export přihlášek do PDF
 
-    Export přihlášky do PDF formátu je poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš, ani efektivní. Pro tento účel bylo zvoleno řešení pomocí kombinace přihlášky ve formátu XLSX a následné konverze do PDF pomocí nástroje LibreOffice.
+    Export přihlášky do PDF formátu je poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné, ani efektivní. Aktuálně existují 2 možné řešení pro generování PDF z předhotovené šablony: přes vyplňování buněk v XLSX a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování i kvalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB #footnote("https://pdf-lib.js.org/"), která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí. Celý proces generování PDF probíhá následovně:
 
-    Proces generování PDF probíhá ve třech krocích:
-    - Jednorázové nahrání přihláškové šablony XLSX do aplikace.
-    - Při požadavku na export přihlášky je vytvořena kopie šablony, do které jsou následně vloženy údaje z přihlášky. Vložení údajů probíhá pomocí knihovna *ExcelJS*, která umožňuje manipulaci s XLSX soubory v prostředí Node.js. V šabloně jsou přepsány položky s předem definovanými názvy buněk (např. buňka s obsahem `$application_id$` bude nahrazena univerálním identifikátorem přihlášky).
-    - Upravený XLSX soubor je následně vyexportován do PDF pomocí knihovny *libreoffice-convert*, který abstrahuje volání LibreOffice z příkazové řádky pro konverzi mezi různými formáty dokumentů.
+    - Předem je vytvořena šablona PDF, která obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací. Šablona je nahrána do systém přes nastavení aplikace.
+    - Pro vygenerování PDF konkrétní přihlášky, či sady přihlášek lze použít tlačítko pro export do PDF, které se nachází jak ve stránce pro detaily přihlášky, tak i v přehledu přihlášek. Po kliknutí na tlačítko se spustí proces generování PDF, který načte šablonu PDF, vyplní formulářová pole daty z přihlášky a vygeneruje výsledný PDF dokument, který je následně odeslán uživateli ke stažení.
 
-    #figure(
-      image("assets/pdf-gen-flow.png"),
-      caption: "Ukázka toku exportu přihlášky do formátu PDF",
-    )
+    Interně je pro generování PDF vytvořena speciální API, která přijímá ID přihlášky (nebo skupiny ID) a vrací vyplněný PDF dokument. Všechny PDF jsou zpracovány v separatním vlákně (_worker thread_), aby nedocházelo k blokování hlavního vlákna serveru a tím i zhoršení výkonu aplikace. Všechny přihlášky se zároveň cachují do lokálního úložiště, aby se zrychlil přístup k již vygenerovaným PDF dokumentům (cache se automaticky přemazává při případných změnách přihlášek).
 
-    Řešení pomocí mezisouboru XLSX se může zdát jako redundantní a zbytečně komplikované, avšak v současné době neexistuje žádné široce používané řešení pro vyplňování (přepisování) PDF šablon v prostředí Node.js. Tento přístup tedy představuje kompromis mezi složitostí implementace a funkčností.
+    #show math.equation: set text(size: 12pt);
+
+    Hlavní výhodou užití knihovny PDF-LIB oproti řešení s XLSX je fakt, že XLSX řešení má podstatně horší časovou komplexitu ($O(C dot R)$), zatímco PDF-LIB nabízí konstantní časovou komplexitu ($O(1)$) pro vygenerování jednoho PDF dokumentu, což je zásadní pro zajištění rychlé odezvy aplikace. Při testování obou řešení se ukázalo, že průměrná odezva pro vygenerování PDF pomocí PDF-LIB byla přibližně 600 ms, zatímco pro řešení s XLSX to bylo přibližně 5.5 sekundy.
+
+    #show math.equation: set text(size: 16pt);
 
     === Archivace
 
@@ -542,7 +597,7 @@
 
     === Massmail
 
-    _Massmail_ (neboli hromadné e-maily) je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. Funkce je dostupná pro všechny vychovatele a skrývá se pod položkou _Hromadné e-maily_ v bočním navigačním menu. E-maily lze posílat ve formátu prostého textu, nebo HTML.
+    _Massmail_ (neboli hromadné e-maily) je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva, odrážky a další.
 
     = Vývoj a nasazení
 
@@ -628,13 +683,19 @@
 
     Nasazení aplikaci na produkční systém probíhá pomocí automazivaného procesu, který je spuštěn při každé aktualizaci hlavní větve v repozitáři na platformě GitHub. Tento proces je implementován pomocí _GitHub Actions_, což je nástroj pro automatizaci pracovních postupů přímo v rámci platformy GitHub @github-actions.
 
-    V prvním kroku je pomocí _GitHub Action_ sestaven výsledný obraz aplikaci. V následujícím kroku je tento obraz odeslán na servery GitHubu jako výsledný _artifakt_ (výstupní soubor). Akce poté pošle HTTP požadavek na produkční server, požadavek je zpracován, a server si stáhne výsledný obraz ze serveru GitHubu ve formátu ZIP. Obraz je extrahován do složky určené pro aplikaci. Následně je zastavena aktuálně běžící instance aplikace (pokud nějaká běží) pomocí softwaru PM2 a je spuštěna nová instance aplikace nově staženého obrazu. Tento proces zajišťuje, že aplikace je vždy nasazena ve své nejnovější verzi po každé aktualizaci hlavní větve v repozitáři.
+    V prvním kroku procesu nasazení je spuštěna akce, která ověří spustitenost kódu testovacím sestavením. Pokud je sestavení úspěšné, akce odešle HTTP požadavek na otevřenou API jednoduchého webového serveru běžícího na produkčním serveru. Tento požadavek slouží jako spouštěč skriptu, který je zodpovědný za znovunasazení aplikace. Skript následně vykoná následující kroky, přesně v tomto pořadí:
+
+    - Zastaví běžící instance aplikace (pokud existuje), vypne pm2 proces.
+    - Aktualizuje zdrojový kód aplikace uložený na serveru pomocí `git pull` pro získání nejnovějších změn z repozitáře.
+    - Nainstaluje všechny potřebné závislosti (pokud došlo k jejich změně).
+    - Aplikuje případné změny v databázovém schématu pomocí migrací.
+    - Nastartuje aplikaci pomocí pm2 a znovu ji zpřístupní uživatelům.
 
     === Architektura produkčního serveru
 
-    Produkční server je hostován jako LXC kontejner na hlavním školním serveru. Tento kontejner je nakonfigurován tak, aby poskytoval izolované prostředí pro běh aplikace, což zajišťuje bezpečnost a stabilitu aplikace. Kontejner obsahuje všechny potřebné závislosti a konfigurace pro běh aplikace, včetně databázového serveru PostgreSQL a přístupu na SMTP server pro odesílání e-mailů.
+    Produkční server je hostován jako LXC kontejner na hlavním školním serveru. Tento kontejner je nakonfigurován tak, aby poskytoval izolované prostředí pro běh aplikace, což zajišťuje bezpečnost a stabilitu aplikace. Kontejner obsahuje všechny potřebné závislosti a konfigurace pro běh aplikace, včetně databázového serveru PostgreSQL a přístupu na SMTP server pro odesílání e-mailů přes školní doménu.
 
-    Pro přístup z internetu je v kontejneru nakonfigurována reverzní proxy pomocí nástroje Nginx. Tato proxy přijímá příchozí HTTP(S) požadavky a přeposílá je na služby běžící uvnitř kontejneru (samotná aplikace a služba pro znovunasazení aplikace -- rozhodnutí probíhá na základě URL cesty, pro přístup ke službe znovunasazení je potřeba se příslušně ověřit).
+    Pro přístup k aplikaci z veřejné sítě je na školním serveru nastavena služba Nginx, která poskytuje reverzní proxy pro směrování HTTP požadavků na správný port, na kterém aplikace běží. V případě služby pro znovunasazení je pak v konfiguraci reverzní proxy nastaveno směrování požadavků na specifickou cestu a přístup je omezen na klíč pro ověření. Pro bezpečnostní účely je také implementována cesta pro _kill-switch_, která umožňuje pouhým posláním HTTP požadavku na specifickou cestu okamžitě vzdáleně zastavit běh aplikace, což je užitečné v případě zjištění závažné chyby, nebo bezpečnostního incidentu.
 
     #figure(
       image("assets/prod-server.png"),
@@ -643,9 +704,10 @@
 
     #heading(numbering: none, [Závěr])
 
-    Cílem této maturitní práce bylo představit systém Dormio. Jedná se o webovou aplikaci určenou pro správu přijímacího řízení do domovů mládeže a internátních zařízení. Práce se soustředila na návrh, implementaci a nasazení této aplikace s důrazem na moderní technologie a osvědčené postupy ve vývoji softwaru. Cílem také bylo zajistit, aby aplikace byla uživatelsky přívětivá jak pro žadatele, tak i pro vychovatele, a aby splňovala požadavky na bezpečnost a spolehlivost. Během vývoje také byly zpracovány návrh na budoucí rozšíření aplikace. Mezi navrhované funkcionality patří rozšíření oblasti užití aplikace na celkovou správu domovů mládeže.
+    Cílem této maturitní práce bylo představit systém Dormio. Jedná se o webovou aplikaci určenou pro správu přijímacího řízení do domovů mládeže a internátních zařízení. Práce se soustředila na návrh, implementaci a nasazení této aplikace s důrazem na moderní technologie a osvědčené postupy ve vývoji softwaru. Cílem také bylo zajistit, aby aplikace byla uživatelsky přívětivá jak pro žadatele, tak i pro vychovatele, a aby splňovala požadavky na bezpečnost a spolehlivost.
 
-    Při vývoji jsem získal cenné zkušenosti s návrhem webových rozhraní, vývojem služeb na straně serveru, správou produkčního prostředí a implementací bezpečnostních opatření. Tyto zkušenosti jsou klíčové pro další rozšiřování tohoto projektu a pro budoucí karierní růst v oblasti vývoje softwaru.
+    Při vývoji jsem získal cenné zkušenosti s návrhem databázových modelů, uživatelských rozhraní, implementací kódu na straně klienta i serveru a také se správou životního cyklu vývoje softwaru. Samotná práce mě pak naučila lépe přemýšlet o architektuře webových aplikací a výběru vhodných technologií pro konkrétní úkoly. Věřím tedy, že se tento projekt ověří jako užitečný nástroj pro domovy mládeže a internátní zařízení.
 
+    Plně doufám v to, že tento projekt bude nadále udržován a rozvíjen tak, aby se stal univerzálním systémem pro správu domovů mládeže a jeho funkcionalita se rozšiřovala o další užitečné funkce, které by mohly usnadnit práci vychovatelům.
   ],
 )
