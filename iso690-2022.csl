@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<style class="in-text" version="1.0" and="text" delimiter-precedes-last="always" et-al-min="5" et-al-use-first="5" demote-non-dropping-particle="never" default-locale="cs-CZ" xmlns="http://purl.org/net/xbiblio/csl">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" and="text" delimiter-precedes-et-al="never" delimiter-precedes-last="always" et-al-min="5" et-al-use-first="5" demote-non-dropping-particle="never" default-locale="cs-CZ">
+  <!-- This style was edited with the Visual CSL Editor (https://editor.citationstyles.org/visualEditor/) -->
   <info>
-    <title>CSN ISO-690:2022:NUM (numeric, brackets, Čeština)</title>
-    <title-short>CSN 690 2022 NUM</title-short>
-    <id>http://csl.mendeley.com/styles/660303821/tul-iso-690-2022-num-5</id>
+    <title>TUL ISO-690:2022:NUM (numeric, brackets, Čeština)</title>
+    <title-short>TUL 2022 NUM</title-short>
+    <id>http://www.zotero.org/styles/tul-iso-690-2022-num</id>
     <link rel="self" href="http://www.zotero.org/styles/tul-iso-690-2022-num"/>
     <link href="https://github.com/zizienova/zoteroTUL2022" rel="documentation"/>
     <author>
@@ -17,20 +18,19 @@
     <category citation-format="numeric"/>
     <category field="generic-base"/>
     <summary>Style based on ČSN ISO 690:2022</summary>
-    <updated>2025-09-23T14:35:32+00:00</updated>
+    <updated>2023-05-05T09:57:50+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
     <terms>
       <term name="from">z</term>
-      <term name="no date">s.a.</term>
-      <term name="accessed">cit.</term>
-      <term name="online">Online</term>
+      <term name="no date">s. a.</term>
+      <term name="accessed">citováno</term>
     </terms>
   </locale>
   <macro name="author">
     <names variable="author">
-      <name delimiter="; " and="text" delimiter-precedes-last="never" name-as-sort-order="all">
+      <name delimiter="; " and="text" delimiter-precedes-last="never" name-as-sort-order="first">
         <name-part name="family" text-case="uppercase"/>
         <name-part name="given"/>
       </name>
@@ -151,6 +151,9 @@
           </substitute>
         </names>
       </if>
+      <else>
+        <text term="anonymous" form="short" text-case="capitalize-first" suffix=","/>
+      </else>
     </choose>
   </macro>
   <macro name="container-author">
@@ -176,6 +179,9 @@
           </else>
         </choose>
       </if>
+      <else>
+        <text term="anonymous" text-case="capitalize-first"/>
+      </else>
     </choose>
   </macro>
   <macro name="year-date">
@@ -183,7 +189,7 @@
       <if variable="issued">
         <choose>
           <if is-uncertain-date="issued">
-            <text term="circa" form="short" suffix=" "/>
+            <text term="circa" form="short" suffix=" "/>
           </if>
         </choose>
         <date variable="issued">
@@ -211,7 +217,7 @@
         <group delimiter=". ">
           <text variable="title"/>
           <text macro="medium-online"/>
-          <text term="in" text-case="capitalize-first" suffix=": "/>
+          <text term="in" text-case="capitalize-first" suffix=": "/>
         </group>
         <choose>
           <if variable="container-author editor" match="any">
@@ -291,16 +297,16 @@
   <macro name="date">
     <choose>
       <if variable="issued">
-        <date variable="issued" form="text">
-          <date-part name="day"/>
-          <date-part name="month"/>
+        <date variable="issued">
+          <date-part name="day" suffix=". "/>
+          <date-part name="month" suffix=" "/>
           <date-part name="year"/>
         </date>
       </if>
     </choose>
   </macro>
   <macro name="scale">
-    <group delimiter=" ">
+    <group delimiter=" ">
       <text term="scale" text-case="capitalize-first"/>
       <text variable="scale"/>
     </group>
@@ -309,7 +315,7 @@
     <choose>
       <if is-numeric="edition">
         <number variable="edition" form="ordinal"/>
-        <label prefix=" " variable="edition" form="short"/>
+        <label prefix=" " variable="edition" form="short"/>
       </if>
       <else>
         <text variable="edition"/>
@@ -380,7 +386,7 @@
   </macro>
   <macro name="accessed">
     <choose>
-      <if variable="URL DOI" match="any">
+      <if variable="URL" match="any">
         <group prefix=" [" suffix="]">
           <text term="accessed" suffix=" "/>
           <date variable="accessed">
@@ -421,13 +427,13 @@
   <macro name="page">
     <choose>
       <if type="book thesis manuscript" match="any">
-        <group delimiter=" ">
+        <group delimiter=" ">
           <text variable="number-of-pages"/>
           <text term="page" form="short"/>
         </group>
       </if>
       <else-if type="chapter paper-conference article-newspaper" match="any">
-        <group delimiter=" ">
+        <group delimiter=" ">
           <text term="page" form="short"/>
           <text variable="page"/>
         </group>
@@ -439,22 +445,26 @@
   </macro>
   <macro name="isbn">
     <choose>
-      <if match="any" variable="ISBN">
-        <text variable="ISBN" prefix="ISBN "/>
+      <if match="none" variable="DOI">
+        <choose>
+          <if match="any" variable="ISBN">
+            <text variable="ISBN" prefix="ISBN "/>
+          </if>
+          <else-if match="any" variable="ISSN">
+            <text variable="ISSN" prefix="ISSN "/>
+          </else-if>
+          <else-if match="any" variable="PMID">
+            <text variable="PMID" prefix="PMID "/>
+          </else-if>
+          <else-if match="any" variable="PMCID">
+            <text variable="PMCID" prefix="PMCID "/>
+          </else-if>
+        </choose>
       </if>
-      <else-if match="any" variable="ISSN">
-        <text variable="ISSN" prefix="ISSN "/>
-      </else-if>
-      <else-if match="any" variable="PMID">
-        <text variable="PMID" prefix="PMID "/>
-      </else-if>
-      <else-if match="any" variable="PMCID">
-        <text variable="PMCID" prefix="PMCID "/>
-      </else-if>
     </choose>
   </macro>
   <macro name="issn">
-    <text variable="ISSN" prefix="ISSN "/>
+    <text variable="ISSN" prefix="ISSN "/>
   </macro>
   <macro name="url">
     <choose>
@@ -466,30 +476,30 @@
       </if>
       <else-if variable="URL">
         <group>
-          <text term="available at" text-case="capitalize-first" text-decoration="none" suffix=": "/>
+          <text term="available at" suffix=": " text-case="capitalize-first"/>
           <text variable="URL" text-decoration="underline" suffix="."/>
         </group>
       </else-if>
     </choose>
   </macro>
   <macro name="cele-datum">
-    <choose>
-      <if match="all" variable="issued">
-        <date variable="issued" form="numeric">
-          <date-part name="year"/>
-          <date-part name="month" form="numeric-leading-zeros"/>
-          <date-part name="day" form="numeric-leading-zeros"/>
-        </date>
-      </if>
-      <else>
-        <text macro="year-date"/>
-      </else>
-    </choose>
-  </macro>
+  <choose>
+    <if variable="issued" match="all">
+      <date variable="issued">
+        <date-part name="year"/>
+        <date-part name="month" form="numeric-leading-zeros" prefix="-"/>
+        <date-part name="day" form="numeric-leading-zeros" prefix="-"/>
+      </date>
+    </if>
+    <else>
+      <text macro="year-date"/>
+    </else>
+  </choose>
+</macro>
   <macro name="doi-url">
     <choose>
       <if match="any" variable="DOI">
-        <text variable="DOI" text-decoration="underline" prefix="https://doi.org/"/>
+        <text variable="DOI" text-decoration="none" prefix="https://doi.org/"/>
       </if>
     </choose>
   </macro>
@@ -503,7 +513,7 @@
       </if>
       <else-if match="any" variable="URL">
         <group>
-          <text term="available at" text-case="capitalize-first" suffix=": "/>
+          <text term="available at" text-case="capitalize-first" suffix=": "/>
           <text variable="URL" text-decoration="underline"/>
         </group>
       </else-if>
@@ -607,10 +617,10 @@
     <sort>
       <key variable="citation-number"/>
     </sort>
-    <layout delimiter="," prefix="[" suffix="]">
+    <layout prefix="[" suffix="]" delimiter=", ">
       <group delimiter=" ">
         <text variable="citation-number"/>
-        <group delimiter=" ">
+        <group delimiter=" ">
           <label variable="locator" form="short"/>
           <text variable="locator"/>
         </group>
@@ -634,14 +644,12 @@
               <text macro="collection"/>
               <group delimiter=", ">
                 <text macro="publisher-info"/>
-                <text macro="year-date"/>
+                <text macro="cele-datum"/>
               </group>
-              <text macro="page"/>
-            </group>
-            <group delimiter=". " suffix=".">
               <text macro="isbn"/>
               <text macro="url"/>
-              <text variable="note"/>
+              <text variable="archive"/>
+              <text variable="note" text-case="capitalize-first"/>
             </group>
           </if>
           <else-if type="chapter" match="any">
@@ -657,17 +665,18 @@
                 </else-if>
               </choose>
             </group>
-            <group delimiter=". " suffix=". ">
-              <group delimiter=" ">
-                <text term="in" text-case="capitalize-first" suffix=":"/>
-                <text macro="container-responsability"/>
-                <text variable="container-title" font-style="italic"/>
-              </group>
+            <group delimiter=". " prefix="In: " suffix=". ">
+              <text macro="container-responsability"/>
               <group delimiter=", ">
-                <text macro="publisher-info"/>
-                <text macro="year-date"/>
+                <text variable="container-title" font-style="italic"/>
                 <text macro="page"/>
               </group>
+              <text macro="edition"/>
+              <text macro="collection"/>
+            </group>
+            <group delimiter=", " suffix=". ">
+              <text macro="publisher-info"/>
+              <text macro="cele-datum"/>
             </group>
             <group delimiter=". " suffix=".">
               <text macro="isbn"/>
@@ -682,13 +691,33 @@
               <text variable="title"/>
               <text macro="medium-online"/>
             </group>
-            <text variable="container-title" font-style="italic" suffix=". "/>
-            <group delimiter=", " suffix=". ">
-              <text macro="year-date"/>
-              <text variable="volume" prefix="vol. "/>
-			  <text variable="issue" prefix="no. "/>
-              <text variable="page" prefix="s. "/>
-            </group>
+            <choose>
+              <if match="any" variable="volume issue ISBN">
+                <group delimiter=", " suffix=". ">
+                  <text variable="container-title" font-style="italic"/>
+                  <group delimiter=" ">
+                    <text variable="volume" prefix="roč. "/>
+                    <date date-parts="year" form="text" variable="issued" prefix="(" suffix=")"/>
+                  </group>
+                  <text variable="issue" prefix="č. "/>
+                  <text variable="page" prefix="s. "/>
+                </group>
+              </if>
+              <else>
+                <group delimiter=". " suffix=". ">
+                  <choose>
+                    <if match="any" variable="container-title">
+                      <text variable="container-title" font-style="italic"/>
+                    </if>
+                    <else-if match="any" variable="publisher">
+                      <text variable="publisher" font-style="italic"/>
+                    </else-if>
+                  </choose>
+                  <text macro="datum-noviny"/>
+                  <text variable="page" prefix="s. "/>
+                </group>
+              </else>
+            </choose>
             <group delimiter=". " suffix=".">
               <text macro="isbn"/>
               <text macro="url"/>
@@ -756,9 +785,10 @@
                 <text macro="publisher-info"/>
                 <text macro="cele-datum"/>
               </group>
-              <text variable="note" prefix="Rozmery: "/>
+              <text variable="dimensions"/>
               <text macro="isbn"/>
               <text macro="url"/>
+              <text macro="accessed"/>
               <text variable="archive" prefix="Místo: "/>
             </group>
           </else-if>
@@ -777,31 +807,29 @@
           <else-if type="paper-conference">
             <group delimiter=". " suffix=". ">
               <text macro="responsability"/>
-              <text variable="title"/>
-              <text macro="medium-online"/>
+              <text variable="title" font-style="normal"/>
+              <text macro="medium-online" text-case="capitalize-first"/>
               <group delimiter=". " prefix="In: ">
-                <text macro="container-responsability"/>
-                <text variable="container-title" font-style="italic"/>
+                <names variable="editor"/>
+                <text variable="event-title" font-style="italic"/>
               </group>
               <group delimiter=", ">
-                <text macro="publisher-info"/>
-                <text macro="year-date"/>
-                <text macro="page"/>
+                <text variable="event-place"/>
+                <date form="numeric" variable="issued"/>
               </group>
-            </group>
-            <group delimiter=". " suffix=".">
+              <text variable="publisher"/>
               <text macro="isbn"/>
               <text macro="url"/>
-              <text variable="note"/>
+              <text variable="note" text-case="capitalize-first"/>
             </group>
           </else-if>
           <else-if type="webpage">
             <group delimiter=". " suffix=". ">
               <text macro="responsability"/>
               <choose>
-                <if match="none" variable="container-title">
+                <if type="webpage">
                   <text variable="title" font-style="italic"/>
-                  <text value="Webové sídlo"/>
+                  <text term="online" />
                   <text macro="edition"/>
                   <text macro="cele-datum"/>
                 </if>
@@ -818,20 +846,20 @@
               </choose>
               <text macro="isbn"/>
               <choose>
-                <if match="any" variable="note">
+                <if match="any" variable="archive">
                   <group delimiter=". ">
                     <group delimiter=", " prefix="Archivní kopie dostupná z: ">
-                      <text variable="note" prefix="[archivováno " suffix="]"/>
                       <text variable="publisher" suffix=" (distributor)"/>
                       <text variable="URL" text-decoration="underline"/>
                     </group>
-                    <text variable="note" prefix="[archivováno " suffix="]"/>
+                    <text variable="archive" prefix="[archivováno " suffix="]"/>
                   </group>
                 </if>
                 <else>
                   <text macro="url"/>
                 </else>
               </choose>
+              <text macro="accessed"/>
             </group>
           </else-if>
           <else-if type="personal_communication" match="any">
@@ -846,12 +874,13 @@
             <group delimiter=". " suffix=". ">
               <group delimiter=" ">
                 <text macro="responsability"/>
-                <text variable="note" prefix="[" suffix="]"/>
+                <text macro="author" prefix="[" suffix="]"/>
               </group>
               <text variable="title" font-style="italic"/>
               <text variable="genre" text-case="capitalize-first"/>
               <text macro="date-RRRRMMDD"/>
               <text macro="url-post"/>
+              <text macro="accessed"/>
             </group>
           </else-if>
           <else-if type="motion_picture" match="any">
@@ -990,6 +1019,7 @@
                 <text macro="cele-datum"/>
               </group>
               <text macro="url"/>
+              <text macro="accessed"/>
               <text variable="note" text-case="capitalize-first"/>
             </group>
           </else-if>
@@ -1015,6 +1045,7 @@
               </group>
               <text macro="isbn"/>
               <text macro="url"/>
+              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else-if>
@@ -1030,11 +1061,11 @@
               <text macro="cele-datum"/>
               <text macro="isbn"/>
               <text macro="url"/>
+              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else>
         </choose>
-        <text macro="accessed"/>
       </group>
     </layout>
   </bibliography>
