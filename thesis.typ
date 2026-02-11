@@ -25,7 +25,7 @@
     application form, dormitory, web application, React, Next.js
   ]),
   acknowledgements: par([
-    Děkuji vedoucímu práce Mgr. Matěji Brožkovi za cenné rady a odborné vedení při zpracování této práce.
+    Děkuji vedoucímu práce Mgr. Matěji Brožkovi za cenné rady a odborné vedení při zpracování této práce. Chtěl bych také poděkovat své rodině a blízkým přátelům za jejich podporu během celého období tvorby této práce.
   ]),
   assignment: [
     #par([
@@ -45,26 +45,11 @@
 
 = Úvod
 
+Správa přihlašovacích formulářů do domova mládeže je často náročný a časově intenzivní proces, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci za použití moderních technologií, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže. Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které byly vyplňovány ručně a posílány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy se snaží tato práce řešit vytvořením specializované webové aplikace.
 
-#par([
-  Správa přihlašovacích formulářů do domova mládeže je často náročný a časově intenzivní proces, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se
-  žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci za použití
-  moderních technologií, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže.
-  Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které
-  byly vyplňovány ručně a posílány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání
-  přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy
-  se snaží tato práce řešit vytvořením specializované webové aplikace.
-])
+Mezi primární funkce aplikace patří možnost vytváření a správu přihlášek žadateli, kteří budou moci sledovat stav své žádosti v reálném čase. Vychovatelé v domově mládeže pak získají nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě bodů, které budou automaticky uděleny dle uvedených odpovědí na otázky.
 
-#par([
-  Mezi primární funkce aplikace patří možnost vytváření a správu přihlášek žadateli, kteří budou moci sledovat stav své žádosti v reálném čase. Vychovatelé na domově mládeže pak získají
-  nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě bodů, které budou automaticky uděleny na základě odpovědí na otázky.
-])
-
-#par([
-  Výsledná aplikace by měla být přínostná pro všechny strany, jmenovitě pro žadatele, kteří získají
-  pohodlnou a transparentní cestu k podání přihlášky, a pro vychovatele, kteří budou mít efektivní nástroj pro správu a zpracování přihlášek.
-])
+Výsledná aplikace by měla být přínostná pro všechny strany. Jmenovitě pak pro žadatele, kteří získají pohodlnou a transparentní cestu k podání přihlášky, a pro vychovatele, kteří budou mít efektivní nástroj pro správu a zpracování přihlášek.
 
 #pagebreak()
 
@@ -72,77 +57,81 @@
 
 = Problematika stávajícího řešení
 
-Jak již bylo zmíněno v úvodu, aktuální stav systému pro přihlašování a správu přihlášek pro
-domov mládeže je neoptimální a obsahuje množství funkcí, které lze implementovat pro celkové
-zlepšení uživatelské přívětivosti a pohodlnosti. Pro jednoduché ustanovaní těchto funkcí
-je však se potřeba podívat na všechny typy, které kdy byly zvažovány pro použití a následně
-tato data zohlednit při návrhu nového systému.
+Jak již bylo zmíněno v úvodu, aktuální stav systému pro přihlašování a správu přihlášek pro domov mládeže je neoptimální a obsahuje množství funkcí, které lze implementovat pro celkové zlepšení uživatelské přívětivosti a pohodlnosti. Pro jednoduché ustanovaní těchto funkcí je však se potřeba podívat na všechny typy, které kdy byly zvažovány pro použití a následně tato data zohlednit při návrhu nového systému.
 
 == Fyzické přihlášky
 
-Fyzické přihlášky, také zvané papírové přihlášky, jsou již dnes považovány za staromódní,
-avšak je potřeba si z nich vzít důležité poznámky o tom, jaké nevýhody přinášeli a ty následně zvážit
-při implementaci našeho řešení.
+Při analýze stávajících mechanismů podávání přihlášek se fyzická (papírová) forma jeví jako procesně nejméně efektivní varianta. Její limity však zároveň definují požadavky na modernizaci a digitalizaci celého systému. Mezi kritické nedostatky, které je nutné v rámci návrhu nového řešení eliminovat nebo je omezit, patří zejména:
 
-Při porovnání s ostatními řešeními mají bezkonkurenčně nejvíce nevýhod. Mezi nevýhody definitivně patří:
-- Nutnost fyzického doručení přihlášky na určené místo, což může být pro některé žadatele komplikované.
-- Obtížná správa a archivace papírových přihlášek. Papírové dokumenty se těžce hledají, třídí a uchovávají, což dokáže zvýšit administrativní zátěž pro vychovatele.
-- Omezené možnosti pro automatizaci procesu hodnocení a kalkukace bodů na základě odpovědí žadatelů.
+- Nutnost fyzického doručení přihlášky na určené místo. To může být pro některé žadatele komplikované.
+- Obtížná správa a archivace fyzických přihlášek. Papírové dokumenty se těžce hledají, třídí a uchovávají, což dokáže zvýšit administrativní zátěž pro vychovatele.
+- Omezené možnosti pro automatizaci procesu hodnocení a kalkukace bodů na základě odpovědí žadatelů. Nutnost manuálního zpracování vede k chybovosti a daleko vyšší časové náročnosti.
 
 == Google Forms
 
 Google Forms je online nástroj pro tvorbu formulářů, sběr a statistiku dat.
-Nabízí široké možnosti přizpůsobení formulářů, integraci s dalšími službami Google a automatické shromažďování odpovědí do přehledných tabulek.
-@google-forms
+Nabízí široké možnosti přizpůsobení formulářů, integraci s dalšími službami Google a automatické shromažďování odpovědí do přehledných tabulek @google-forms.
 
 Mezi hlavní výhody Google Forms patří hlavně intuitivní uživatelské rozhraní, jednoduché
 nastavení a možnost rychlého sdílení formulářů prostřednictvím odkazu. Dále nabízí
-automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak přichází i funkce které jsou vitální a chybí. Pro školní rok 2025/2026 byly
-Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní
-strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote("Tento krok byl řešen automaticky za pomocí zautomatizovaného skriptu v Google Sheets, z vlastní zkušenosti bylo toto řešení však velice chybové a často se muselo upravovat."), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
+automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak přichází i funkce které jsou vitální a chybí. Pro školní rok 2025/2026 byly Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote("Tento krok byl řešen automaticky za pomocí zautomatizovaného skriptu v Google Sheets, z vlastní zkušenosti bylo toto řešení však velice chybové a často se muselo upravovat."), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
 
 == Externí řešení
 
-Externí řešení patří zdaleka k nejvhodnějším možnostem, jak řešit přihlašovací proces. Mezi hlavní výhody
-patří především fakt, že produkty lze přizpůsobit na míru dle požadavků a potřeb domova mládeže. Nabízejí
-též opravu chyb, aktualizace a technickou podporu, což může být velice užitečné pro zajištění hladkého chodu systému. Mezi nevýhody však patří především finanční náročnost, jelikož
-externí řešení často vyžadují měsíční nebo roční poplatky za podporu a údržbu.
+Externí řešení patří zdaleka k nejvhodnějším a nejflexibilnějším možnostem, jak řešit přihlašovací proces. Mezi hlavní výhody patří především fakt, že produkty lze přizpůsobit na míru dle požadavků a potřeb domova mládeže. Nabízejí též opravu chyb, aktualizace a technickou podporu, což může být velice užitečné pro zajištění hladkého chodu systému. Mezi nevýhody patří především finanční náročnost, jelikož externí řešení často vyžadují měsíční nebo roční poplatky za podporu a údržbu.
 
-#pagebreak()
+#v(30pt)
+
+#context[
+  #show table.cell: set text(size: 10pt)
+
+  #figure(
+    table(
+      align: horizon,
+      columns: 5,
+      [Vlastnost], [Fyzické přihlášky], [Google Forms], [Externí řešení], [Studentský projekt],
+      [Snadná manipulace s přihláškou], [ne], [ano], [ano], [ano],
+      [Automatizace hodnocení přihlášek], [ne], [částečně], [ano], [ano],
+      [Archivace přihlášek], [ne], [částečně], [ano], [ano],
+      [Komunikace se žadateli], [ne], [ne], [možná], [ano],
+      [Implementace na míru], [ne], [ne], [ano], [ano],
+      [Možnost expanze funkcí], [částečně], [ne], [ano], [ano],
+      [Náklady], [nízké], [nízké], [vysoké], [nízké],
+    ),
+    caption: [Jednoduché porovnání řešení přihlašovacího procesu do domova mládeže],
+  )
+]
 
 = Stanovení požadavků na novou aplikaci
 
-Při diskuzi o tvorbě nové aplikacei byly též stanoveny požadavky na funkce, které by měla aplikace
-obsahovat, odvíjely jsme se především od problémů, které přinášela stávající řešení. Tyto požadavky
-můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na uživatelské funkce* a *požadavky na administrátorské funkce*. Na základě těchto požadavků bude následně proveden výběr technologií a návrh architektury aplikace.
+Při diskuzi o tvorbě nové aplikace byly též stanoveny požadavky na funkce, které by měla aplikace obsahovat. Vycházeli jsme se především od problémů, které přinášela stávající řešení. Tyto požadavky můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na uživatelské funkce* a *požadavky na funkce administrátorské*. Na základě těchto požadavků byly následně vybrány technologie užité pro vývoj aplikace.
 
 == Uživatelské funkce
 
-- Zobrazení formuláře pro přihlášení do domova mládeže s možností vyplnění a odeslání přihlášky.
-- Možnost sledování stavu přihlášky v reálném čase prostřednictvím ovládacího panelu.
-- Automatické zasílání notifikací e-mailem při změně stavu přihlášky (např. přijetí, zamítnutí).
-- Využití stejného uživatelského účtu pro podání více přihlášek (např. sourozenci, jiné ročníky), bez nutnosti nové registrace.
+Uživatelskými funkcemi se rozumí funkce, které jsou přístupné a využívané samotnými žadateli o ubytování. 
+
+- Zobrazení přehledného formuláře pro podání přihlášky, který bude obsahovat všechny potřebné informace a otázky pro správné vyplnění žádosti. Zároveň bude obsahovat validaci pro zajištění správnosti a úplnosti zadaných dat společně s kolonkami pro nahrání potřebných souborů.
+- Možnost sledování přihlášku, včetně jejího stavu, v reálném čase. Žadatelé budou mít jednoduchý přehled o tom, v jaké fázi se jejich žádost nachází, a budou informováni o případných změnách stavu.
+- Využití stejného účtu pro podání a správu více přihlášek (předpokládá se, že uživatelé budou podávat přihlášky pro více svých dětí a ve více letech).
 
 == Administrátorské funkce
 
-- Zobrazení přehledu všech přijatých přihlášek s možností filtrování, či přidávání poznámek.
-- Možnost komunikace se žadateli prostřednictvím integrované funkce pro zasílání zpráv za pomoci e-mailu.
-- Automatické bodování přihlášek na základě odpovědí žadatelů.
-- Generování a archivace přijatých přihlášek společně s možností exportu do PDF, či jiných formátů.
-- Jednoduchá úprava studijních oborů a ročníků, pro minimalizaci intervence správce systému.
+Do administrátorských funkcí spadají funkce, které jsou standardně přístupné pouze pro vychovatele a pracovníky domova mládeže, kteří mají na starosti správu přihlášek.
+
+- Možnost spravovat přijaté žádosti, včetně možnosti prohlížet a upravovat informace o žadatelích, měnit stav žádostí a přidávat poznámky k jednotlivým žádostem.
+- Automatizace procesu hodnocení a kalkulace bodů na základě odpovědí žadatelů. Aplikace bude automaticky udělovat body za jednotlivé odpovědi na otázky v přihlášce, což usnadní a zrychlí proces hodnocení žádostí.
+- Možnost komunikace se žadateli přímo z aplikace, a to ať už prostřednictvím e-mailu, tak i za pomoci funkce pro hromadnou korespondenci, která využije interního školního mailového serveru pro odesílání zpráv.
 - Zabezpečení přístupu k administrátorským funkcím pomocí autentizačního systému s RBAC #footnote([
     Role-Based Access Control je systém pro efektivní správu přístupu k zabezpečeným informacím pomocí rolí a oprávnění @decoding-rbac.
   ]), který zajistí různé úrovně přístupu pro různé role vychovatelů.
-
-#pagebreak()
 
 // TODO: Add image/graph here
 
 = Architektura webové aplikace
 
-Vývoj jakékoliv aplikace by měl začít návrhem její architektury. Ta dokáže přibližně
+Vývoj jakékoliv aplikace začíná návrhem její architektury. Ta dokáže přibližně
 nastínit, jak do sebe budou jednotlivé části aplikace zapadat a také se od ní odvíjí
-výběr technologií, které budou při vývoji použity. Pro webové aplikace je de-facto standardem architektura *client-server*, která dělí aplikaci na dvě hlavní části -- klientskou a serverovou.
+výběr technologií, které budou při vývoji použity. Fungování moderních webových aplikací se opírá o rozdělení odpovědnosti mezi uživatelské rozhraní (_client-side_) a aplikační logiku běžící na serveru (_server-side_).
 
 #figure(
   image("res/client-server.png", width: 75%),
@@ -151,52 +140,45 @@ výběr technologií, které budou při vývoji použity. Pro webové aplikace j
 
 == Klient
 
-Klientská část aplikace je zodpovědná za interakce s uživatelem. V případě webové aplikace
-se jedná kód, který běží přímo v prohlížeči uživatele. Jejím hlavním úkolem je zobrazit
-uživatelské rozhraní a zpracovávat interakce způsobené uživatelem.
+Klientská část aplikace, někdy nazývaná také _front-end_, představuje kód a soubory, které jsou přeneseny do prohlížeče uživatele a vykonávány přímo na jeho zařízení. Hlavním účelem těchto dat je vykreslit uživatelské rozhraní, zpracovávat interakce s cílovým uživatelem a zpětně komunikovat se serverovou částí aplikace.
 
 == Server
 
-Serverová část aplikace běží na vzdáleném zařízení (serveru) a je zodpovědná primárně
-za úkony, které považujeme za nebezpečné při vykonávání na straně klienta, jako je
-např. přístup k databázi, validace dat, autentizace uživatelů či vnitřní logika aplikace.
-Server je také zodpovědný za poskytnutí dat samotné webové stránky (HTML, CSS, JavaScript), které následně klient uživateli zobrazí a umožní mu s nimi interagovat.
+Serverová část aplikace, také označována jako _back-end_ je část aplikace, která běží na vzdáleném zařízení (server), není tedy přístupná přímo uživateli. Serverová část aplikace je nejčastěji zodpovědná za interní zpracování dat, komunikaci s databází, autentizaci uživatelů a poskytování dat klientovi (včetně samotné webové stránky). Obecně by se tedy dalo říci, že tato část aplikace provádí úkony, které jsou považovány za nebezpečné (např. zápis do databáze) nebo neověřitelné (např. validace dat) při vykonávání na straně klienta.
 
 == Komunikace mezi klientem a serverem
 
-Klient a server spolu může komunikovat několika protokoly, mezi nejpopulárnější patří HTTP/HTTPS,
-GraphQL či WebSocket. Pro většinu webových aplikací, je však nejvhodnější volbou využití HTTP/HTTPS protokolu. Tento protokol umožňuje klientovi odesílat požadavky na server a přijímat odpovědi, což je ideální pro většinu scénářů webových aplikací.
+Komunikace mezi klientem a serverem na aplikační vrstvě může používat různé protokoly, mezi nejběžněji používané protokoly patří HTTP (HyperText Transfer Protocol), WebSocket a GraphQL. V této práci probíhá komunikace mezi klientem a serverem primárně pomocí protokolu HTTP.
+
+HTTP protokol dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient -- prohlížeč odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace:
+
+Klientský požadavek je definován především metodou (např. GET pro čtení či POST pro zápis), která určuje typ operace, a cílovou adresou URL identifikující konkrétní zdroj. Nedílnou součást tvoří hlavičky, nesoucí metadata typu autentizačních údajů či formátu dat, a volitelně také tělo požadavku obsahující samotná data k odeslání. Server následně na tento podnět reaguje strukturou, jejímž klíčovým prvkem je stavový kód (např. 200 OK či 404 Not Found), ten poskytuje okamžitou informaci o výsledku zpracování. Obdobně jako u požadavku, i odpověď obsahuje specifické hlavičky a zpravidla i tělo, které nese klientem vyžádaný obsah, nejčastěji ve formátu JSON nebo HTML.
 
 #figure(
   image("res/http.png", width: 75%),
   caption: "Vizualizace komunikace mezi klientem a serverem pomocí HTTP protokolu",
 )
 
-Každý požadavek odeslaný klientem obsahuje metodu (mezi nejběžněji používané patří GET, POST, PUT a DELETE), URL adresu, hlavičky a případné tělo požadavku #footnote("Tělo požadavku je obvykle přítomno u metod jako POST a PUT, které odesílají data na server."). Server následně zpracuje požadavek a vrátí odpověď obsahující stavový kód, hlavičky a případně tělo odpovědi s daty.
-
-#pagebreak()
-
 == Autentizace a autorizace
 
 Pro zabezpečení přístupu k funkcím, jež jsou určeny pouze pro oprávněné klienty (uživatele), je potřebná implementace systému pro autentizaci a autorizace. Autentizace
 je proces ověření identity uživatele, zatímco autorizace určuje, jaké akce může autentizovaný uživatel provádět.
 
-V dnešní době dělíme autentizaci na 2 primární typy -- *session-based authentication* a *JWT (JSON Web Tokens)*. Často se však můžeme setkat i termíny jako je *stateful* a *stateless authentication*, tyto termíny však přímo popisují, zda server uchovává stav
+V dnešní době dělíme autentizaci na dva primární typy -- *session-based authentication* a *JWT (JSON Web Tokens)*. Často se však můžeme setkat i termíny jako je *stateful* a *stateless authentication*, tyto termíny však přímo popisují, zda server uchovává stav
 o přihlášeném uživateli (stateful) nebo nikoliv (stateless).
 
 === JWT (JSON Web Tokens)
 
-JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na 2 hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token(obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token
-je zašifrován za pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům. 
+JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na dva hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token (obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token je zašifrován za pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům @presenting-jwt.
 
-Oproti session-based autentizace má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli.
+Oproti session-based autentizace má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter.
 
 #figure(
   image("res/jwt.png", width: 90%),
   caption: "Vizualizace JWT autentizace",
 )
 
-=== Session-based authentication
+=== Session-based autentizace
 
 Druhým hojně užívaným způsobem pro autentizaci je tzv. session-based autentizace. Tento
 styl je oproti JWT *stateful*, ukládá tedy stav přihlášeného uživatele na serveru (v databázi). Při přihlášení klient odešle požadavek na server s přihlašovacími údaji. Server ověří tyto údaje a pokud jsou správné, vytvoří novou session (relaci) pro uživatele a vygeneruje unikátní identifikátor session (session ID). Tento identifikátor je následně odeslán zpět klientovi, který si ho uloží do cookies. Při každém dalším požadavku na server klient automaticky přiloží cookies obsahující session ID. Server následně ověří platnost session ID (např. kontrolou, zda session stále existuje v databázi) a pokud je platné, povolí přístup k požadovaným zdrojům.
@@ -206,7 +188,18 @@ styl je oproti JWT *stateful*, ukládá tedy stav přihlášeného uživatele na
   caption: "Vizualizace session-based autentizace",
 )
 
-#pagebreak()
+#v(30pt)
+
+#figure(
+  table(
+    columns: 3,
+    [*Vlastnost*], [*JWT Token*], [*Session*],
+    [Uchovávání stavu na serveru], [ne], [ano],
+    [Možnost odhlášení uživatele před vypršením platnosti], [ne], [ano],
+    [Škálovatelnost], [vysoká], [nízká],
+  ),
+  caption: [Porovnání standardů pro autentizaci a autorizaci]
+)
 
 = Technologie použité při vývoji
 
@@ -232,8 +225,6 @@ ve většině moderních vývojových nástrojů, což usnadňuje práci vývoj�
 == Next.js
 
 Next.js je webový framework, který je postaven na Reactu a umožňuje tvorbu kompletních webových aplikací s podporou pokročilých funkcí, jako je _Server-Side Rendering_ (SSR), nebo _Server Actions_ @nextjs.
-
-#pagebreak()
 
 === React
 
@@ -319,8 +310,6 @@ RSC lze do jisté míry přirovnat ke klasickému PHP -- které kód vykonává 
   caption: "Ukázka React Server Component a jejího použití s Suspense",
 )
 
-#pagebreak()
-
 === Server Actions v Next.js
 
 Server Actions (česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné API na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
@@ -357,8 +346,6 @@ Funkci lze následně importovat a volat přímo z komponenty na straně klienta
   kind: "raw",
   caption: "Ukázka komponenty v Next.js využívající Server Action",
 )
-
-#pagebreak()
 
 == Prisma ORM
 
@@ -401,8 +388,6 @@ Prisma následně na základě tohoto schématu generuje typované API pro inter
 )
 
 Prisma podporuje širokou škálu databázových systému, včetně PostgreSQL, MySQL, SQLite a dalších @prisma-orm.
-
-#pagebreak()
 
 === PostgreSQL
 
@@ -522,7 +507,7 @@ Sekce pro správu uživatelských účtů. Uživatelé mohou být přidáváni, 
 
 ==== Sekce "E-maily"
 
-Sekce pro správu e-mailových šablon, které jsou používány pro komunikaci s žadateli. Lze také nastavit výchozího odesílatele a předmět, se kterým bude e-mail odeslán. Je nutno podotknout, že tato část neslouží pro nastavení připojení k SMTP serveru, to je řešeno pomocí konfiguračních proměnných v souboru `.env`. 
+Sekce pro správu e-mailových šablon, které jsou používány pro komunikaci s žadateli. Lze také nastavit výchozího odesílatele a předmět, se kterým bude e-mail odeslán. Je nutno podotknout, že tato část neslouží pro nastavení připojení k SMTP serveru, to je řešeno pomocí konfiguračních proměnných v souboru `.env`.
 
 === Zobrazení přijatých přihlášek
 
@@ -530,7 +515,7 @@ Vychovatelé mají přístup k přehlednému seznamu všech přihlášek. Seznam
 
 ==== Detail přihlášky
 
-Každou přihlášku lze rozkliknout pro zobrazení detailních informací. V detailu přihlášky jsou zobrazeny všechny informace, které žadatel zadal při vyplňování přihlášky, včetně automaticky vygenerovaného bodového ohodnocení a stavu přihlášky. Vychovatel zde má také možnost měnit stav přihlášky (např. přijatá, zamítnutá) a přidávat poznámky. V případě, že uživatel, který přihlášku vytvořil, špatně vyplnil libovolný údaj, má možnost údaj v přihlášce opravit. 
+Každou přihlášku lze rozkliknout pro zobrazení detailních informací. V detailu přihlášky jsou zobrazeny všechny informace, které žadatel zadal při vyplňování přihlášky, včetně automaticky vygenerovaného bodového ohodnocení a stavu přihlášky. Vychovatel zde má také možnost měnit stav přihlášky (např. přijatá, zamítnutá) a přidávat poznámky. V případě, že uživatel, který přihlášku vytvořil, špatně vyplnil libovolný údaj, má možnost údaj v přihlášce opravit.
 
 ==== Export přihlášek do PDF
 
@@ -543,7 +528,7 @@ Proces generování PDF probíhá ve třech krocích:
 
 #figure(
   image("res/pdf-gen-flow.png"),
-  caption: "Ukázka toku exportu přihlášky do formátu PDF"
+  caption: "Ukázka toku exportu přihlášky do formátu PDF",
 )
 
 Řešení pomocí mezisouboru XLSX se může zdát jako redundantní a zbytečně komplikované, avšak v současné době neexistuje žádné široce používané řešení pro vyplňování (přepisování) PDF šablon v prostředí Node.js. Tento přístup tedy představuje kompromis mezi složitostí implementace a funkčností.
@@ -560,7 +545,7 @@ Archivace ročníku nemá vliv na již vygenerovaná evidenční čísla přihl�
 Evidenční čísla jsou unikátní identifikátory přihlášek, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška a pořadového čísla přihlášky v daném ročníku. Tento výrok tedy implikuje, že pro každé rodné číslo, bude číslo evidenční vygenerováno pouze jednou, a při opětovném podání přihlášky v dalším ročníku, bude použito již existující evidenční číslo.
 
 #figure(
-  $2025\/1$, 
+  $2025\/1$,
   caption: "Příklad evidenčního čísla přihlášky (první přihláška v roce 2025)",
 )
 
@@ -576,7 +561,7 @@ Při tvorbě projektu by měl být kladen důraz na efektivní vývojový proces
 
 #figure(
   image("res/development.png"),
-  caption: [Schéma procesu vývoje aplikace]
+  caption: [Schéma procesu vývoje aplikace],
 )
 
 == Vývojové nástroje
@@ -606,7 +591,7 @@ SonarQube je platforma pro inspekci kvality kódu v softwarových projektech. Po
 
 #figure(
   image("res/sonarqube.png"),
-  caption: [Souhrn analýzy zdrojového kódu v SonarQube]
+  caption: [Souhrn analýzy zdrojového kódu v SonarQube],
 )
 
 Pro integraci SonarQube do vývojového procesu byl SonarQube nasazen na vlastní server a byl vytvořen nový projekt. Pro integraci mezi repozitářem na platformě GitHub a SonarQube byla vytvořena nová _GitHub Action_, tedy automaticky vykonaný činnost. Ta je nastavena, aby se spustila při každém aktualizace zdrojového kódu na hlavní větvi repozitáře. Tato akce provede analýzu kódu pomocí SonarQube a výsledky jsou následně odeslány na server SonarQube, kde jsou dostupné pro další přehledy a analýzy.
@@ -631,7 +616,7 @@ Správné plánování vývoje je jednou z klíčových činností pro úspěšn
 
 #figure(
   image("res/github-project.png"),
-  caption: [Plánovací tabulka pro vývoj aplikace na platformě GitHub Projects]
+  caption: [Plánovací tabulka pro vývoj aplikace na platformě GitHub Projects],
 )
 
 Struktura plánovací tabulky byla rozdělena do několika sloupců:
@@ -664,5 +649,11 @@ Pro přístup z internetu je v kontejneru nakonfigurována reverzní proxy pomoc
 
 #figure(
   image("res/prod-server.png"),
-  caption: [Schéma architektury produkčního serveru]
+  caption: [Schéma architektury produkčního serveru],
 )
+
+#heading(numbering: none, [Závěr])
+
+Cílem této maturitní práce bylo představit systém Dormio. Jedná se o webovou aplikaci určenou pro správu přijímacího řízení do domovů mládeže a internátních zařízení. Práce se soustředila na návrh, implementaci a nasazení této aplikace s důrazem na moderní technologie a osvědčené postupy ve vývoji softwaru. Cílem také bylo zajistit, aby aplikace byla uživatelsky přívětivá jak pro žadatele, tak i pro vychovatele, a aby splňovala požadavky na bezpečnost a spolehlivost. Během vývoje také byly zpracovány návrh na budoucí rozšíření aplikace. Mezi navrhované funkcionality patří rozšíření oblasti užití aplikace na celkovou správu domovů mládeže.
+
+Při vývoji jsem získal cenné zkušenosti s návrhem webových rozhraní, vývojem služeb na straně serveru, správou produkčního prostředí a implementací bezpečnostních opatření. Tyto zkušenosti jsou klíčové pro další rozšiřování tohoto projektu a pro budoucí karierní růst v oblasti vývoje softwaru.
