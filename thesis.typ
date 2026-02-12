@@ -20,6 +20,7 @@
   keywords-en: [
     application form, dormitory, web application, React, Next.js
   ],
+  assignment: image("assets/assignment.pdf"),
   declaration: [
     Prohlašuji, že jsem tuto práci vypracoval/a samostatně a uvedl/a v ní všechny prameny, literaturu a ostatní zdroje, které jsem použil/a.
     Při přípravě této práce jsem použil ChatGPT (https://chat.openai.com/) a Github Copilot (https://github.com/featuassets/copilot) za účelem kontroly kódu, překladů v aplikaci a hledání chyb. Po použití tohoto nástroje jsem provedl kontrolu obsahu a přebírám za něj plnou zodpovědnost.
