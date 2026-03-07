@@ -650,6 +650,7 @@
               <text macro="url"/>
               <text variable="archive"/>
               <text variable="note" text-case="capitalize-first"/>
+              <text macro="accessed"/>
             </group>
           </if>
           <else-if type="chapter" match="any">
@@ -721,6 +722,7 @@
             <group delimiter=". " suffix=".">
               <text macro="isbn"/>
               <text macro="url"/>
+              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else-if>
