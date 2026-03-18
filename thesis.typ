@@ -971,7 +971,7 @@
 
     == Budoucí rozšíření
 
-    Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně, stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
+    Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
 
     == Všestrannost
 

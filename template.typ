@@ -50,7 +50,7 @@
     ),
   )
 
-  set text(font: "Times New Roman", size: 12pt, lang: "cs")
+  set text(font: "Times New Roman", size: 12pt, lang: "cs", hyphenate: false)
   show heading: set block(below: 20pt, above: 20pt)
   show math.equation: set text(size: 16pt)
   set figure(gap: 1.5em)
