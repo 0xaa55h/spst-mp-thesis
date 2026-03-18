@@ -26,6 +26,7 @@
       <term name="from">z</term>
       <term name="no date">s. a.</term>
       <term name="accessed">citováno</term>
+      <term name="online">Online</term>
     </terms>
   </locale>
   <macro name="author">
@@ -650,7 +651,6 @@
               <text macro="url"/>
               <text variable="archive"/>
               <text variable="note" text-case="capitalize-first"/>
-              <text macro="accessed"/>
             </group>
           </if>
           <else-if type="chapter" match="any">
@@ -722,7 +722,6 @@
             <group delimiter=". " suffix=".">
               <text macro="isbn"/>
               <text macro="url"/>
-              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else-if>
@@ -790,7 +789,6 @@
               <text variable="dimensions"/>
               <text macro="isbn"/>
               <text macro="url"/>
-              <text macro="accessed"/>
               <text variable="archive" prefix="Místo: "/>
             </group>
           </else-if>
@@ -861,7 +859,6 @@
                   <text macro="url"/>
                 </else>
               </choose>
-              <text macro="accessed"/>
             </group>
           </else-if>
           <else-if type="personal_communication" match="any">
@@ -882,7 +879,6 @@
               <text variable="genre" text-case="capitalize-first"/>
               <text macro="date-RRRRMMDD"/>
               <text macro="url-post"/>
-              <text macro="accessed"/>
             </group>
           </else-if>
           <else-if type="motion_picture" match="any">
@@ -1021,7 +1017,6 @@
                 <text macro="cele-datum"/>
               </group>
               <text macro="url"/>
-              <text macro="accessed"/>
               <text variable="note" text-case="capitalize-first"/>
             </group>
           </else-if>
@@ -1047,7 +1042,6 @@
               </group>
               <text macro="isbn"/>
               <text macro="url"/>
-              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else-if>
@@ -1063,12 +1057,12 @@
               <text macro="cele-datum"/>
               <text macro="isbn"/>
               <text macro="url"/>
-              <text macro="accessed"/>
               <text variable="note"/>
             </group>
           </else>
         </choose>
       </group>
+      <text macro="accessed"/>
     </layout>
   </bibliography>
 </style>

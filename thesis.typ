@@ -8,11 +8,10 @@
   author: "Jan Prokůpek",
   date: datetime.today().display("[day]. [month padding:none]. [year]"),
   abstract-cs: [
-    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce popisuje aktuální řešení a problémy s ním spojené. V teoretické části jsou shrnuty technologie, které byly při vývoji použity a důvody, proč byly vybrány pro vývoj. Praktická část pojednává o shrnutí vlastní implementace projektu, strategiích, které byly při vývoji použity a průběhem nasazením aplikace na server Střední průmyslové školy Třebíč.
+    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce popisuje aktuální řešení a problémy s ním spojené. Problematika stávajícího řešení popisuje důvody nutnosti vytvoření nové aplikace a zmiňuje všechny typy řešení, které byly zvažovány pro použití. Stanovení požadavků na novou aplikaci popisuje funkce, které by měla aplikace obsahovat. Architektura webové aplikace popisuje architekturální vzory, které byly použity při návrhu a vývoji aplikace a další teoretické informace. Technologie použité při vývoji popisují technologie, které byly použity při vývoji a důvody, proč byly zvoleny. V kapitole o implementaci webové aplikace je popsána samotná aplikace a její funkce. Poslední kapitola, vývoj a nasazení, popisuje proces vývoje a nasazení aplikace na produkční prostředí.
   ],
   abstract-en: [
-    The graduation thesis aims to simplify the process of student registration and application management for educators by creating an application for managing the registration process. The introduction briefly describes the current solution and the problems associated with it.
-    The theoretical part summarizes the technologies used during development and explains the reasons why they were chosen. The practical part discusses the implementation of the project itself, the strategies used during development, and the process of deploying the application on the server of the Secondary Technical School in Třebíč.
+    The graduation thesis aims to streamline the student registration process and application management for educators by developing a dedicated management application. The introduction briefly describes the current solution and its associated issues. "The problem statement" section outlines the reasons why a new application is necessary and mentions all types of solutions that were considered. Requirements specification for the new application describes the features it should include. The web application architecture section details the architectural patterns used during design and development, along with other theoretical information. "Used technologies" describes the specific tools used during development and the reasons behind their selection. In the implementation chapter, the application itself and its functions are described. The final chapter, development and deployment, covers the development process and the transition of the application to a production environment.
   ],
   keywords-cs: [
     přihlašovací formulář, domov mládeže, webová aplikace, React, Next.js
@@ -23,19 +22,143 @@
   assignment: image("assets/assignment.pdf"),
   declaration: [
     Prohlašuji, že jsem tuto práci vypracoval/a samostatně a uvedl/a v ní všechny prameny, literaturu a ostatní zdroje, které jsem použil/a.
-    Při přípravě této práce jsem použil ChatGPT (https://chat.openai.com/) a Github Copilot (https://github.com/featuassets/copilot) za účelem kontroly kódu, překladů v aplikaci a hledání chyb. Po použití tohoto nástroje jsem provedl kontrolu obsahu a přebírám za něj plnou zodpovědnost.
+    Při přípravě této práce jsem použil ChatGPT (#link("https://chat.openai.com/")) a GitHub Copilot (#link("https://github.com/features/copilot")) za účelem kontroly kódu, překladů v aplikaci a hledání chyb. Po použití těchto nástrojů jsem provedl kontrolu obsahu a přebírám za něj plnou odpovědnost.
   ],
   acknowledgements: [
-    Děkuji vedoucímu práce Mgr. Matěji Brožkovi za cenné rady a odborné vedení při zpracování této práce. Chtěl bych také poděkovat své rodině a blízkým přátelům za jejich podporu během celého období tvorby této práce.
+    Děkuji vedoucímu práce Mgr. Matěji Brožkovi za cenné rady a odborné vedení při zpracování této práce. Chtěl bych také poděkovat své rodině a blízkým přátelům za jejich podporu během celého období tvorby této práce. V neposlední řadě bych chtěl poděkovat virtuální zpěvačce Hatsune Miku za podporu, kterou mi dodala svojí pozitivní energií.
   ],
+  dictionary: (
+    (
+      key: "api",
+      short: "API",
+      long: "Application Programming Interface",
+      description: [Programové rozhraní, které definuje způsob komunikace mezi různými částmi aplikace nebo mezi různými službami.],
+    ),
+    (
+      key: "ci/cd",
+      short: "CI/CD",
+      long: "Continuous Integration / Continuous Deployment",
+      description: [Soubor postupů a nástrojů pro průběžnou integraci změn, automatizované testování a nasazování aplikace.],
+    ),
+    (
+      key: "crud",
+      short: "CRUD",
+      long: "Create, Read, Update, Delete",
+      description: [Základní čtyři operace používané při práci s daty v databázových a aplikačních systémech.],
+    ),
+    (
+      key: "http",
+      short: "HTTP",
+      long: "HyperText Transfer Protocol",
+      description: [Protokol aplikační vrstvy pro přenos hypertextových dokumentů a webových požadavků.],
+    ),
+    (
+      key: "jit",
+      short: "JIT",
+      long: "Just-In-Time",
+      description: [Způsob kompilace nebo generování výstupu až v okamžiku potřeby, typicky pro optimalizaci výkonu a velikosti výsledku.],
+    ),
+    (
+      key: "jsx",
+      short: "JSX",
+      long: "JavaScript XML",
+      description: [Syntaktické rozšíření JavaScriptu používané v Reactu pro zápis komponent podobný HTML.],
+    ),
+    (
+      key: "jwt",
+      short: "JWT",
+      long: "JSON Web Token",
+      description: [Kompaktní tokenový formát používaný pro přenos informací o identitě a oprávněních uživatele.],
+    ),
+    (
+      key: "lxc",
+      short: "LXC",
+      long: "Linux Containers",
+      description: [Technologie virtualizace na úrovni operačního systému pro izolovaný běh aplikací.],
+    ),
+    (
+      key: "mvc",
+      short: "MVC",
+      long: "Model-View-Controller",
+      description: [Architektonický vzor oddělující datový model, prezentační vrstvu a řídicí logiku aplikace.],
+    ),
+    (
+      key: "mvvm",
+      short: "MVVM",
+      long: "Model-View-ViewModel",
+      description: [Architektonický vzor, který odděluje uživatelské rozhraní od aplikační logiky pomocí vrstvy ViewModel.],
+    ),
+    (
+      key: "orm",
+      short: "ORM",
+      long: "Object-Relational Mapping",
+      description: [Technika mapování objektů v programovacím jazyce na relační databázové tabulky.],
+    ),
+    (
+      key: "pdf",
+      short: "PDF",
+      long: "Portable Document Format",
+      description: [Formát dokumentu určený pro konzistentní zobrazení a tisk napříč zařízeními.],
+    ),
+    (
+      key: "rbac",
+      short: "RBAC",
+      long: "Role-Based Access Control",
+      description: [Model řízení přístupu, ve kterém jsou oprávnění přiřazena rolím a uživatelé získávají práva podle své role.],
+    ),
+    (
+      key: "rls",
+      short: "RLS",
+      long: "Row-Level Security",
+      description: [Mechanismus zabezpečení databáze umožňující omezit přístup k jednotlivým řádkům tabulky.],
+    ),
+    (
+      key: "rsc",
+      short: "RSC",
+      long: "React Server Components",
+      description: [Typ React komponent vykonávaných na serveru, které umožňují načítat data bez přímého běhu v prohlížeči.],
+    ),
+    (
+      key: "smtp",
+      short: "SMTP",
+      long: "Simple Mail Transfer Protocol",
+      description: [Síťový protokol používaný pro odesílání e-mailových zpráv.],
+    ),
+    (
+      key: "ssr",
+      short: "SSR",
+      long: "Server-Side Rendering",
+      description: [Technika vykreslování webových stránek na serveru před jejich odesláním klientovi.],
+    ),
+    (
+      key: "uuid",
+      short: "UUID",
+      long: "Universally Unique Identifier",
+      description: [Standardizovaný formát pro vytváření prakticky unikátních identifikátorů.],
+    ),
+    (
+      key: "ux",
+      short: "UX",
+      long: "User Experience",
+      description: [Celkový uživatelský prožitek při používání aplikace, včetně srozumitelnosti a pohodlí ovládání.],
+    ),
+    (
+      key: "xlsx",
+      short: "XLSX",
+      long: "Office Open XML Spreadsheet",
+      description: [Formát tabulkového souboru používaný například v aplikaci Microsoft Excel.],
+    ),
+  ),
   body: [
     = Úvod
 
-    Správa přihlašovacích formulářů do domova mládeže je často náročný a časově intenzivní proces, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se žadateli. Cílem této práce je navrhnout a implementovat webovou aplikaci za použití moderních technologií, která tento proces zjednoduší a zpřehlední jak pro žadatele, tak pro vychovatele domova mládeže. Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které byly vyplňovány ručně a posílány e-mailem. V posledních letech se však začali hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy se snaží tato práce řešit vytvořením specializované webové aplikace.
+    Správa přihlašovacích formulářů na domovech mládeže a internátních zařízeních je často náročným a časově intenzivním procesem, který vyžaduje efektivitu při zpracování žádosti a případné komunikaci se žadateli. Cílem této práce je proto navrhnout a implementovat webovou aplikaci za použití moderních technologií, která tento proces zjednoduší a zpřehlední jej jak pro žadatele, tak pro vychovatele domova mládeže.
 
-    Mezi primární funkce aplikace patří možnost vytváření a správu přihlášek žadateli, kteří budou moci sledovat stav své žádosti v reálném čase. Vychovatelé v domově mládeže pak získají nástroje pro správu přihlášky, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě bodů, které budou automaticky uděleny dle uvedených odpovědí na otázky.
+    Historicky bylo přihlašování do domova mládeže řešeno prostřednictvím papírových formulářů, které byly vyplňovány ručně a posílány e-mailem. V posledních letech se však začaly hledat alternativy, které by umožnily digitalizaci tohoto procesu. Minulý rok bylo pilotně zavedeno zasílání přihlášek prostřednictvím Google Forms, což přineslo určité zlepšení. Nicméně tento systém má své limity, zejména pokud jde o evidenci a archivování přijatých žádostí. Přesně tyto problémy se snaží tato práce řešit vytvořením specializované webové aplikace.
 
-    Výsledná aplikace by měla být přínostná pro všechny strany. Jmenovitě pak pro žadatele, kteří získají pohodlnou a transparentní cestu k podání přihlášky, a pro vychovatele, kteří budou mít efektivní nástroj pro správu a zpracování přihlášek.
+    Mezi primární funkce aplikace patří možnost vytváření a správy přihlášek, přičemž žadatelé budou moci sledovat stav své žádosti v reálném čase. Vychovatelé v domově mládeže pak získají nástroje pro správu přihlášek, automatizovanou komunikaci se žadateli a přehled o všech přijatých žádostech. Aplikace bude také obsahovat funkce pro hodnocení a výběr žadatelů na základě bodů, které budou automaticky uděleny dle uvedených odpovědí na otázky.
+
+    Výsledná aplikace by měla být přínosná pro všechny strany. Jmenovitě pak pro žadatele, kteří získají pohodlnou a transparentní cestu k podání přihlášky, a pro vychovatele, kteří budou mít efektivní nástroj pro správu a zpracování přihlášek.
 
     #pagebreak()
 
@@ -43,7 +166,7 @@
 
     = Problematika stávajícího řešení
 
-    Jak již bylo zmíněno v úvodu, aktuální stav systému pro přihlašování a správu přihlášek pro domov mládeže je neoptimální a obsahuje množství funkcí, které lze implementovat pro celkové zlepšení uživatelské přívětivosti a pohodlnosti. Pro jednoduché ustanovaní těchto funkcí je však se potřeba podívat na všechny typy, které kdy byly zvažovány pro použití a následně tato data zohlednit při návrhu nového systému.
+    Jak již bylo zmíněno v úvodu, aktuální stav systému pro přihlašování a správu přihlášek pro domov mládeže je neoptimální a obsahuje množství funkcí, které lze implementovat pro celkové zlepšení uživatelské přívětivosti a pohodlnosti. Pro jednoduché ustanovení těchto funkcí je však potřeba podívat se na všechny typy, které kdy byly zvažovány pro použití, a následně tato data zohlednit při návrhu nového systému.
 
     == Fyzické přihlášky
 
@@ -51,7 +174,7 @@
 
     - Nutnost fyzického doručení přihlášky na určené místo. To může být pro některé žadatele komplikované.
     - Obtížná správa a archivace fyzických přihlášek. Papírové dokumenty se těžce hledají, třídí a uchovávají, což dokáže zvýšit administrativní zátěž pro vychovatele.
-    - Omezené možnosti pro automatizaci procesu hodnocení a kalkukace bodů na základě odpovědí žadatelů. Nutnost manuálního zpracování vede k chybovosti a daleko vyšší časové náročnosti.
+    - Omezené možnosti pro automatizaci procesu hodnocení a kalkulace bodů na základě odpovědí žadatelů. Nutnost manuálního zpracování vede k chybovosti a daleko vyšší časové náročnosti.
 
     == Google Forms
 
@@ -60,7 +183,7 @@
 
     Mezi hlavní výhody Google Forms patří hlavně intuitivní uživatelské rozhraní, jednoduché
     nastavení a možnost rychlého sdílení formulářů prostřednictvím odkazu. Dále nabízí
-    automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak přichází i funkce které jsou vitální a chybí. Pro školní rok 2025/2026 byly Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote("Tento krok byl řešen automaticky za pomocí zautomatizovaného skriptu v Google Sheets, z vlastní zkušenosti bylo toto řešení však velice chybové a často se muselo upravovat."), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
+    automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak existují i funkce, které jsou zásadní a chybí. Pro školní rok 2025/2026 byly Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote("Tento krok byl řešen automaticky pomocí zautomatizovaného skriptu v Google Sheets, z vlastní zkušenosti však bylo toto řešení velice chybové a často se muselo upravovat."), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
 
     == Externí řešení
 
@@ -90,7 +213,7 @@
 
     = Stanovení požadavků na novou aplikaci
 
-    Při diskuzi o tvorbě nové aplikace byly též stanoveny požadavky na funkce, které by měla aplikace obsahovat. Vycházeli jsme se především od problémů, které přinášela stávající řešení. Tyto požadavky můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na uživatelské funkce* a *požadavky na funkce administrátorské*. Na základě těchto požadavků byly následně vybrány technologie užité pro vývoj aplikace.
+    Při diskuzi o tvorbě nové aplikace byly též stanoveny požadavky na funkce, které by měla aplikace obsahovat. Vycházeli jsme především z problémů, které přinášela stávající řešení. Tyto požadavky můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na uživatelské funkce* a *požadavky na funkce administrátorské*. Na základě těchto požadavků byly následně vybrány technologie užité pro vývoj aplikace.
 
     == Uživatelské funkce
 
@@ -121,13 +244,13 @@
 
     == Architekturální vzory
 
-    Softwarový architekturální vzor je řešení, které se opakovaně používá v rámci vývoje softwaru @richards2020fundamentals. Mezi vzory, se kterými se lze běžně setkat, patří například Model-View-Controller (MVC), Model-View-ViewModel (MVVM) a Client-Server. Architekturální vzory poskytují jak jasnou strukturu organizaci struktury kódu, tak i jasně definované role pro jednotlivé části aplikace, což výrazně usnadňuje vývoj, údržbu a rozšiřování aplikace.
+    Softwarový architekturální vzor je řešení, které se opakovaně používá v rámci vývoje softwaru @richards2020fundamentals. Mezi vzory, se kterými se lze běžně setkat, patří například Model-View-Controller (MVC), Model-View-ViewModel (MVVM) a Client-Server. Architekturální vzory poskytují jak jasnou strukturu organizace kódu, tak i jasně definované role pro jednotlivé části aplikace, což výrazně usnadňuje vývoj, údržbu a rozšiřování aplikace.
 
     == Klient-Server
 
     Klient-server architektura je jedním z nejběžnějších a nejpoužívanějších architekturálních vzorů pro vývoj webových aplikací. Tento vzor se zakládá na rozdělení aplikace do dvou hlavních částí: klienta a serveru.
 
-    V kontextu webového vývoje se fungování moderních webových aplikací se opírá o rozdělení odpovědnosti mezi uživatelské rozhraní (_client-side_) a aplikační logiku běžící na serveru (_server-side_). Obecně lze říci, že klientská část je odpovědná za zobrazení a prezentaci dat, zatímco server je odpovědný za poskytování a zpracování samotných dat.
+    V kontextu webového vývoje se fungování moderních webových aplikací opírá o rozdělení odpovědnosti mezi uživatelské rozhraní (_client-side_) a aplikační logiku běžící na serveru (_server-side_). Obecně lze říci, že klientská část je odpovědná za zobrazení a prezentaci dat, zatímco server je odpovědný za poskytování a zpracování samotných dat.
 
     #figure(
       image("assets/client-server.png", width: 75%),
@@ -148,7 +271,7 @@
 
     Protokol HTTP dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient -- prohlížeč odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace.
 
-    Klientský požadavek je definován především metodou (např. GET pro čtení či POST pro zápis), která určuje typ operace, a cílovou adresou URL identifikující konkrétní zdroj. Nedílnou součást tvoří hlavičky, nesoucí metadata typu autentizačních údajů či formátu dat, a volitelně také tělo požadavku obsahující samotná data k odeslání. Server následně na tento podnět reaguje strukturou, jejímž klíčovým prvkem je stavový kód (např. 200 OK či 404 Not Found), ten poskytuje okamžitou informaci o výsledku zpracování. Obdobně jako u požadavku, i odpověď obsahuje specifické hlavičky a zpravidla i tělo, které nese klientem vyžádaný obsah, nejčastěji ve formátu JSON nebo HTML.
+    HTTP požadavek je definován především metodou (např. GET pro čtení či POST pro zápis), která určuje typ operace, a cílovou adresou URL identifikující konkrétní zdroj. Nedílnou součást tvoří hlavičky, nesoucí metadata typu autentizačních údajů či formátu dat, a volitelně také tělo požadavku obsahující samotná data k odeslání. Server následně na tento podnět reaguje strukturou, jejímž klíčovým prvkem je stavový kód (např. 200 OK či 404 Not Found), ten poskytuje okamžitou informaci o výsledku zpracování. Obdobně jako u požadavku, i odpověď obsahuje specifické hlavičky a zpravidla i tělo, které nese klientem vyžádaný obsah, nejčastěji ve formátu JSON nebo HTML @rfc2616.
 
     #figure(
       image("assets/http.png", width: 75%),
@@ -157,19 +280,19 @@
 
     == Komponentová architektura <component-architecture>
 
-    Komponentová architektura (_Component-based Architecture_) je architektura, která je hojně užívaná v případě knihoven jako je React. Tento přístup se zaměřuje na rozdělení uživatelského rozhraní do menších, znovupoužitelných částí, které jsou nazývány komponentami. Každá komponenta je samostatná jednotka, která obsahuje jak logiku, tak i prezentaci určité části uživatelského rozhraní. Komponenty mohou být hierarchicky uspořádány, což umožňuje vytváření složitějších rozhraní z jednodušších stavebních bloků.
+    Komponentová architektura (_Component-based Architecture_) je architektura, která je hojně užívaná v případě knihoven jako je React. Tento přístup se zaměřuje na rozdělení uživatelského rozhraní do menších, znovupoužitelných částí, které jsou nazývány komponentami. Každá komponenta je samostatná jednotka, která obsahuje jak logiku, tak i prezentaci určité části uživatelského rozhraní. Komponenty mohou být hierarchicky uspořádány, což umožňuje vytváření složitějších rozhraní z jednodušších stavebních bloků @richards2020fundamentals.
 
     == Autentizace a autorizace
 
-    Pro zabezpečení přístupu k funkcím, jež jsou určeny pouze pro oprávněné klienty (uživatele), je potřebná implementace systému pro autentizaci a autorizace. Autentizace je proces ověření identity uživatele, zatímco autorizace určuje, jaké akce může autentizovaný uživatel provádět.
+    Pro zabezpečení přístupu k funkcím, jež jsou určeny pouze pro oprávněné klienty (uživatele), je potřebná implementace systému pro autentizaci a autorizaci. Autentizace je proces ověření identity uživatele, zatímco autorizace určuje, jaké akce může autentizovaný uživatel provádět.
 
-    V dnešní době dělíme autentizaci na dva primární typy -- *Session-based authentication* a *JWT (JSON Web Tokens)*. Často se však můžeme setkat i termíny jako je *stateful* a *stateless authentication*, tyto termíny však přímo popisují, zda server uchovává stav o přihlášeném uživateli (stateful) nebo nikoliv (stateless).
+    V dnešní době dělíme autentizaci na dva primární typy -- *Session-based authentication* a *JWT (JSON Web Tokens)*. Často se však můžeme setkat i s termíny jako jsou *stateful* a *stateless authentication*; tyto termíny přímo popisují, zda server uchovává stav o přihlášeném uživateli (stateful), nebo nikoliv (stateless).
 
     === JWT (JSON Web Tokens)
 
-    JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na dva hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token (obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token je zašifrován za pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům @presenting-jwt.
+    JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na dva hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token (obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token je zašifrován pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům @presenting-jwt.
 
-    Oproti session-based autentizace má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter.
+    Oproti session-based autentizaci má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter.
 
     #figure(
       image("assets/jwt.png", width: 90%),
@@ -199,7 +322,7 @@
       caption: [Porovnání standardů pro autentizaci a autorizaci],
     )
 
-    Ve shrnutí, je praktické využít JWT tokeny například pro klasický API server, zatímco Session autentizace je vhodná spíše pro webové aplikace a služby, které využívají SSR nebo jiné technologie než API k získávání dat ze serveru.
+    Ve shrnutí je praktické využít JWT tokeny například pro klasický API server, zatímco session-based autentizace je vhodná spíše pro webové aplikace a služby, které využívají SSR nebo jiné technologie než API k získávání dat ze serveru.
 
     = Technologie použité při vývoji
 
@@ -208,24 +331,24 @@
 
     == TypeScript
 
-    TypeScript je staticky typované rozšíření JavaScriptu, které přidává podporu pro typy, třídy, rozhraní a další funkce, které lze běžně najít ve striktně staticky a objektově orientovaných jazycích. Přidává silnou typovou kontrolu, která se prosazuje již přes samotnou transpilací kódu do JavaScriptu, což pomáhá odhalit chyby již během vývoje a zvyšuje kvalitu kódu @typescriptlang.
+    TypeScript je staticky typované rozšíření JavaScriptu, které přidává podporu pro typy, třídy, rozhraní a další funkce, které lze běžně najít ve striktně staticky a objektově orientovaných jazycích. Přidává silnou typovou kontrolu, která se prosazuje již při samotné transpilaci kódu do JavaScriptu, což pomáhá odhalit chyby už během vývoje a zvyšuje kvalitu kódu @typescriptlang.
 
     TypeScript byl zvolen pro tento projekt z několika důvodů. Prvním z nich je fakt, že je hojně využíván v moderním webovém vývoji, což zajišťuje širokou podporu a množství knihoven a nástrojů, které jsou s ním kompatibilní @stackoverflow-survey-git. Dále přináší výhody v podobě lepší čitelnosti a údržby kódu, což je klíčové pro dlouhodobou udržitelnost projektu. TypeScript také umožňuje využívat pokročilé funkce a syntaxi, které nejsou nativně podporovány v JavaScriptu, což může zefektivnit vývoj a zlepšit celkovou strukturu kódu.
 
     === Typy a rozhraní
 
-    Jak již bylo v na začátku kapitoly zmíněno, TypeScript přináší do JavaScriptu rozsáhlou podporu typů. Typy jsou definovány pomocí klíčového slova `type` a umožňují vývojářům definovat vlastní datové struktury, které mohou být použity k zajištění správnosti dat v aplikaci. Mezi vybrané základní předdefinované datové typy pak patří:
+    Jak již bylo na začátku kapitoly zmíněno, TypeScript přináší do JavaScriptu rozsáhlou podporu typů. Typy jsou definovány pomocí klíčového slova `type` a umožňují vývojářům definovat vlastní datové struktury, které mohou být použity k zajištění správnosti dat v aplikaci. Mezi vybrané základní předdefinované datové typy pak patří:
 
     - `string` pro textové řetězce
     - `number` pro číselné hodnoty
     - `boolean` pro logické hodnoty (true/false)
     - `array` pro pole hodnot
     - `enum` pro výčtové typy
-    - `any` pro hodnoty, které mohou být jakéhokoliv typu #footnote([Použití typu `any` se nedoporučuje @ts-dos-donts. Jeho použití vede k vypnutí statické kontroly typů pro danou proměnnou, což může vést k chybám, které by jinak mohli být odhaleny během vývoje.])
+    - `any` pro hodnoty, které mohou být jakéhokoliv typu #footnote([Použití typu `any` se nedoporučuje @ts-dos-donts. Jeho použití vede k vypnutí statické kontroly typů pro danou proměnnou, což může vést k chybám, které by jinak mohly být odhaleny během vývoje.])
     - `void` pro funkce, které nevracejí žádnou hodnotu
     - `null` a `undefined` pro reprezentaci neexistujících nebo nedefinovaných hodnot
 
-    Pomocí TypeScriptu lze však specifikovat i složitější datové struktury. Typy lze kombinovat pomocí logických operátorů `&` (průnik typů) a `|` (sjednocení typů). Komplexní datové struktury lze pak definovat pomocí rozhraních (`interface`), či `type` aliasů, které umožňují definovat strukturu objektů a jejich vlastností.
+    Pomocí TypeScriptu lze však specifikovat i složitější datové struktury. Typy lze kombinovat pomocí logických operátorů `&` (průnik typů) a `|` (sjednocení typů). Komplexní datové struktury lze pak definovat pomocí rozhraní (`interface`) či `type` aliasů, které umožňují definovat strukturu objektů a jejich vlastností.
 
     #figure(
       ```ts
@@ -248,7 +371,7 @@
 
     === Standard ECMAScript
 
-    Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi některé moderní funkce, které standard ECMAScript přinesl v posledních letech, zejména patří šipkové funkce, třídy, moduly, podpora asynchroního programování @ecma262_es6.
+    Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi moderní funkce, které standard ECMAScript přinesl v posledních letech, patří zejména šipkové funkce, třídy, moduly a podpora asynchronního programování @ecma262_es6.
 
     #figure(
       table(
@@ -274,10 +397,10 @@
 
     === React
 
-    React je knihovna pro tvorbu uživatelských rozhraní, který umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu @reactjs.
+    React je knihovna pro tvorbu uživatelských rozhraní, která umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu @reactjs.
     Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
 
-    React umožňuje tvorbu _znovupoužitelných komponent_ (viz @component-architecture). Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderních verzích knihovny React je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data (_props_, též známo v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
+    React umožňuje tvorbu _znovupoužitelných komponent_ (viz @component-architecture). Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderních verzích knihovny React je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data (_props_, též známé v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
 
     Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi JSX, ta umožňuje kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
 
@@ -300,7 +423,6 @@
         );
       }
       ```,
-      kind: "raw",
       caption: "Ukázka komponenty v Reactu",
     )
 
@@ -339,7 +461,6 @@
         );
       }
       ```,
-      kind: "raw",
       caption: "Ukázka využití Context API pro správu stavu v Reactu",
     )
 
@@ -356,7 +477,6 @@
         );
       }
       ```,
-      kind: "raw",
       caption: "Ukázka využití knihovny Jotai pro správu stavu",
     )
 
@@ -364,12 +484,12 @@
 
     React Server Components (RSC) je speciální typ komponenty v Reactu, která umožňuje
     vykonávání kódu komponenty na serveru místo v prohlížeči.
-    V Next.js lze rozlišit RSC a běžné komponenty na straně klienty pomocí direktivy `"use client"` umístěné na začátku souboru. Pokud tato direktiva chybí, automaticky se React automaticky považuje všechny komponenty definované v daném souboru jako serverové komponenty @react-server-components.
+    V Next.js lze rozlišit RSC a běžné komponenty na straně klienta pomocí direktivy `"use client"` umístěné na začátku souboru. Pokud tato direktiva chybí, React automaticky považuje všechny komponenty definované v daném souboru za serverové komponenty @react-server-components.
 
     Tento speciální typ komponenty umožňuje vývojářům přistupovat ke zdrojům na serveru,
     jako je databáze nebo souborový systém přímo z komponenty, aniž by bylo nutné vytvářet
-    API rozhraní pro komunikaci. Jednou z úskalí RSC je, že tyto komponenty nemohou používat
-    interaktivní prvky(např. `onClick` události nebo `useState` hook).
+    API rozhraní pro komunikaci. Jedním z úskalí RSC je, že tyto komponenty nemohou používat
+    interaktivní prvky (např. `onClick` události nebo `useState` hook).
 
     Využití samotné RSC také prodlužuje dobu načítání stránky, protože React čeká na
     dokončení obsluhy serverové komponenty před tím, než odešle výsledná data do prohlížeče klientovi, nelze tedy použít reaktivní funkce pro kontrolu načtení obsahu. Pro zvýšení uživatelské přivětivosti (UX) existuje proto tzv. _Suspense_
@@ -407,7 +527,7 @@
       }
 
       ```,
-      kind: "raw",
+
       caption: "Ukázka React Server Component a jejího použití s Suspense",
     )
 
@@ -416,7 +536,7 @@
     Server Actions (česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné API na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
     volat přímo z komponent na straně klienta. Next.js interně automaticky vytvoří potřebné API na pozadí @nextjs-server-actions.
 
-    Jako příklad můžeme vytvořit jednoduchou funkci, jejíž úkolem bude vrátit aktuální čas ze serveru. Server Actions jsou definovány v souborech které začínájí direktivou `"use server"`.
+    Jako příklad můžeme vytvořit jednoduchou funkci, jejíž úkolem bude vrátit aktuální čas ze serveru. Server Actions jsou definovány v souborech, které začínají direktivou `"use server"`.
 
     #figure(
       ```tsx
@@ -426,7 +546,7 @@
         return new Date().toISOString();
       }
       ```,
-      kind: "raw",
+
       caption: "Ukázka Server Action v Next.js",
     )
 
@@ -442,14 +562,14 @@
         return <div>Aktuální čas ze serveru: {cas}</div>;
       }
       ```,
-      kind: "raw",
+
       caption: "Ukázka komponenty v Next.js využívající Server Action",
     )
 
     == Prisma ORM
 
     Prisma je moderní ORM (Object-Relational Mapping) nástroj pro TypeScript,
-    který slouží k interakcemi s databází za pomocí automaticky generovaného
+    který slouží k interakci s databází pomocí automaticky generovaného
     typovaného API @prisma-orm. Jedná se o jednu z nejpopulárnějších možností pro práci s databázemi v TypeScriptu, a díky své jednoduchosti pro vykonávání jednoduchých CRUD operací byla ideální volbou pro tento projekt.
 
     Každý projekt definuje své schéma databáze v souboru zakončeného příponou `.prisma`.
@@ -464,7 +584,7 @@
         name     String?
       }
       ```,
-      kind: "raw",
+
       caption: [Ukázka schématu databáze v Prisma ORM s modelem `User`],
     )
 
@@ -478,21 +598,21 @@
         }
       });
       ```,
-      kind: "raw",
+
       caption: [Ukázka použití generovaného kódu pro práci s modelem `User`],
     )
 
-    Prisma podporuje širokou škálu databázových systému, včetně PostgreSQL, MySQL, SQLite a dalších @prisma-orm.
+    Prisma podporuje širokou škálu databázových systémů, včetně PostgreSQL, MySQL, SQLite a dalších @prisma-orm.
 
     === PostgreSQL
 
-    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (Full-textové vyhledávání). PostgreSQL také dodržuje takzvaný _ACID_ standard, ten definuje garance přístupu a platnost dat v případě chybových událostí, jako jsou výpadky proudu, náhlých chyb, či jiných externích okolností, které by mohli ovlivnit chod databáze. @postgres.
+    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (fulltextové vyhledávání). PostgreSQL také dodržuje takzvaný _ACID_ standard, který definuje garance přístupu a platnost dat v případě chybových událostí, jako jsou výpadky proudu, náhlé chyby či jiné externí okolnosti, které by mohly ovlivnit chod databáze @postgres.
 
     Velkou výhodou databázového systému PostgreSQL je pak jeho rozšiřitelnost, jeho funkcionalitu lze pak jednoduše expandovat pomocí rozšíření @postgres. Mezi některá známá rozšíření pak patří například PgVector, který implementuje rozšířené vektorové vyhledávání, což je velkou výhodou pro optimalizované vyhledávání ve velkých datasetech @pgvector.
 
     == TailwindCSS
 
-    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé a efektivní vytváření uživatelských rozhraní za pomocí tříd s předdefinovanými styly @tailwindcss. Vývojářům je umožněno vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
+    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé a efektivní vytváření uživatelských rozhraní pomocí tříd s předdefinovanými styly @tailwindcss. Vývojářům je umožněno vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
 
     #figure(
       ```html
@@ -501,24 +621,23 @@
       </div>
       ```,
       caption: [Jednoduché stylování za použití frameworku TailwindCSS],
-      kind: "raw",
     )
 
     Na první pohled TailwindCSS dokáže připomínat ostatní CSS frameworky, jako je například Bootstrap, jeho zásadní rozdíl však spočívá v granularitě (jemnosti) stylů @tailwindcss. Zatímco TailwindCSS abstrahuje jednotlivé styly do samotných CSS tříd, Bootstrap vytváří ucelené a předem definované styly (v angličtině _opinionated design_) pro celé komponenty.
 
-    Velkou výhodou TailwindCSS oproti ostatním CSS frameworkům je také _JIT Kompilátor_, který umožňuje optimalizaci balíčku stylů, které se v produkčním prostředí stahuje na klientské zařízení. Kompilátor funguje tak, že z balíčku vyřadí styly, které nejsou v projektu využity a výsledná velikost balíčku zasleného na klienta se tak dokáže dramaticky zmenšit @tailwindcss.
+    Velkou výhodou TailwindCSS oproti ostatním CSS frameworkům je také _JIT Kompilátor_, který umožňuje optimalizaci balíčku stylů, který se v produkčním prostředí stahuje na klientské zařízení. Kompilátor funguje tak, že z balíčku vyřadí styly, které nejsou v projektu využity, a výsledná velikost balíčku zaslaného na klienta se tak dokáže dramaticky zmenšit @tailwindcss.
 
     = Implementace webové aplikace
 
     == Návrh databáze a datového modelu
 
-    Jak již bylo zmíněno v kapitole o použitých technologiích, pro práci s databází byla zvolena ORM Prisma. Samotný databázový model pak vychází z výchozího modelu používaného knihovnou Better Auth (viz @auth-betterauth). Tento model byl následně rozšířen o další sloupce a tabulky, které byly za potřebí pro implementaci webové aplikace.
+    Jak již bylo zmíněno v kapitole o použitých technologiích, pro práci s databází bylo zvoleno ORM Prisma. Samotný databázový model pak vychází z výchozího modelu používaného knihovnou Better Auth (viz @auth-betterauth). Tento model byl následně rozšířen o další sloupce a tabulky, které byly zapotřebí pro implementaci webové aplikace.
 
     #figure(image("assets/prisma-erd-2.svg"), caption: [
       Databázový model aplikace jako Entity-Relationship Diagram
     ])
 
-    
+
 
     Mezi některé důležité tabulky v modelu patří:
     - `User` -- tabulka pro ukládání informací o uživatelích, jako je e-mail, role a další.
@@ -548,7 +667,7 @@
 
     == Přihlášovací formulář a autentizace<auth-betterauth>
 
-    Po úvodním otevření aplikace je uživatel automaticky přesměrován na přihlašovací stránku, kde se lze přihlásit, nebo zaregistrovat nový účet. Pro úspěšnou registraci je potřeba zadat platnou e-mailovou adresu, uživatelské jméno a heslo. Uživatel má téže možnost si vybrat, zda-li si má prohlížeč zapamatovat heslo pro příští návštěvy aplikace. Po úspěšné registraci je uživatel přesměrován do samotného uživatelského rozhraní aplikace.
+    Po úvodním otevření aplikace je uživatel automaticky přesměrován na přihlašovací stránku, kde se lze přihlásit nebo zaregistrovat nový účet. Pro úspěšnou registraci je potřeba zadat platnou e-mailovou adresu, uživatelské jméno a heslo. Uživatel má také možnost vybrat si, zda si má prohlížeč zapamatovat heslo pro příští návštěvy aplikace. Po úspěšné registraci je uživatel přesměrován do samotného uživatelského rozhraní aplikace.
 
     Pokud uživatel již účet má, může se přihlásit zadáním e-mailové adresy a hesla. V případě zadání neplatných údajů je uživatel informován o chybě a je vyzván k opětovnému zadání.
 
@@ -558,7 +677,7 @@
 
     === Autentizace a autorizace pomocí knihovny Better Auth
 
-    Pro implementaci přihlašovacího formuláře, autentizace i autorizace byla zvolena knihovna Better Auth. Ta nabízí jednoduché a rychlé řešení přihlašování v aplikacích postavených na nejen Reactu a Next.js. Better Auth využívá session-based autentizace, takže jsou do cookies ukládány session identifikátor, které server ověřuje při každém požadavku @better-auth.
+    Pro implementaci přihlašovacího formuláře, autentizace i autorizace byla zvolena knihovna Better Auth. Ta nabízí jednoduché a rychlé řešení přihlašování v aplikacích postavených nejen na Reactu a Next.js. Better Auth využívá session-based autentizaci, takže se do cookies ukládá session identifikátor, který server ověřuje při každém požadavku @better-auth.
 
     Knihovna je modulární a podporuje přidávání _pluginů_, které rozšiřují její funkce @better-auth. Jedním z těchto pluginů je i plugin pro podporu RBAC, který umožňuje definovat různé role uživatelů a jejich oprávnění v aplikaci. Struktura rolí v aplikaci byla rozdělena do tří úrovní, které odpovídají různým typům uživatelů a jejich oprávněním:
 
@@ -568,15 +687,11 @@
 
     V případě běhu aplikace s nastavením přijímání přihlášek bez nutnosti registrace (anonymní režim), jsou práva anonymního uživatele omezena na minimum -- pouhé odesílání přihlášek.
 
-    ==== Middleware pro ochranu veřejné API<nsa-middleware>
+    === Middleware pro ochranu veřejné API<nsa-middleware>
 
-    Je nutno zmínit, že aplikace obsahuje API, kterou lze dosáhnout z veřejné sítě. Tato
-    API je vygenerovaná Next.js z Serverových akcí a je tedy přístupná z klientské části aplikace. Tuto API je nutno ochránit před neoprávněným přístupem, což je zajištěno
-    pomocí knihovny Next-Safe-Action #footnote("https://next-safe-action.dev/") (dále již jen jako NSA).
+    Je nutno zmínit, že aplikace obsahuje API, k němuž lze přistupovat z veřejné sítě. Toto API je vygenerované Next.js ze serverových akcí a je tedy přístupné z klientské části aplikace. Toto API je nutno ochránit před neoprávněným přístupem, což je zajištěno pomocí knihovny Next-Safe-Action. Jedná se o knihovnu, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
 
-    NSA je knihovna, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
-
-    V konfiguraci NSA lze použít funkci `.use()` pro definování _middleware_ (prostředník pro zachycování požadavků). Tento _middleware_ je vykonán před samotnou serverovou akcí a může být použit pro různé účely, jako je kontrola autentizace uživatele, logování požadavků, či manipulace s daty požadavku.
+    V konfiguraci Next-Safe-Action lze použít funkci `.use()` pro definování _middleware_ (prostředník pro zachycování požadavků). Tento _middleware_ je vykonán před samotnou serverovou akcí a může být použit pro různé účely, jako je kontrola autentizace uživatele, logování požadavků, či manipulace s daty požadavku.
 
     == Rozhraní pro žadatele
 
@@ -585,7 +700,7 @@
     === Boční navigační menu
 
     Boční navigační menu je hlavním navigačním prvkem aplikace. Umožňuje uživateli přístup k různým sekcím aplikace, jako je přehled přihlášek, možnosti uživatele,
-    nebo odhlášení z aplikace. Navigační menu je navrženo tak, aby bylo responzivní vůči různým velikostem obrazovky a zařízení.
+    nebo odhlášení z aplikace. Navigační menu je navrženo tak, aby bylo responzivní pro různé velikosti obrazovky a zařízení.
 
     === Sekce "Moje přihlášky"
 
@@ -597,34 +712,42 @@
 
     Formulář obsahuje několik sekcí, které pokrývají různé části přihlášky: údaje o žadateli, údaje o zákonných zástupcích a další otázky týkající se přihlášky. Každá sekce obsahuje různé typy vstupních polí, jako jsou textová pole, výběrové seznamy, přepínače a další. Pro postoupení do další sekce je vždy potřeba vyplnit všechna povinná pole tak, aby podléhala schématu validace. Po úspěšném vyplnění všech sekcí a odeslání formuláře je přihláška uložena do databáze a uživatel je přesměrován zpět do sekce "Moje přihlášky", kde může sledovat stav své přihlášky. Přihlášku po odeslání již není možné upravovat.
 
-    Při každém odeslání formuláře je formulář zařazen do ročníku, jenž je aktuálně otevřen pro přijímání přihlášek. Žadatelskému rodnému číslo je také přiřazeno číslo _evidenční_, to je automaticky vygenerováno (nebo při opětovném podání přihlášky znovu použito) na základě počtu již přijatých přihlášek v daném ročníku.
+    Při každém odeslání formuláře je formulář zařazen do ročníku, jenž je aktuálně otevřen pro přijímání přihlášek. K rodnému číslu žadatele je také přiřazeno _evidenční číslo_, které je automaticky vygenerováno (nebo při opětovném podání přihlášky znovu použito) na základě počtu již přijatých přihlášek v daném ročníku.
 
     === Nastavení profilu
 
-    Sekce je užita pro správu uživatelského profilu. Uživatel zde může měnit své osobní údaje, jako je jméno, e-mailová adresa a heslo. Pro změnu hesla je potřeba zadat heslo aktuální a nové heslo.
+    Sekce je určena pro správu uživatelského profilu. Uživatel zde může měnit své osobní údaje, jako je jméno, e-mailová adresa a heslo. Pro změnu hesla je potřeba zadat aktuální heslo a nové heslo.
 
     == Rozhraní pro vychovatele
 
-    Rozhraním pro vychovatele se rozumí administrativní část aplikace, která umožňuje spravovat přihlášky a vykonávat další administrativní úkony. Toto rozhraní je pouhým rozšířením uživatelského rozhraní pro žadatele, tímpádem má vychovatel stále přístup k podávání přihlášek a ostatním úkonům, které by za normálních okolností žadatel měl.
+    Rozhraním pro vychovatele se rozumí administrativní část aplikace, která umožňuje spravovat přihlášky a vykonávat další administrativní úkony. Toto rozhraní je pouhým rozšířením uživatelského rozhraní pro žadatele, tím pádem má vychovatel stále přístup k podávání přihlášek a ostatním úkonům, které by za normálních okolností žadatel měl.
+
+    === Úvodní přehled
+
+    Po přihlášení do administrativního rozhraní se vychovatelům zobrazí přehledná úvodní stránka, která obsahuje souhrn aktuálního ročníku. Mezi informacemi, které jsou zde zobrazeny, patří zejména statistiky o počtu přihlášek v aktuálním školním roce, graf zobrazující počet přihlášek v jednotlivých dnech, či koláčový graf zobrazující rozdělení přihlášek podle stavů přihlášek.
+
+    #figure(image("assets/image-4.png"), caption: [
+      Úvodní přehled pro vychovatele s grafy a statistikami o aktuálním ročníku
+    ])
 
     === Nastavení chování aplikace
 
-    Nastavení aplikace se nadále dělí na několik podčástí (sekcí). Většina těchto nastavení je dostupna pouze pro uživatele s rolí `admin` (hlavní vychovatel).
+    Nastavení aplikace se nadále dělí na několik podčástí (sekcí). Většina těchto nastavení je dostupná pouze pro uživatele s rolí `admin` (hlavní vychovatel).
 
-    ==== Sekce "Obecné"
+    *1. Sekce "Obecné"*
 
-    Sekce obsahuje hlavní nastavení samotné aplikace, mezi některé vybrané konfiguravatelné možnosti patří:
-    - *Přístup k přihlašovacímu formuláři* -- vybrání mezi možnostmi:
+    Sekce obsahuje hlavní nastavení samotné aplikace, mezi některé vybrané konfigurovatelné možnosti patří:
+    - *Přístup k přihlašovacímu formuláři* -- výběr mezi možnostmi:
       - "Otevřeno pro všechny (ignorovat uzávěrku)" -- umožňuje přístup k formuláři všem přihlášeným uživatelům.
       - "Otevřeno pro vychovatele (ignorovat uzávěrku)" -- přístup k přihlášce je možný pouze uživatelům s rolí _user_ a vyšší.
       - "Uzavřeno po datu konce přihlašování" -- obsah je dostupný pouze do vypršení předem stanovené lhůty.
       - "Uzavřeno" -- k obsahu nemá přístup žádný typ uživatele.
-    - *Datum konce přihlašování* -- nastavením datumu a času znemožníte přístup k formuláři po daném termínu. Toto pravidlo však vejde v platnost pouze v případě, že je přístup k formuláři nastaven na "Uzavřeno po datu konce přihlašování".
+    - *Datum konce přihlašování* -- nastavením data a času znemožníte přístup k formuláři po daném termínu. Toto pravidlo však vstoupí v platnost pouze v případě, že je přístup k formuláři nastaven na "Uzavřeno po datu konce přihlašování".
     - *Název domény* -- toto pole je pouze estetické. Vzhledem k univerzálnímu návrhu aplikace bylo přidáno toto pole, aby žadatelé dokázali jednoduše odlišit, pro jaké internátní zařízení aplikaci využívají.
-    - *Povolit vlastní obory* -- tato možnost umožní žadatelům zadat vlastní studijní obor, v případě že nestudují na žádném z předdefinovaných oborů. Pokud je tato možnost zakázána, musí žadatelé vybrat obor ze seznamu předdefinovaných oborů.
+    - *Povolit vlastní obory* -- tato možnost umožní žadatelům zadat vlastní studijní obor v případě, že nestudují na žádném z předdefinovaných oborů. Pokud je tato možnost zakázána, musí žadatelé vybrat obor ze seznamu předdefinovaných oborů.
     - *Potvrzení při odeslání přihlášky* -- slouží jako text, který musí uživatelé odsouhlasit před odesláním samotné přihlášky.
 
-    ==== Sekce "Školní roky"
+    *2. Sekce "Školní roky"*
 
     V této sekci lze spravovat školní roky. Školní rok je základní jednotkou pro organizaci přihlášek. Každý školní rok je identifikován svým počátečním rokem. Roky jsou však zobrazovány ve formátu "počáteční rok / následující rok" (např. "2023/2024").
 
@@ -632,17 +755,17 @@
     - Stav archivace -- pokud je školní rok archivován, již není možné přidávat nové přihlášky do tohoto roku, ale stále je možné prohlížet stávající přihlášky a exportovat je.
     - Je-li aktuální -- tento stav označuje, že se jedná o aktuální školní rok, do kterého se přidávají nové přihlášky. V aplikaci může být pouze jeden aktuální školní rok.
 
-    ==== Sekce "Studijní obory"
+    *3. Sekce "Studijní obory"*
 
     Sekce sloužící pro správu studijních oborů. Každý obor má jméno, krátkou formu jména, délku studia a možnost nastavení, zda-li se jedná o obor, ve kterém začíná výuka brzy (tento fakt poté ovlivňuje samotné bodování přihlášky).
 
-    ==== Sekce "Účty"
+    *4. Sekce "Účty"*
 
     Sekce pro správu uživatelských účtů. Uživatelé mohou být přidáváni, odebíráni a lze upravovat jejich role.
 
-    ==== Sekce "Generace PDF"
+    *5. Sekce "Generace PDF"*
 
-    Sekce určená pro správu šablony PDF, která se použivá pro generaci PDF dokumentů z přihlášek. Šablona je nahrána do systému a obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací a jsou následně vyplňována daty z přihlášky při generování PDF.
+    Sekce určená pro správu šablony PDF, která se používá pro generaci PDF dokumentů z přihlášek. Šablona je nahrána do systému a obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací a jsou následně vyplňována daty z přihlášky při generování PDF.
 
     #figure(image("assets/image.png"), caption: [
       Vybraná jména polí, která lze do šablony PDF vložit pro následné vyplnění daty z přihlášky.
@@ -652,7 +775,7 @@
 
     Vychovatelé mají přístup k přehlednému seznamu všech přihlášek. Seznam je zde implementován pomocí přehledné tabulky s podporou stránkování, filtrování a vyhledávání. Každá přihláška je zobrazena v řádku tabulky s možností rozkliknutí pro zobrazení detailních informací o přihlášce. Z této stránky lze také přihlášky mazat.
 
-    ==== Detail přihlášky
+    === Detaily přihlášky
 
     Každou přihlášku lze rozkliknout pro zobrazení detailních informací. V detailu přihlášky jsou zobrazeny všechny informace, které žadatel zadal při vyplňování přihlášky, včetně automaticky vygenerovaného bodového ohodnocení a stavu přihlášky. Vychovatel zde má také možnost měnit stav přihlášky (např. přijatá, zamítnutá) a přidávat poznámky. V případě, že uživatel, který přihlášku vytvořil, špatně vyplnil libovolný údaj, má možnost údaj v přihlášce opravit.
 
@@ -660,22 +783,22 @@
       Stránka s detailem přihlášky, kde jsou zobrazeny všechny informace o přihlášce a možnosti pro změnu stavu přihlášky a přidávání poznámek.
     ])
 
-    Mezi vybrané funkce, které jsou dostupné v detailu přihlášky, jsou například možnost zobrazení trvalého bydliště v aplikaci Mapy.com #footnote(link("https://mapy.com/")), nebo v aplikaci IDOS #footnote(link("https://idos.cz/")) (pro kontrolu vzdálenosti mezi trvalým bydlištěm a internátem). Kliknutím na individuální e-mailové adresy lze také odesílat e-maily přímo z aplikace, což usnadňuje komunikaci s žadateli a zákonnými zástupci.
+    Mezi vybrané funkce, které jsou dostupné v detailu přihlášky, patří například možnost zobrazení trvalého bydliště v aplikaci Mapy.com #footnote(link("https://mapy.com/")) nebo v aplikaci IDOS #footnote(link("https://idos.cz/")) (pro kontrolu vzdálenosti mezi trvalým bydlištěm a internátem). Kliknutím na individuální e-mailové adresy lze také odesílat e-maily přímo z aplikace, což usnadňuje komunikaci s žadateli a zákonnými zástupci.
 
     === Export přihlášek do PDF
 
     Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci.
 
-    Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné, ani efektivní. Aktuálně existují 2 možné řešení pro generování PDF z předhotovené šablony: přes vyplňování buněk v XLSX a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování i kvalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB #footnote(link("https://pdf-lib.js.org/")), která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí. Celý proces generování PDF probíhá následovně:
+    Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné ani efektivní. Aktuálně existují dvě možná řešení pro generování PDF z předhotovené šablony, které by vyhovovali aktuálnímu systému na domově mládeže: přes vyplňování buněk v XLSX a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování, kvalitě a univerzalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB, která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí @pdf-lib. Celý proces generování PDF probíhá následovně:
 
-    - Předem je vytvořena šablona PDF, která obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací. Šablona je nahrána do systém přes nastavení aplikace.
+    - Předem je vytvořena šablona PDF, která obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací. Šablona je nahrána do systému přes nastavení aplikace.
     - Pro vygenerování PDF konkrétní přihlášky, či sady přihlášek lze použít tlačítko pro export do PDF, které se nachází jak ve stránce pro detaily přihlášky, tak i v přehledu přihlášek. Po kliknutí na tlačítko se spustí proces generování PDF, který načte šablonu PDF, vyplní formulářová pole daty z přihlášky a vygeneruje výsledný PDF dokument, který je následně odeslán uživateli ke stažení.
 
-    Interně je pro generování PDF vytvořena speciální API, která přijímá ID přihlášky (nebo skupiny ID) a vrací vyplněný PDF dokument. Všechny PDF jsou zpracovány v separatním vlákně (_worker thread_), aby nedocházelo k blokování hlavního vlákna serveru a tím i zhoršení výkonu aplikace. Všechny přihlášky se zároveň cachují do lokálního úložiště, aby se zrychlil přístup k již vygenerovaným PDF dokumentům (cache se automaticky přemazává při případných změnách přihlášek).
+    Interně je pro generování PDF vytvořena speciální API, která přijímá ID přihlášky (nebo skupiny ID) a vrací vyplněný PDF dokument. Všechny PDF jsou zpracovány v samostatném vlákně (_worker thread_), aby nedocházelo k blokování hlavního vlákna serveru a tím i zhoršení výkonu aplikace. Všechny přihlášky se zároveň ukládají do lokální cache, aby se zrychlil přístup k již vygenerovaným PDF dokumentům (cache se automaticky přepisuje při případných změnách přihlášek).
 
     #show math.equation: set text(size: 12pt);
 
-    Hlavní výhodou užití knihovny PDF-LIB oproti řešení s XLSX je fakt, že XLSX řešení má podstatně horší časovou komplexitu ($O(text("Řádky") dot #text("Sloupce"))$ -- nutnost procházet všechny buňky), zatímco PDF-LIB nabízí konstantní časovou komplexitu ($O(1)$ -- přímý přístup pomocí mapy) pro vygenerování jednoho PDF dokumentu, což je zásadní pro zajištění rychlé odezvy aplikace. Při testování obou řešení se ukázalo, že průměrná odezva pro vygenerování PDF pomocí PDF-LIB byla přibližně 600 ms, zatímco pro řešení s XLSX to bylo přibližně 5.5 sekundy.
+    Hlavní výhodou užití knihovny PDF-LIB oproti řešení s XLSX je fakt, že XLSX řešení má podstatně horší časovou komplexitu ($O(text("Řádky") dot #text("Sloupce"))$ -- nutnost procházet všechny buňky), zatímco PDF-LIB nabízí konstantní časovou komplexitu ($O(1)$ -- přímý přístup pomocí mapy @iso32000) pro vygenerování jednoho PDF dokumentu, což je zásadní pro zajištění rychlé odezvy aplikace. Při testování obou řešení se ukázalo, že průměrná odezva pro vygenerování PDF pomocí PDF-LIB byla přibližně 600 ms, zatímco pro řešení s XLSX to bylo přibližně 5.5 sekundy.
 
     #show math.equation: set text(size: 16pt);
 
@@ -687,7 +810,7 @@
 
     === Evidenční čísla
 
-    Evidenční čísla jsou unikátní identifikátory přihlášek, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška a pořadového čísla přihlášky v daném ročníku. Tento výrok tedy implikuje, že pro každé rodné číslo, bude číslo evidenční vygenerováno pouze jednou, a při opětovném podání přihlášky v dalším ročníku, bude použito již existující evidenční číslo.
+    Evidenční čísla jsou unikátní identifikátory přihlášek, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška, a pořadového čísla přihlášky v daném ročníku. To implikuje, že pro každé rodné číslo bude evidenční číslo vygenerováno pouze jednou a při opětovném podání přihlášky v dalším ročníku bude použito již existující evidenční číslo.
 
     #figure(
       $1\/2025$,
@@ -698,7 +821,7 @@
 
     === Massmail
 
-    _Massmail_ (neboli hromadná korespondence) je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
+    _Massmail_, neboli hromadná korespondence, je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
 
     = Vývoj a nasazení
 
@@ -714,23 +837,23 @@
 
     Ve vývojovém prostředí lze aplikaci i služby nutné pro její běh (např. databáze) spustit pomocí Dockeru. Pro tento účel je v kořenovém adresáři projektu umístěn soubor `docker-compose.dev.yml`, který definuje potřebné služby a jejich konfiguraci. Tento soubor lze použít pro rychlé a jednotné spuštění databáze Postgres a podpůrného SMTP serveru MailHog.
 
-    Společně se souborem `docker-compose.dev.yml` je kořenovém adresáři projektu umístěn i soubor `Dockerfile`, který definuje sestavení samotné aplikace do Docker obrazu. Tento obraz je následně použit v `docker-compose.yml` pro spuštění aplikace v produkčním prostředí. Nutno podotknout, že na produkčním serveru je aplikace spuštěna přes _LXC kontejner_, nikoliv jako Docker kontejner. Toto rozhodnutí bylo učiněno na základě konzultace s administrátorem lokálního školního serveru.
+    Společně se souborem `docker-compose.dev.yml` je v kořenovém adresáři projektu umístěn i soubor `Dockerfile`, který definuje sestavení samotné aplikace do Docker obrazu. Tento obraz je následně použit v `docker-compose.yml` pro spuštění aplikace v produkčním prostředí. Nutno podotknout, že na produkčním serveru je aplikace spuštěna přes _LXC kontejner_, nikoliv jako Docker kontejner. Toto rozhodnutí bylo učiněno na základě konzultace s administrátorem lokálního školního serveru.
 
     === Užití statických analýzátorů kódu
 
     Pro zajištění kvality kódu, dodržování standardů programování a odhalování potenciálních chyb byly do vývojového procesu integrovány _nástroje pro statickou analýzu kódu_. Tyto nástroje analyzují zdrojový kód bez jeho spuštění a poskytují zpětnou vazbu vývojářům o možných problémech, jako jsou chyby v syntaxi, nedodržování konvencí, či potenciální bezpečnostní rizika, tímto se liší od analyzérů dynamických, jako jsou testy, nástroje pro analýzu výkonu (profilery) nebo ladicí nástroje (debuggery).
 
-    ==== Biome
+    *1. Biome*
 
-    Biome je moderní nástroj pro statickou analýzu kódu, který podporuje různé programovací jazyky, včetně TypeScriptu. Biome nabízí funkce, jako je formátování kódu podle předem stanovených pravidel, detekce chyb v syntaxi, analýza kvality kódu podle definovaných standardů pro statickou analýzu webovách aplikací #footnote([Tato pravidla jsou často převzata z jiných nástrojů, jako je ESLint. Kompletní seznam pravidel a jejich odůvodnění lze nalézt v oficiální dokumentaci Biome.]) a další @biomejs.
+    Biome je moderní nástroj pro statickou analýzu kódu, který podporuje různé programovací jazyky, včetně TypeScriptu. Biome nabízí funkce, jako je formátování kódu podle předem stanovených pravidel, detekce chyb v syntaxi, analýza kvality kódu podle definovaných standardů pro statickou analýzu webových aplikací #footnote([Tato pravidla jsou často převzata z jiných nástrojů, jako je ESLint. Kompletní seznam pravidel a jejich odůvodnění lze nalézt v oficiální dokumentaci Biome.]) a další @biomejs.
 
-    Součástí lokální konfigurace Biome je i integrace s verzovacím systémem Git pomocí _pre-commit hooku_. Z názvu je patrné, že se jedná o skript, nebo jinou akci, která bude vykonána před tím, než dojde k vytvoření nového _commitu_ v lokálním repoziráři. V případě Biome je tento _hook_ použit pro automatické spuštění analýzy kódu a případné opravy nalezených problémů.
+    Součástí lokální konfigurace Biome je i integrace s verzovacím systémem Git pomocí _pre-commit hooku_. Z názvu je patrné, že se jedná o skript nebo jinou akci, která bude vykonána před tím, než dojde k vytvoření nového _commitu_ v lokálním repozitáři. V případě Biome je tento _hook_ použit pro automatické spuštění analýzy kódu a případné opravy nalezených problémů.
 
     Další funkcí Biome je integrace s editory a vývojovými prostředími (jako je Visual Studio Code, nebo JetBrains WebStorm) pomocí rozšíření. Tato integrace umožňuje vývojářům získávat zpětnou vazbu o kvalitě kódu přímo během psaní kódu, což usnadňuje dodržování standardů a zlepšuje kvalitu kódu již v raných fázích vývoje, ještě než je samotný nástroj spuštěn manuálně.
 
     Celé nastavení Biome je uloženo v kořenovém adresáři projektu v souboru `biome.json`, kde jsou definována pravidla pro analýzu kódu, formátování a další.
 
-    ==== SonarQube
+    *2. SonarQube*
 
     SonarQube je platforma pro inspekci kvality kódu v softwarových projektech. Podporuje širokou škálu programovacích jazyků, včetně TypeScriptu, a nabízí funkce jako je analýza kódu, detekce chyb, sledování metrik kvality a další @sonarqube.
 
@@ -739,19 +862,19 @@
       caption: [Souhrn analýzy zdrojového kódu v SonarQube],
     )
 
-    Pro integraci SonarQube do vývojového procesu byl SonarQube nasazen na vlastní server a byl vytvořen nový projekt. Pro integraci mezi repozitářem na platformě GitHub a SonarQube byla vytvořena nová _GitHub Action_, tedy automaticky vykonaný činnost. Ta je nastavena, aby se spustila při každém aktualizace zdrojového kódu na hlavní větvi repozitáře. Tato akce provede analýzu kódu pomocí SonarQube a výsledky jsou následně odeslány na server SonarQube, kde jsou dostupné pro další přehledy a analýzy.
+    Pro integraci SonarQube do vývojového procesu byl SonarQube nasazen na vlastní server a byl vytvořen nový projekt. Pro integraci mezi repozitářem na platformě GitHub a SonarQube byla vytvořena nová _GitHub Action_, tedy automaticky vykonaná činnost. Ta je nastavena tak, aby se spustila při každé aktualizaci zdrojového kódu na hlavní větvi repozitáře. Tato akce provede analýzu kódu pomocí SonarQube a výsledky jsou následně odeslány na server SonarQube, kde jsou dostupné pro další přehledy a analýzy.
 
     === Aktivní monitorování
 
     Mezi nástroje pro aktivní monitorování webových aplikací řadíme nástroje, které aktivně sledují chování aplikace v reálném čase a poskytují zpětnou vazbu o výkonu, chybách a dalších důležitých aspektech aplikace. Tyto nástroje pomáhají vývojářům identifikovat a řešit problémy (například sledováním kroků uživatele, které vedly k vyvolání chyby), optimalizovat výkon a zlepšovat uživatelskou zkušenost za běhu aplikace.
 
-    ==== PostHog
+    *1. PostHog*
 
     PostHog je open-source platforma pro analýzu chování uživatelů a aktivní monitorování webových aplikací. Umožňuje vývojářům sledovat interakce uživatelů, analyzovat chování aplikace, zajišťovat neodlaďené chyby a získávat cenné informace pro optimalizaci výkonu a zlepšení uživatelské zkušenosti @posthog.
 
-    PostHog byl do vývojového procesu integrován použitím oficiální knihovny. Hlavním cílem integrace bylo vytvořit možnost získávání zpětné vazby o chování uživatelů a sledování chyb, které by mohly nastat během používání aplikace. Tato integrace umožňuje lépe porozumět chybám a problémům, které uživatelé mohou zažívat. Integrací zároveň pomůžeme rychleji problémy opravovat a případně i předcházet jejich vzniku v budoucnu.
+    PostHog byl do vývojového procesu integrován použitím oficiální knihovny. Hlavním cílem integrace bylo vytvořit možnost získávání zpětné vazby o chování uživatelů a sledování chyb, které by mohly nastat během používání aplikace. Tato integrace umožňuje lépe porozumět chybám a problémům, které uživatelé mohou zažívat. Integrace zároveň pomáhá rychleji problémy opravovat a případně i předcházet jejich vzniku v budoucnu.
 
-    #figure(image("assets/posthog.png"), caption: [
+    #figure(image("assets/posthog-2.png"), caption: [
       Panel pro sledování nastalých problémů při běhu projektu v platformě PostHog
     ])
 
@@ -772,19 +895,19 @@
     - _In Review_ -- sloupec pro úkoly, které byly dokončeny a čekají na schválení (např. kontrolou kódu).
     - _Done_ -- sloupec pro úkoly, které byly dokončeny a schváleny.
 
-    Každému z úkolů je propojen s příslušnou _issue_ (problémem) nebo _pull requestem_ (žádostí o sloučení kódu) v repozitáři, což umožňuje snadné sledování pokroku a stavu jednotlivých úkolů přímo z plánovací tabulky. Zároveň je ke každému úkolu možní přiřadit různé typy štítků (labels), které pomáhají kategorizovat úkoly podle jejich povahy (např. bug, feature, enhancement) a priority.
+    Každý z úkolů je propojen s příslušnou _issue_ (problémem) nebo _pull requestem_ (žádostí o sloučení kódu) v repozitáři, což umožňuje snadné sledování pokroku a stavu jednotlivých úkolů přímo z plánovací tabulky. Zároveň je ke každému úkolu možné přiřadit různé typy štítků (labels), které pomáhají kategorizovat úkoly podle jejich povahy (např. bug, feature, enhancement) a priority.
 
     Samostatné _issues_ a _pull requesty_ jsou pak spravovány pomocí standardních funkcí platformy GitHub a lze je opět kategorizovat do štítků, ty ale nyní slouží pro identifikaci typu problému či změny, kterou daný _issue_ nebo _pull request_ řeší (například problém se štítkem `ui/ux` značí problém, který se týká uživatelského rozhraní).
 
     == Verzovací systém Git
 
-    Git je distribuovaný verzovací systém, který umožňuje sledování změn v souborech a koordinaci práce mezi více vývojáři na jednom projektu @git-scm. Pro tento projekt byl zvolen Git jako hlavní nástroj pro správu verzí kódu, jelikož je nabízí širokou škálu funkcí pro efektivní spolupráci a správu kódu, zároveň je dobře integrován s platformou GitHub, která slouží jako hostitelská služba pro repozitář projektu. Git zároveň patří mezi nejrozšířenější verzovací systémy, které jsou v současnosti používány ve vývoji softwaru @stackoverflow-survey-git.
+    Git je distribuovaný verzovací systém, který umožňuje sledování změn v souborech a koordinaci práce mezi více vývojáři na jednom projektu @git-scm. Pro tento projekt byl zvolen Git jako hlavní nástroj pro správu verzí kódu, jelikož nabízí širokou škálu funkcí pro efektivní spolupráci a správu kódu, zároveň je dobře integrován s platformou GitHub, která slouží jako hostitelská služba pro repozitář projektu. Git zároveň patří mezi nejrozšířenější verzovací systémy, které jsou v současnosti používány ve vývoji softwaru @stackoverflow-survey-git.
 
     == GitHub Actions
 
     GitHub Actions je sada nástrojů pro automatizaci pracovních postupů přímo v rámci platformy GitHub. Jedná se o takzvané _CI/CD_ (Continuous Integration/Continuous Deployment) nástroje, které umožňují automatizovat různé úkoly, jako je testování kódu, nasazení aplikace, nebo jiné opakující se úkoly @github-actions.
 
-    V tomto projektu by se použité GitHub akce dali rozdělit do 2 kategorií:
+    V tomto projektu by se použité GitHub akce daly rozdělit do 2 kategorií:
     + Akce pro zajištění kvality kódu -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci kódu, jedná se o kontrolu sestavení projektu, spuštění testů a analýzu kódu pomocí SonarQube. Zároveň akce kontroluje zranitelnosti v závislostech projektu.
     + Akce pro nasazení aplikace -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci hlavní větve repozitáře. Tyto akce zajišťují automatizované nasazení aplikace na produkční server.
 
@@ -794,9 +917,9 @@
 
     == Nasazení na produkční server
 
-    Nasazení aplikaci na produkční systém probíhá pomocí automazivaného procesu, který je spuštěn při každé aktualizaci hlavní větve v repozitáři na platformě GitHub. Tento proces je implementován pomocí GitHub Actions.
+    Nasazení aplikace na produkční systém probíhá pomocí automatizovaného procesu, který je spuštěn při každé aktualizaci hlavní větve v repozitáři na platformě GitHub. Tento proces je implementován pomocí GitHub Actions.
 
-    V prvním kroku procesu nasazení je spuštěna akce, která ověří spustitenost kódu testovacím sestavením. Pokud je sestavení úspěšné, akce odešle HTTP požadavek na otevřenou API jednoduchého webového serveru běžícího na produkčním serveru. Tento požadavek slouží jako spouštěč skriptu, který je zodpovědný za znovunasazení aplikace. Skript následně vykoná následující kroky, přesně v tomto pořadí:
+    V prvním kroku procesu nasazení je spuštěna akce, která ověří spustitelnost kódu testovacím sestavením. Pokud je sestavení úspěšné, akce odešle HTTP požadavek na otevřené API jednoduchého webového serveru běžícího na produkčním serveru. Tento požadavek slouží jako spouštěč skriptu, který je zodpovědný za znovunasazení aplikace. Skript následně vykoná následující kroky, přesně v tomto pořadí:
 
     - Zastaví běžící instance aplikace (pokud existuje), vypne pm2 proces.
     - Aktualizuje zdrojový kód aplikace uložený na serveru pomocí `git pull` pro získání nejnovějších změn z repozitáře.
@@ -805,8 +928,8 @@
     - Nastartuje aplikaci pomocí pm2 a znovu ji zpřístupní uživatelům.
 
     === Inicializace aplikace
-    
-    Při každém restartu aplikace dojde k _boostrappingu_ (inicializace) aplikace. Tento proces zahrnuje kroky nutné pro funkci aplikace, jako je napojení na databázi, načtění a validace konfiguračních proměnných (ze souboru `.env`), či vytvoření vitálních struktur potřebných pro běh aplikace -- například vytvoření výchozího administrátorského účtu, pokud v databázi ještě žádný neexistuje (údaje jsou převzaty z proměnných prostředí).
+
+    Při každém restartu aplikace dojde k _bootstrappingu_ (inicializaci) aplikace. Tento proces zahrnuje kroky nutné pro funkci aplikace, jako je napojení na databázi, načtení a validace konfiguračních proměnných (ze souboru `.env`), či vytvoření vitálních struktur potřebných pro běh aplikace -- například vytvoření výchozího administrátorského účtu, pokud v databázi ještě žádný neexistuje (údaje jsou převzaty z proměnných prostředí).
 
     === Architektura produkčního serveru
 
@@ -819,20 +942,22 @@
       caption: [Schéma architektury produkčního serveru],
     )
 
-    #[
-      #show heading.where(level: 1): it => { it.body }
+    == Praktické testování
 
-      = Závěr
+    Důležitou částí vývoje aplikace bylo zajištění, že ji budou uživatelé (vychovatelé i žadatelé) skutečně používat a že bude dostatečně intuitivní. Společně s několika vychovateli byla proto vybrána skupinka studentů, kteří měli možnost systém otestovat. Cílem testování bylo hlavně získat zpětnou vazbu o uživatelské zkušenosti, identifikovat případné problémy a nedostatky v aplikaci a získat cenné informace, které by mohly být použity pro další vylepšení a zvýšení UX.
 
-      Během vývoje této aplikace a psaní této práce jsem se setkal s mnoha výzvami, které mě přiměly k hlubšímu zamyšlení nad různými aspekty vývoje webových aplikací, jako je návrh uživatelského rozhraní, výběr vývojových nástrojů, zajištění kvality kódu a další. Tento projekt mi umožnil získat cenné zkušenosti a znalosti, které využiji i v budoucnu při vývoji dalších projektů.
+    Testování probíhalo v několika iteracích, přičemž každá iterace zahrnovala jinou cílovou skupinu uživatelů (vychovatelé, rodiče, studenti...). Z každé iterace byla zpětná vazba využita pro vylepšení aplikace.
 
-      == Budoucí rozšíření
+    #heading(numbering: none, [Závěr])
 
-      Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně, stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
+    Během vývoje této aplikace a psaní této práce jsem se setkal s mnoha výzvami, které mě přiměly k hlubšímu zamyšlení nad různými aspekty vývoje webových aplikací, jako je návrh uživatelského rozhraní, výběr vývojových nástrojů, zajištění kvality kódu a další. Tento projekt mi umožnil získat cenné zkušenosti a znalosti, které využiji i v budoucnu při vývoji dalších projektů.
 
-      == Všestrannost
+    == Budoucí rozšíření
 
-      Dalším aspektem aplikace byl i fakt, že jsem se ji snažil postavit co nejvíce univerzálně tak, aby ji bylo možné snadno přizpůsobit pro různé domovy mládeže. Toho bylo dosaženo například tím, že jsem do nastavení aplikace přidal možnost nastavit název domény, což umožňuje žadatelům snadno odlišit, pro jaké zařízení aplikaci využívají.
-    ]
+    Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně, stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
+
+    == Všestrannost
+
+    Dalším aspektem aplikace byl i fakt, že jsem se ji snažil postavit co nejvíce univerzálně tak, aby ji bylo možné snadno přizpůsobit pro různé domovy mládeže. Toho bylo dosaženo například tím, že jsem do nastavení aplikace přidal možnost nastavit název domény, což umožňuje žadatelům snadno odlišit, pro jaké zařízení aplikaci využívají.
   ],
 )
