@@ -555,16 +555,33 @@
     #figure(
       ```tsx
       "use client";
+      export function TestovaciKomponenta() {
+        const [cas, setCas] = useState(null);
 
-      function TestovaciKomponenta() {
-        const cas = use(getServerTime());
+        useEffect(() => {
+          getServerTime().then(setCas);
+        }, [getServerTime]);
 
-        return <div>Aktuální čas ze serveru: {cas}</div>;
+        return <div>Aktuální čas ze serveru: {cas ?? "Načítání..."}</div>;
       }
       ```,
 
       caption: "Ukázka komponenty v Next.js využívající Server Action",
     )
+
+    === Kompilace Next.js
+
+    Pro optimalizaci výkonu a zajištění kompatibility se širokou škálou prohlížečů, framework Next.js využívá pro kompilaci kódu nástroj SWC a Turbopack. Při spuštění příkazu, který kompiluje a zajištuje přípravu kódu na produkčním prostředí (typicky `next build`), se odehraje několik zásadních kroků. Lze je pozorovat při samotném běhu tohoto příkazu (v terminálu se zobrazí informace o jednotlivých krocích kompilace):
+
+    + Validace JavaScriptu a TypeScriptu pro zajištění správnosti kódu.
+    + Transformace kódu do podoby optimalizované pro produkční prostředí (odstraňování mrtvého kódu, optimalizace importů, atd.).
+    + Transpilace kódu z TypeScriptu do JavaScriptu. (TSC/Bun)
+    + Spuštění předkompilovatelných funkcí (pre-rendering), jako jsou React Server Components a Server Actions. (Turbopack)
+    + Vytvoření produkčního balíčku připraveného pro nasazení.
+
+    #figure(image("assets/image-5.png", width: 70%), caption: [
+      Výstup příkazu `next build` zobrazující jednotlivé kroky kompilace a optimalizace kódu v Next.js
+    ])
 
     == Prisma ORM
 
@@ -828,7 +845,7 @@
     Při tvorbě projektu by měl být kladen důraz na efektivní vývojový proces, který zahrnuje nástroje pro jednodušší lokální vývoj, zajištění kvality kódu, monitorování aplikace po nasazení a automatizaci nasazení. V následující kapitole je proto popsán přesný vývojový proces, nástroje použité pro zajištění kvality kódu a samotný automatizovaný proces nasazení aplikace na produkční server.
 
     #figure(
-      image("assets/development.png"),
+      image("assets/development.png", height: 70%),
       caption: [Schéma procesu vývoje aplikace],
     )
 
