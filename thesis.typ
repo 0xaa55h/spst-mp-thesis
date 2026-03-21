@@ -95,12 +95,6 @@
       description: [Technika mapování objektů v programovacím jazyce na relační databázové tabulky.],
     ),
     (
-      key: "pdf",
-      short: "PDF",
-      long: "Portable Document Format",
-      description: [Formát dokumentu určený pro konzistentní zobrazení a tisk napříč zařízeními.],
-    ),
-    (
       key: "rbac",
       short: "RBAC",
       long: "Role-Based Access Control",
@@ -292,7 +286,7 @@
 
     JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na dva hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token (obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token je zašifrován pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům @presenting-jwt.
 
-    Oproti session-based autentizaci má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter.
+    Oproti session-based autentizaci má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter @gfg-session-jwt.
 
     #figure(
       image("assets/jwt.png", width: 90%),
@@ -302,7 +296,7 @@
     === Session-based autentizace
 
     Druhým hojně užívaným způsobem pro autentizaci je tzv. session-based autentizace. Tento
-    styl je oproti JWT *stateful*, ukládá tedy stav přihlášeného uživatele na serveru (v databázi). Při přihlášení klient odešle požadavek na server s přihlašovacími údaji. Server ověří tyto údaje a pokud jsou správné, vytvoří novou session (relaci) pro uživatele a vygeneruje unikátní identifikátor session (session ID). Tento identifikátor je následně odeslán zpět klientovi, který si ho uloží do cookies. Při každém dalším požadavku na server klient automaticky přiloží cookies obsahující session ID. Server následně ověří platnost session ID (např. kontrolou, zda session stále existuje v databázi) a pokud je platné, povolí přístup k požadovaným zdrojům.
+    styl je oproti JWT *stateful*, ukládá tedy stav přihlášeného uživatele na serveru (v databázi). Při přihlášení klient odešle požadavek na server s přihlašovacími údaji. Server ověří tyto údaje a pokud jsou správné, vytvoří novou session (relaci) pro uživatele a vygeneruje unikátní identifikátor session (session ID). Tento identifikátor je následně odeslán zpět klientovi, který si ho uloží do cookies. Při každém dalším požadavku na server klient automaticky přiloží cookies obsahující session ID. Server následně ověří platnost session ID (např. kontrolou, zda session stále existuje v databázi) a pokud je platné, povolí přístup k požadovaným zdrojům @gfg-session-jwt.
 
     #figure(
       image("assets/session.png", width: 90%),
@@ -565,7 +559,6 @@
         return <div>Aktuální čas ze serveru: {cas ?? "Načítání..."}</div>;
       }
       ```,
-
       caption: "Ukázka komponenty v Next.js využívající Server Action",
     )
 
@@ -645,6 +638,8 @@
     Velkou výhodou TailwindCSS oproti ostatním CSS frameworkům je také _JIT Kompilátor_, který umožňuje optimalizaci balíčku stylů, který se v produkčním prostředí stahuje na klientské zařízení. Kompilátor funguje tak, že z balíčku vyřadí styly, které nejsou v projektu využity, a výsledná velikost balíčku zaslaného na klienta se tak dokáže dramaticky zmenšit @tailwindcss.
 
     = Implementace webové aplikace
+
+    Největší část celého vývojového procesu tvoří samotný vývoj a programování funkcí. V této kapitole jsou popsány konkrétní prvky zohledněny při vývoji a jednotlivé funkce aplikace.
 
     == Návrh databáze a datového modelu
 
@@ -840,6 +835,10 @@
 
     _Massmail_, neboli hromadná korespondence, je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
 
+    === Bodování přihlášek
+
+    Další důležitou funkcí v aplikaci je automatické bodování příchozím přihlášek. Přihlášky jsou po odeslání automaticky obodovány a jejich bodový stav se automaticky reflektuje v detailech, kde lze i body manuálně později přepočítat, samotní uchazeči s touto hodnotou však seznámeni nejsou, neboť se v jejich případě považuje za nerelevantní. Bodování je v implementováno přímo v aplikaci a pro jakoukoliv změnu je potřeba změnit aplikaci znovu sestavit. Tento stav není finální a v průběhu přechodu k větší univerzalitě je nutné aby tato funkce šla přímo konfigurovat z nastavení aplikace.
+
     = Vývoj a nasazení
 
     Při tvorbě projektu by měl být kladen důraz na efektivní vývojový proces, který zahrnuje nástroje pro jednodušší lokální vývoj, zajištění kvality kódu, monitorování aplikace po nasazení a automatizaci nasazení. V následující kapitole je proto popsán přesný vývojový proces, nástroje použité pro zajištění kvality kódu a samotný automatizovaný proces nasazení aplikace na produkční server.
@@ -969,12 +968,12 @@
 
     Během vývoje této aplikace a psaní této práce jsem se setkal s mnoha výzvami, které mě přiměly k hlubšímu zamyšlení nad různými aspekty vývoje webových aplikací, jako je návrh uživatelského rozhraní, výběr vývojových nástrojů, zajištění kvality kódu a další. Tento projekt mi umožnil získat cenné zkušenosti a znalosti, které využiji i v budoucnu při vývoji dalších projektů.
 
-    == Budoucí rozšíření
+    #heading(numbering: none, outlined: false, [Budoucí rozšíření])
 
     Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
 
-    == Všestrannost
+    #heading(numbering: none, outlined: false, [Všestrannost])
 
-    Dalším aspektem aplikace byl i fakt, že jsem se ji snažil postavit co nejvíce univerzálně tak, aby ji bylo možné snadno přizpůsobit pro různé domovy mládeže. Toho bylo dosaženo například tím, že jsem do nastavení aplikace přidal možnost nastavit název domény, což umožňuje žadatelům snadno odlišit, pro jaké zařízení aplikaci využívají.
+    Dalším aspektem aplikace byl i fakt, že jsem se ji snažil postavit co nejvíce univerzálně tak, aby ji bylo možné snadno přizpůsobit pro různé domovy mládeže. Toho bylo dosaženo například tím, že jsem do nastavení aplikace přidal možnost nastavit název domény, což umožňuje žadatelům snadno odlišit, pro jaké zařízení aplikaci využívají. Je třeba však zmínit, že některé funkce, jako například automatické bodování, univerzálně postaveny nejsou a případná univerzalita bude zajištěna později.
   ],
 )

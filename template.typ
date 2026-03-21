@@ -55,6 +55,7 @@
   show math.equation: set text(size: 16pt)
   set figure(gap: 1.5em)
   show figure: set block(below: 16pt, above: 16pt)
+  show figure.where(kind: raw): set figure.caption(position: top)
   set par(leading: 1em, spacing: 0.75em + 18pt, justify: true)
   show heading.where(level: 1): set text(size: 20pt, weight: "bold")
   show heading.where(level: 2): set text(size: 16pt, weight: "bold")
