@@ -56,6 +56,7 @@
   set figure(gap: 1.5em)
   show figure: set block(below: 16pt, above: 16pt)
   show figure.where(kind: raw): set figure.caption(position: top)
+  show figure.caption: set text(size: 11pt, style: "italic")
   set par(leading: 1em, spacing: 0.75em + 18pt, justify: true)
   show heading.where(level: 1): set text(size: 20pt, weight: "bold")
   show heading.where(level: 2): set text(size: 16pt, weight: "bold")
@@ -192,6 +193,8 @@
   ])
 
   body
+
+  pagebreak()
 
   set par(leading: 0.75em, spacing: 0.75em + 6pt, justify: true)
 

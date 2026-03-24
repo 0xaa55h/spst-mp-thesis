@@ -205,6 +205,8 @@
       )
     ]
 
+    #pagebreak()
+
     = Stanovení požadavků na novou aplikaci
 
     Při diskuzi o tvorbě nové aplikace byly též stanoveny požadavky na funkce, které by měla aplikace obsahovat. Vycházeli jsme především z problémů, které přinášela stávající řešení. Tyto požadavky můžeme pro přehlednost rozdělit do dvou hlavních kategorií: *požadavky na uživatelské funkce* a *požadavky na funkce administrátorské*. Na základě těchto požadavků byly následně vybrány technologie užité pro vývoj aplikace.
@@ -230,6 +232,8 @@
     - Automatická generace evidenčních (jednacích) čísel, která budou přidělována každé přihlášce.
     - Možnost exportu dat do tabulkového a PDF formátu pro potřeby archivace a exportu do externích systémů.
 
+    #pagebreak()
+
     = Architektura webové aplikace
 
     Vývoj jakékoliv aplikace začíná návrhem její architektury. Ta dokáže přibližně
@@ -247,7 +251,7 @@
     V kontextu webového vývoje se fungování moderních webových aplikací opírá o rozdělení odpovědnosti mezi uživatelské rozhraní (_client-side_) a aplikační logiku běžící na serveru (_server-side_). Obecně lze říci, že klientská část je odpovědná za zobrazení a prezentaci dat, zatímco server je odpovědný za poskytování a zpracování samotných dat.
 
     #figure(
-      image("assets/client-server.png", width: 75%),
+      image("assets/client-server.png", height: 30%),
       caption: "Vizualizace client-server architektury",
     )
 
@@ -318,6 +322,8 @@
 
     Ve shrnutí je praktické využít JWT tokeny například pro klasický API server, zatímco session-based autentizace je vhodná spíše pro webové aplikace a služby, které využívají SSR nebo jiné technologie než API k získávání dat ze serveru.
 
+    #pagebreak()
+
     = Technologie použité při vývoji
 
     Při vývoji moderní webové aplikace je klíčové zvolit technologie, které kromě splnění požadavků na funkcionalitu zajistí i dlouhodobou udržitelnost, škálovatelnost a bezpečnost aplikace. Následující technologie byly vybrány na
@@ -363,6 +369,8 @@
       Vizualizace procesu transpilace TypeScriptu do JavaScriptu
     ])
 
+    #pagebreak()
+
     === Standard ECMAScript
 
     Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi moderní funkce, které standard ECMAScript přinesl v posledních letech, patří zejména šipkové funkce, třídy, moduly a podpora asynchronního programování @ecma262_es6.
@@ -394,6 +402,8 @@
     React je knihovna pro tvorbu uživatelských rozhraní, která umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu @reactjs.
     Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
 
+    #pagebreak()
+
     React umožňuje tvorbu _znovupoužitelných komponent_ (viz @component-architecture). Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderních verzích knihovny React je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data (_props_, též známé v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
 
     Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi JSX, ta umožňuje kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
@@ -422,9 +432,9 @@
 
     === Správa stavu
 
-    Správa stavu (_State Management_) je jedním z klíčových aspektů knihovny React. Stav představuje data v paměti, která se mohou měnit v průběhu života komponenty a ovlivňovat její chování a vzhled. React nejčastěji využívá pro správu stavu vestavěný hook `useState`, který umožňuje definovat a aktualizovat stav přímo v rámci funkční komponenty.
+    Správa stavu (_State Management_) je jedním z klíčových aspektů knihovny React. Stav představuje data v paměti, která se mohou měnit v průběhu života komponenty a ovlivňovat její chování a vzhled. React nejčastěji využívá pro správu stavu vestavěný hook `useState`, který umožňuje definovat a aktualizovat stav na úrovni funkční komponenty.
 
-    Pro zamezení tzv. _prop-drillingu_ (situace, kdy je potřeba předávat data z rodičovské komponenty do hluboko zanořených komponent přes několik úrovní atributů komponent), lze využít kontextu (_Context API_), který umožňuje sdílet data mezi komponentami bez nutnosti předávat je přes každou úroveň komponent.
+    Pro zamezení tzv. _prop-drillingu_ (situace, kdy je potřeba předávat stavová data z rodičovské komponenty do hluboko zanořených komponent přes několik úrovní atributů komponent), lze využít kontextu (_Context API_), který umožňuje sdílet data mezi komponentami bez nutnosti předávat je přes každou úroveň komponent.
 
     #figure(
       ```tsx
@@ -457,6 +467,8 @@
       ```,
       caption: "Ukázka využití Context API pro správu stavu v Reactu",
     )
+
+    #pagebreak()
 
     V případě složitějších aplikací, které vyžadují komplexnější správu stavu, lze využít některé z externích knihoven. V tomto projektu byla zvolena knihovna Jotai, která nabízí jednoduché řešení pro správu stavu pomocí primitivních jednotek v podobě _atomů_ @jotai.
 
@@ -525,6 +537,8 @@
       caption: "Ukázka React Server Component a jejího použití s Suspense",
     )
 
+    #pagebreak()
+
     === Server Actions v Next.js
 
     Server Actions (česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné API na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
@@ -561,6 +575,8 @@
       ```,
       caption: "Ukázka komponenty v Next.js využívající Server Action",
     )
+
+    #pagebreak()
 
     === Kompilace Next.js
 
@@ -637,6 +653,8 @@
 
     Velkou výhodou TailwindCSS oproti ostatním CSS frameworkům je také _JIT Kompilátor_, který umožňuje optimalizaci balíčku stylů, který se v produkčním prostředí stahuje na klientské zařízení. Kompilátor funguje tak, že z balíčku vyřadí styly, které nejsou v projektu využity, a výsledná velikost balíčku zaslaného na klienta se tak dokáže dramaticky zmenšit @tailwindcss.
 
+    #pagebreak()
+
     = Implementace webové aplikace
 
     Největší část celého vývojového procesu tvoří samotný vývoj a programování funkcí. V této kapitole jsou popsány konkrétní prvky zohledněny při vývoji a jednotlivé funkce aplikace.
@@ -645,17 +663,15 @@
 
     Jak již bylo zmíněno v kapitole o použitých technologiích, pro práci s databází bylo zvoleno ORM Prisma. Samotný databázový model pak vychází z výchozího modelu používaného knihovnou Better Auth (viz @auth-betterauth). Tento model byl následně rozšířen o další sloupce a tabulky, které byly zapotřebí pro implementaci webové aplikace.
 
+    Mezi některé důležité tabulky v modelu patří:
+    - `user` -- tabulka pro ukládání informací o uživatelích, jako je e-mail, role a další.
+    - `application` -- tabulka pro ukládání informací o přihláškách, jako je stav přihlášky, datum podání, a další.
+    - `application_config` -- tabulka pro ukládání konfiguračních nastavení aplikace, jako jsou stav přijímání přihlášek, datum uzávěrky apod.
+    - `person` -- tabulka pro ukládání informací o osobách, které jsou spojeny s přihláškami (např. žadatel a zák. zástupce).
+
     #figure(image("assets/prisma-erd-2.svg"), caption: [
       Databázový model aplikace jako Entity-Relationship Diagram
     ])
-
-
-
-    Mezi některé důležité tabulky v modelu patří:
-    - `User` -- tabulka pro ukládání informací o uživatelích, jako je e-mail, role a další.
-    - `Application` -- tabulka pro ukládání informací o přihláškách, jako je stav přihlášky, datum podání, a další.
-    - `ApplicationConfig` -- tabulka pro ukládání konfiguračních nastavení aplikace, jako jsou stav přijímání přihlášek, datum uzávěrky apod.
-    - `Person` -- tabulka pro ukládání informací o osobách, které jsou spojeny s přihláškami (např. žadatel a zák. zástupce).
 
     == Kontrola a validace dat
 
@@ -746,7 +762,7 @@
 
     Nastavení aplikace se nadále dělí na několik podčástí (sekcí). Většina těchto nastavení je dostupná pouze pro uživatele s rolí `admin` (hlavní vychovatel).
 
-    *1. Sekce "Obecné"*
+    #text([Sekce "Obecné"], weight: "bold", size: 13pt)
 
     Sekce obsahuje hlavní nastavení samotné aplikace, mezi některé vybrané konfigurovatelné možnosti patří:
     - *Přístup k přihlašovacímu formuláři* -- výběr mezi možnostmi:
@@ -759,7 +775,7 @@
     - *Povolit vlastní obory* -- tato možnost umožní žadatelům zadat vlastní studijní obor v případě, že nestudují na žádném z předdefinovaných oborů. Pokud je tato možnost zakázána, musí žadatelé vybrat obor ze seznamu předdefinovaných oborů.
     - *Potvrzení při odeslání přihlášky* -- slouží jako text, který musí uživatelé odsouhlasit před odesláním samotné přihlášky.
 
-    *2. Sekce "Školní roky"*
+    #text([Sekce "Školní roky"], weight: "bold", size: 13pt)
 
     V této sekci lze spravovat školní roky. Školní rok je základní jednotkou pro organizaci přihlášek. Každý školní rok je identifikován svým počátečním rokem. Roky jsou však zobrazovány ve formátu "počáteční rok / následující rok" (např. "2023/2024").
 
@@ -767,15 +783,15 @@
     - Stav archivace -- pokud je školní rok archivován, již není možné přidávat nové přihlášky do tohoto roku, ale stále je možné prohlížet stávající přihlášky a exportovat je.
     - Je-li aktuální -- tento stav označuje, že se jedná o aktuální školní rok, do kterého se přidávají nové přihlášky. V aplikaci může být pouze jeden aktuální školní rok.
 
-    *3. Sekce "Studijní obory"*
+    #text([Sekce "Studijní obory"], weight: "bold", size: 13pt)
 
     Sekce sloužící pro správu studijních oborů. Každý obor má jméno, krátkou formu jména, délku studia a možnost nastavení, zda-li se jedná o obor, ve kterém začíná výuka brzy (tento fakt poté ovlivňuje samotné bodování přihlášky).
 
-    *4. Sekce "Účty"*
+    #text([Sekce "Účty"], weight: "bold", size: 13pt)
 
     Sekce pro správu uživatelských účtů. Uživatelé mohou být přidáváni, odebíráni a lze upravovat jejich role.
 
-    *5. Sekce "Generace PDF"*
+    #text([Sekce "Generace PDF"], weight: "bold", size: 13pt)
 
     Sekce určená pro správu šablony PDF, která se používá pro generaci PDF dokumentů z přihlášek. Šablona je nahrána do systému a obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací a jsou následně vyplňována daty z přihlášky při generování PDF.
 
@@ -797,9 +813,11 @@
 
     Mezi vybrané funkce, které jsou dostupné v detailu přihlášky, patří například možnost zobrazení trvalého bydliště v aplikaci Mapy.com #footnote(link("https://mapy.com/")) nebo v aplikaci IDOS #footnote(link("https://idos.cz/")) (pro kontrolu vzdálenosti mezi trvalým bydlištěm a internátem). Kliknutím na individuální e-mailové adresy lze také odesílat e-maily přímo z aplikace, což usnadňuje komunikaci s žadateli a zákonnými zástupci.
 
+    #pagebreak()
+
     === Export přihlášek do PDF
 
-    Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci.
+    Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci. Aktuální způsob řešení využívá funkce standardu PDF, polemi AcroForms, které umožňují definovat interaktivní formulářová pole přímo v PDF dokumentu. Tato pole jsou následně vyplňována daty z přihlášky při generování PDF. Tato pole jsou podporávna většinou moderních PDF editorů @iso32000.
 
     Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné ani efektivní. Aktuálně existují dvě možná řešení pro generování PDF z předhotovené šablony, které by vyhovovali aktuálnímu systému na domově mládeže: přes vyplňování buněk v XLSX a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování, kvalitě a univerzalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB, která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí @pdf-lib. Celý proces generování PDF probíhá následovně:
 
@@ -825,11 +843,11 @@
     Evidenční čísla jsou unikátní identifikátory přihlášek, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška, a pořadového čísla přihlášky v daném ročníku. To implikuje, že pro každé rodné číslo bude evidenční číslo vygenerováno pouze jednou a při opětovném podání přihlášky v dalším ročníku bude použito již existující evidenční číslo.
 
     #figure(
-      $1\/2025$,
+      $2025\/1$,
       caption: [Příklad evidenčního čísla přihlášky -- první přihláška v roce 2025],
     )
 
-    V programu lze importovat existující evidenční čísla pro předem definovaná rodná čísla. Tento import je užitečný v případech, kdy docházelo k tvoření evidenčních čísel mimo systém (např. ručně) a je potřeba tato čísla synchronizovat s databází aplikace. Import probíhá pomocí CSV souboru, který obsahuje dva sloupce -- rodné číslo a evidenční číslo.
+    V programu lze importovat existující evidenční čísla pro předem definovaná rodná čísla. Tento import je užitečný v případech, kdy docházelo k tvoření evidenčních čísel mimo systém (např. ručně) a je potřeba tato čísla synchronizovat s databází aplikace. Import probíhá pomocí CSV souboru, který obsahuje 3 sloupce: rodné číslo, evidenční číslo a první ročník, ve kterém byla přihláška s daným rodným číslem odeslána (tento ročník musí v aplikaci předem existovat, jinak bude proces neúspěšný).
 
     === Massmail
 
@@ -838,6 +856,8 @@
     === Bodování přihlášek
 
     Další důležitou funkcí v aplikaci je automatické bodování příchozím přihlášek. Přihlášky jsou po odeslání automaticky obodovány a jejich bodový stav se automaticky reflektuje v detailech, kde lze i body manuálně později přepočítat, samotní uchazeči s touto hodnotou však seznámeni nejsou, neboť se v jejich případě považuje za nerelevantní. Bodování je v implementováno přímo v aplikaci a pro jakoukoliv změnu je potřeba změnit aplikaci znovu sestavit. Tento stav není finální a v průběhu přechodu k větší univerzalitě je nutné aby tato funkce šla přímo konfigurovat z nastavení aplikace.
+
+    #pagebreak()
 
     = Vývoj a nasazení
 
@@ -859,7 +879,8 @@
 
     Pro zajištění kvality kódu, dodržování standardů programování a odhalování potenciálních chyb byly do vývojového procesu integrovány _nástroje pro statickou analýzu kódu_. Tyto nástroje analyzují zdrojový kód bez jeho spuštění a poskytují zpětnou vazbu vývojářům o možných problémech, jako jsou chyby v syntaxi, nedodržování konvencí, či potenciální bezpečnostní rizika, tímto se liší od analyzérů dynamických, jako jsou testy, nástroje pro analýzu výkonu (profilery) nebo ladicí nástroje (debuggery).
 
-    *1. Biome*
+
+    #text([Biome], weight: "bold", size: 13pt)
 
     Biome je moderní nástroj pro statickou analýzu kódu, který podporuje různé programovací jazyky, včetně TypeScriptu. Biome nabízí funkce, jako je formátování kódu podle předem stanovených pravidel, detekce chyb v syntaxi, analýza kvality kódu podle definovaných standardů pro statickou analýzu webových aplikací #footnote([Tato pravidla jsou často převzata z jiných nástrojů, jako je ESLint. Kompletní seznam pravidel a jejich odůvodnění lze nalézt v oficiální dokumentaci Biome.]) a další @biomejs.
 
@@ -869,7 +890,7 @@
 
     Celé nastavení Biome je uloženo v kořenovém adresáři projektu v souboru `biome.json`, kde jsou definována pravidla pro analýzu kódu, formátování a další.
 
-    *2. SonarQube*
+    #text([SonarQube], weight: "bold", size: 13pt)
 
     SonarQube je platforma pro inspekci kvality kódu v softwarových projektech. Podporuje širokou škálu programovacích jazyků, včetně TypeScriptu, a nabízí funkce jako je analýza kódu, detekce chyb, sledování metrik kvality a další @sonarqube.
 
@@ -884,13 +905,13 @@
 
     Mezi nástroje pro aktivní monitorování webových aplikací řadíme nástroje, které aktivně sledují chování aplikace v reálném čase a poskytují zpětnou vazbu o výkonu, chybách a dalších důležitých aspektech aplikace. Tyto nástroje pomáhají vývojářům identifikovat a řešit problémy (například sledováním kroků uživatele, které vedly k vyvolání chyby), optimalizovat výkon a zlepšovat uživatelskou zkušenost za běhu aplikace.
 
-    *1. PostHog*
+    #text([PostHog], weight: "bold", size: 13pt)
 
     PostHog je open-source platforma pro analýzu chování uživatelů a aktivní monitorování webových aplikací. Umožňuje vývojářům sledovat interakce uživatelů, analyzovat chování aplikace, zajišťovat neodlaďené chyby a získávat cenné informace pro optimalizaci výkonu a zlepšení uživatelské zkušenosti @posthog.
 
     PostHog byl do vývojového procesu integrován použitím oficiální knihovny. Hlavním cílem integrace bylo vytvořit možnost získávání zpětné vazby o chování uživatelů a sledování chyb, které by mohly nastat během používání aplikace. Tato integrace umožňuje lépe porozumět chybám a problémům, které uživatelé mohou zažívat. Integrace zároveň pomáhá rychleji problémy opravovat a případně i předcházet jejich vzniku v budoucnu.
 
-    #figure(image("assets/posthog-2.png"), caption: [
+    #figure(image("assets/posthog-2.png", width: 80%), caption: [
       Panel pro sledování nastalých problémů při běhu projektu v platformě PostHog
     ])
 
@@ -899,7 +920,7 @@
     Správné plánování vývoje je jednou z klíčových činností pro úspěšný a nezanedbaný vývoj jakéhokoliv softwarového projektu. Pro tento účel byla zvolena platforma GitHub Projects, která umožňuje vytváření projektů, úkolů a sledování jejich stavu přímo v rámci repozitáře na GitHubu @github-projects.
 
     #figure(
-      image("assets/github-project.png"),
+      image("assets/github-project.png", width: 80%),
       caption: [Plánovací tabulka pro vývoj aplikace na platformě GitHub Projects],
     )
 
@@ -925,7 +946,7 @@
 
     V tomto projektu by se použité GitHub akce daly rozdělit do 2 kategorií:
     + Akce pro zajištění kvality kódu -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci kódu, jedná se o kontrolu sestavení projektu, spuštění testů a analýzu kódu pomocí SonarQube. Zároveň akce kontroluje zranitelnosti v závislostech projektu.
-    + Akce pro nasazení aplikace -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci hlavní větve repozitáře. Tyto akce zajišťují automatizované nasazení aplikace na produkční server.
+    + Akce pro nasazení aplikace -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci hlavní větve repozitáře a zajišťují automatizované nasazení aplikace na produkční server.
 
     #figure(image("assets/image-2.png"), caption: [
       Ukázka výpisu spuštěných akcí v GitHub Actions
@@ -964,15 +985,17 @@
 
     Testování probíhalo v několika iteracích, přičemž každá iterace zahrnovala jinou cílovou skupinu uživatelů (vychovatelé, rodiče, studenti...). Z každé iterace byla zpětná vazba využita pro vylepšení aplikace.
 
+    #pagebreak()
+
     #heading(numbering: none, [Závěr])
 
     Během vývoje této aplikace a psaní této práce jsem se setkal s mnoha výzvami, které mě přiměly k hlubšímu zamyšlení nad různými aspekty vývoje webových aplikací, jako je návrh uživatelského rozhraní, výběr vývojových nástrojů, zajištění kvality kódu a další. Tento projekt mi umožnil získat cenné zkušenosti a znalosti, které využiji i v budoucnu při vývoji dalších projektů.
 
-    #heading(numbering: none, outlined: false, [Budoucí rozšíření])
+    #heading(numbering: none, outlined: false, [Budoucí rozšíření], level: 2)
 
     Aplikace v aktuálním stavu nabízí širokou škálu funkcí pro správu přihlášek na domovy mládeže. Nicméně stále existuje prostor pro další rozšíření a vylepšení, které by mohly funkcionalitu aplikace ještě více rozšířit a zlepšit uživatelskou zkušenost. Jedním z možných rozšíření je rozšíření systému na kompletní správu domovů mládeže, což by zahrnovalo nejen správu přihlášek, ale i další aspekty, jako je správa ubytování, vycházek, volnočasových aktivit a další. Dalším možným rozšířením je implementace pokročilých analytických nástrojů pro lepší porozumění datům o přihláškách a žadatelích, což by mohlo pomoci při optimalizaci přijímacího řízení a lepší vyhodnocování kritérií pro přijetí.
 
-    #heading(numbering: none, outlined: false, [Všestrannost])
+    #heading(numbering: none, outlined: false, [Všestrannost], level: 2)
 
     Dalším aspektem aplikace byl i fakt, že jsem se ji snažil postavit co nejvíce univerzálně tak, aby ji bylo možné snadno přizpůsobit pro různé domovy mládeže. Toho bylo dosaženo například tím, že jsem do nastavení aplikace přidal možnost nastavit název domény, což umožňuje žadatelům snadno odlišit, pro jaké zařízení aplikaci využívají. Je třeba však zmínit, že některé funkce, jako například automatické bodování, univerzálně postaveny nejsou a případná univerzalita bude zajištěna později.
   ],
