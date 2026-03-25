@@ -47,12 +47,6 @@
       description: [Základní čtyři operace používané při práci s daty v databázových a aplikačních systémech.],
     ),
     (
-      key: "http",
-      short: "HTTP",
-      long: "HyperText Transfer Protocol",
-      description: [Protokol aplikační vrstvy pro přenos hypertextových dokumentů a webových požadavků.],
-    ),
-    (
       key: "jit",
       short: "JIT",
       long: "Just-In-Time",
@@ -137,11 +131,11 @@
       description: [Celkový uživatelský prožitek při používání aplikace, včetně srozumitelnosti a pohodlí ovládání.],
     ),
     (
-      key: "xlsx",
-      short: "XLSX",
-      long: "Office Open XML Spreadsheet",
-      description: [Formát tabulkového souboru používaný například v aplikaci Microsoft Excel.],
-    ),
+      key: "acid",
+      short: "ACID",
+      long: "Atomicity, Consistency, Isolation, Durability",
+      description: [Sada vlastností zajišťujících spolehlivost transakcí v databázových systémech.],
+    )
   ),
   body: [
     = Úvod
@@ -267,7 +261,7 @@
 
     Komunikace mezi klientem a serverem na aplikační vrstvě může používat různé protokoly, mezi nejběžněji používané protokoly patří HTTP (HyperText Transfer Protocol), WebSocket a GraphQL. V této práci probíhá komunikace mezi klientem a serverem primárně pomocí protokolu HTTP.
 
-    Protokol HTTP dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient -- prohlížeč odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace.
+    Protokol HTTP dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient (prohlížeč) odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace.
 
     HTTP požadavek je definován především metodou (např. GET pro čtení či POST pro zápis), která určuje typ operace, a cílovou adresou URL identifikující konkrétní zdroj. Nedílnou součást tvoří hlavičky, nesoucí metadata typu autentizačních údajů či formátu dat, a volitelně také tělo požadavku obsahující samotná data k odeslání. Server následně na tento podnět reaguje strukturou, jejímž klíčovým prvkem je stavový kód (např. 200 OK či 404 Not Found), ten poskytuje okamžitou informaci o výsledku zpracování. Obdobně jako u požadavku, i odpověď obsahuje specifické hlavičky a zpravidla i tělo, které nese klientem vyžádaný obsah, nejčastěji ve formátu JSON nebo HTML @rfc2616.
 
@@ -290,7 +284,7 @@
 
     JWT je standard pro bezpečnou *stateless* autentizaci (tj. neuchovává stav přihlášeného uživatele na serveru). Autentizace je rozdělena na dva hlavní kroky -- přihlášení a ověření tokenu. Při přihlášení klient vyšle požadavek na server s přihlašovacími údaji (např. uživatelské jméno a heslo). Server ověří tyto údaje a pokud jsou správné, vygeneruje JWT token (obsahující informace o uživateli a jeho oprávněních ve formátu JSON), tento token je zašifrován pomocí asymetrického klíče a následně odeslán zpět klientovi. Klient si tento token uloží (např. do localStorage nebo cookies) a při každém dalším požadavku na server ho přiloží v hlavičce `Authorization`. Server následně ověří platnost tokenu (např. kontrolou podpisu a expirace) a pokud je token platný, povolí přístup k požadovaným zdrojům @presenting-jwt.
 
-    Oproti session-based autentizaci má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- *stateless* charakter @gfg-session-jwt.
+    Oproti session-based autentizaci má tento způsob hlavní nevýhodu v tom, že server nemá možnost uživatele odhlásit před vypršením platnosti tokenu, jelikož server neuchovává žádný stav o přihlášeném uživateli. Této funkce lze však dosáhnout implementací blacklistu neplatných tokenů na straně serveru, v takovém případě však JWT ztrácí svůj hlavní benefit -- stateless charakter @gfg-session-jwt.
 
     #figure(
       image("assets/jwt.png", width: 90%),
@@ -320,7 +314,9 @@
       caption: [Porovnání standardů pro autentizaci a autorizaci],
     )
 
-    Ve shrnutí je praktické využít JWT tokeny například pro klasický API server, zatímco session-based autentizace je vhodná spíše pro webové aplikace a služby, které využívají SSR nebo jiné technologie než API k získávání dat ze serveru.
+    Důležité je zmínit i zabezpečení těchto autentizačních mechanismů. Oba způsoby vyžadují uložení dat na straně klienta (JWT token nebo session ID), což dokáže být jednoduše zneužito. Pro zabezpečení těchto dat je důležité použít bezpečné úložiště (např. Cookies s parametry `Secure`, `HttpOnly`), které zabrání čtení cookies přímo z klientského JavaScriptu a implementovat další bezpečnostní opatření, jako je například ochrana proti CSRF útokům, použití HTTPS pro šifrování komunikace a pravidelná rotace klíčů pro JWT tokeny (což nadále komplikuji implementaci JWT autentizace) @owasp-authentication.
+
+    V obecné rovině lze říct, že zatímco JWT představuje průmyslový standard pro autorizaci v rámci distribuovaných systémů (např. aplikace s více instancemi či aplikaci využívající mikroslužby) a API, session-based přístup zůstává optimálním řešením pro monolitické webové aplikace, a to především díky vyšší bezpečnosti při ukládání citlivých údajů a jednodušší invalidaci aktivních relací.
 
     #pagebreak()
 
@@ -333,7 +329,7 @@
 
     TypeScript je staticky typované rozšíření JavaScriptu, které přidává podporu pro typy, třídy, rozhraní a další funkce, které lze běžně najít ve striktně staticky a objektově orientovaných jazycích. Přidává silnou typovou kontrolu, která se prosazuje již při samotné transpilaci kódu do JavaScriptu, což pomáhá odhalit chyby už během vývoje a zvyšuje kvalitu kódu @typescriptlang.
 
-    TypeScript byl zvolen pro tento projekt z několika důvodů. Prvním z nich je fakt, že je hojně využíván v moderním webovém vývoji, což zajišťuje širokou podporu a množství knihoven a nástrojů, které jsou s ním kompatibilní @stackoverflow-survey-git. Dále přináší výhody v podobě lepší čitelnosti a údržby kódu, což je klíčové pro dlouhodobou udržitelnost projektu. TypeScript také umožňuje využívat pokročilé funkce a syntaxi, které nejsou nativně podporovány v JavaScriptu, což může zefektivnit vývoj a zlepšit celkovou strukturu kódu.
+    TypeScript byl zvolen pro tento projekt z několika důvodů. Prvním z nich je fakt, že je hojně využíván v moderním webovém vývoji, což zajišťuje širokou podporu a množství knihoven a nástrojů, které jsou s ním kompatibilní @stackoverflow-survey-git. Dále přináší výhody v podobě lepší čitelnosti a údržby kódu, což je klíčové pro dlouhodobou udržitelnost projektu. TypeScript také umožňuje využívat pokročilé funkce a syntaxi (např. generika), které nejsou nativně podporovány v JavaScriptu, což může zefektivnit vývoj a zlepšit celkovou strukturu kódu.
 
     === Typy a rozhraní
 
@@ -356,7 +352,7 @@
         id: number;
         name: string;
       }
-      type UserId = User["id"];
+      type UserId = User["id"]; // number
       ```,
       caption: [Ukázka práce s rozhraními -- definice rozhraní a typu odkazujícího na vlastnost rozhraní],
     )
@@ -410,10 +406,6 @@
 
     #figure(
       ```tsx
-      // hello-world.tsx
-      "use client";
-      import React from "react";
-
       function HelloWorld() {
         const [greeting, setGreeting] = React.useState("Ahoj, Světe!");
 
@@ -432,7 +424,9 @@
 
     === Správa stavu
 
-    Správa stavu (_State Management_) je jedním z klíčových aspektů knihovny React. Stav představuje data v paměti, která se mohou měnit v průběhu života komponenty a ovlivňovat její chování a vzhled. React nejčastěji využívá pro správu stavu vestavěný hook `useState`, který umožňuje definovat a aktualizovat stav na úrovni funkční komponenty.
+    Správa stavu (_State Management_) je jedním z klíčových aspektů knihovny React. Stav představuje data v paměti, která se mohou měnit v průběhu života komponenty a ovlivňovat její chování a vzhled. React nejčastěji využívá pro správu stavu vestavěný hook #footnote([Hook je prostá JavaScriptová funkce, která začíná na "use". Používají se pro přidání logiky do funkčních komponent.]) `useState`, který umožňuje definovat a aktualizovat stav na úrovni funkční komponenty.
+
+    #pagebreak()
 
     Pro zamezení tzv. _prop-drillingu_ (situace, kdy je potřeba předávat stavová data z rodičovské komponenty do hluboko zanořených komponent přes několik úrovní atributů komponent), lze využít kontextu (_Context API_), který umožňuje sdílet data mezi komponentami bez nutnosti předávat je přes každou úroveň komponent.
 
@@ -501,8 +495,6 @@
     dokončení obsluhy serverové komponenty před tím, než odešle výsledná data do prohlížeče klientovi, nelze tedy použít reaktivní funkce pro kontrolu načtení obsahu. Pro zvýšení uživatelské přivětivosti (UX) existuje proto tzv. _Suspense_
     komponenta, ta dokáže zobrazit náhradní obsah (např. indikátor načítání) zatímco server čeká na dokončení vykonání RSC.
 
-    RSC lze do jisté míry přirovnat ke klasickému PHP, které kód vykonává na serveru a uživateli pošle až hotovou HTML stránku. Oproti PHP však RSC umožňuje kombinovat serverový a klientský kód v rámci jedné aplikace, což přináší větší flexibilitu a možnosti pro vývojáře.
-
     #figure(
       ```tsx
       // server-component.tsx
@@ -536,6 +528,8 @@
 
       caption: "Ukázka React Server Component a jejího použití s Suspense",
     )
+
+    RSC lze do jisté míry přirovnat ke klasickému PHP, které kód vykonává na serveru a uživateli pošle až hotovou HTML stránku. Oproti PHP však RSC umožňuje kombinovat serverový a klientský kód v rámci jedné aplikace a za pomocí komponentové architektury, což přináší větší flexibilitu a možnosti pro vývojáře.
 
     #pagebreak()
 
@@ -632,7 +626,7 @@
 
     === PostgreSQL
 
-    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (RLS), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (fulltextové vyhledávání). PostgreSQL také dodržuje takzvaný _ACID_ standard, který definuje garance přístupu a platnost dat v případě chybových událostí, jako jsou výpadky proudu, náhlé chyby či jiné externí okolnosti, které by mohly ovlivnit chod databáze @postgres.
+    PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (@rls:short), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (fulltextové vyhledávání). PostgreSQL také dodržuje takzvaný @acid:short standard, který definuje garance přístupu a platnost dat v případě chybových událostí, jako jsou výpadky proudu, náhlé chyby či jiné externí okolnosti, které by mohly ovlivnit chod databáze @postgres.
 
     Velkou výhodou databázového systému PostgreSQL je pak jeho rozšiřitelnost, jeho funkcionalitu lze pak jednoduše expandovat pomocí rozšíření @postgres. Mezi některá známá rozšíření pak patří například PgVector, který implementuje rozšířené vektorové vyhledávání, což je velkou výhodou pro optimalizované vyhledávání ve velkých datasetech @pgvector.
 
@@ -684,10 +678,11 @@
       import { z } from "zod";
 
       const userSchema = z.object({
-        email: z.string().email(),
+        email: z.email(),
         password: z.string().min(8, "Minimálně 8 znaků!"),
         name: z.string().optional(),
       });
+      // TS typ odvozený ze schématu
       type User = z.infer<typeof userSchema>;
       ```,
       caption: [Příklad užití knihovny Zod],
@@ -701,7 +696,7 @@
 
     === Anonymní odesílání přihlášek
 
-    V případě, že je v nastavení aplikace povolena možnost přijímání přihlášek bez vytváření účtu, lze úspěšně odeslat přihlášku i bez přihlášení. V tomto případě odesílatele přihlášky ale nelze identifikovat, tedy nelze zasílat různá upozornění, či informovat o důležitých změnách.
+    V případě, že je v nastavení aplikace povolena možnost přijímání přihlášek bez vytváření účtu, lze úspěšně odeslat přihlášku i bez přihlášení. V tomto případě odesílatele přihlášky ale nelze identifikovat, není tedy možné přihlášku spojit s konkrétním uživatelem, což znamená, že odeslané přihlášky nelze později upravovat ani prohlížet. Tato funkce je určena pro případy, kdy je potřeba umožnit odesílání přihlášek i pro uživatele, kteří nechtějí nebo nemohou vytvořit účet. V případě povolení této funkce se pod tlačítkem na registraci objeví možnost odeslat přihlášku bez registrace, což otevře jednorázový formulář.
 
     === Autentizace a autorizace pomocí knihovny Better Auth
 
@@ -717,7 +712,7 @@
 
     === Middleware pro ochranu veřejné API<nsa-middleware>
 
-    Je nutno zmínit, že aplikace obsahuje API, k němuž lze přistupovat z veřejné sítě. Toto API je vygenerované Next.js ze serverových akcí a je tedy přístupné z klientské části aplikace. Toto API je nutno ochránit před neoprávněným přístupem, což je zajištěno pomocí knihovny Next-Safe-Action. Jedná se o knihovnu, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
+    Je nutno zmínit, že aplikace obsahuje API, k němuž lze přistupovat z veřejné sítě. Toto API je vygenerované Next.js ze serverových akcí a je tedy přístupné z klientské části aplikace. API je nutno ochránit před neoprávněným přístupem, což je zajištěno pomocí knihovny Next-Safe-Action. Jedná se o knihovnu, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
 
     V konfiguraci Next-Safe-Action lze použít funkci `.use()` pro definování _middleware_ (prostředník pro zachycování požadavků). Tento _middleware_ je vykonán před samotnou serverovou akcí a může být použit pro různé účely, jako je kontrola autentizace uživatele, logování požadavků, či manipulace s daty požadavku.
 
@@ -738,9 +733,13 @@
 
     Formulář pro vytvoření přihlášky je dostupný po kliknutí na tlačítko _Nová přihláška_ v sekci "Moje přihlášky". K formuláři lze přistoupit pouze v případě, že nejsou splněny žádné podmínky pro zamezení přístupu k formuláři (např. uzávěrka přihlášek, či globální zamezení přístupu pro uživatele s rolí `guest`).
 
-    Formulář obsahuje několik sekcí, které pokrývají různé části přihlášky: údaje o žadateli, údaje o zákonných zástupcích a další otázky týkající se přihlášky. Každá sekce obsahuje různé typy vstupních polí, jako jsou textová pole, výběrové seznamy, přepínače a další. Pro postoupení do další sekce je vždy potřeba vyplnit všechna povinná pole tak, aby podléhala schématu validace. Po úspěšném vyplnění všech sekcí a odeslání formuláře je přihláška uložena do databáze a uživatel je přesměrován zpět do sekce "Moje přihlášky", kde může sledovat stav své přihlášky. Přihlášku po odeslání již není možné upravovat.
+    #figure(image("assets/image-6.png", width: 80%), caption: [
+      Část formuláře pro vytvoření přihlášky s několika sekcemi a různými typy vstupních polí
+    ])
 
-    Při každém odeslání formuláře je formulář zařazen do ročníku, jenž je aktuálně otevřen pro přijímání přihlášek. K rodnému číslu žadatele je také přiřazeno _evidenční číslo_, které je automaticky vygenerováno (nebo při opětovném podání přihlášky znovu použito) na základě počtu již přijatých přihlášek v daném ročníku.
+    Formulář obsahuje několik sekcí, které pokrývají různé části přihlášky: údaje o žadateli, údaje o zákonných zástupcích a další otázky týkající se přihlášky. Každá sekce obsahuje různé typy vstupních polí, jako jsou textová pole, výběrové seznamy, přepínače a další. Pro postoupení do další sekce je vždy potřeba vyplnit všechna povinná pole tak, aby podléhala schématu validace. V případě špatně vyplněného pole je uživatel upozorněn a pole musí opravit. Po úspěšném vyplnění všech sekcí a odeslání formuláře je přihláška uložena do databáze a uživatel je přesměrován zpět do sekce "Moje přihlášky", kde může sledovat stav své přihlášky. Přihlášku po odeslání již není možné upravovat.
+
+    Při každém odeslání formuláře je formulář zařazen do ročníku, jenž je aktuálně otevřen pro přijímání přihlášek. K rodnému číslu žadatele je také přiřazeno _evidenční číslo_, které je automaticky vygenerováno (nebo při opětovném podání přihlášky znovu použito) na základě počtu již přijatých přihlášek v daném ročníku (viz @evidencni-cisla).
 
     === Nastavení profilu
 
@@ -765,13 +764,13 @@
     #text([Sekce "Obecné"], weight: "bold", size: 13pt)
 
     Sekce obsahuje hlavní nastavení samotné aplikace, mezi některé vybrané konfigurovatelné možnosti patří:
-    - *Přístup k přihlašovacímu formuláři* -- výběr mezi možnostmi:
+    - *Přístup k přihlašovacímu formuláři* -- kontroluje nastavení přístupu k přihlašovacímu formuláři a je omezen na následující hodnoty:
       - "Otevřeno pro všechny (ignorovat uzávěrku)" -- umožňuje přístup k formuláři všem přihlášeným uživatelům.
       - "Otevřeno pro vychovatele (ignorovat uzávěrku)" -- přístup k přihlášce je možný pouze uživatelům s rolí _user_ a vyšší.
       - "Uzavřeno po datu konce přihlašování" -- obsah je dostupný pouze do vypršení předem stanovené lhůty.
       - "Uzavřeno" -- k obsahu nemá přístup žádný typ uživatele.
     - *Datum konce přihlašování* -- nastavením data a času znemožníte přístup k formuláři po daném termínu. Toto pravidlo však vstoupí v platnost pouze v případě, že je přístup k formuláři nastaven na "Uzavřeno po datu konce přihlašování".
-    - *Název domény* -- toto pole je pouze estetické. Vzhledem k univerzálnímu návrhu aplikace bylo přidáno toto pole, aby žadatelé dokázali jednoduše odlišit, pro jaké internátní zařízení aplikaci využívají.
+    - *Název domény* -- toto pole je pouze estetické. Vzhledem k univerzálnímu návrhu aplikace bylo přidáno toto pole, aby žadatelé dokázali jednoduše odlišit, pro jaké zařízení aplikaci využívají.
     - *Povolit vlastní obory* -- tato možnost umožní žadatelům zadat vlastní studijní obor v případě, že nestudují na žádném z předdefinovaných oborů. Pokud je tato možnost zakázána, musí žadatelé vybrat obor ze seznamu předdefinovaných oborů.
     - *Potvrzení při odeslání přihlášky* -- slouží jako text, který musí uživatelé odsouhlasit před odesláním samotné přihlášky.
 
@@ -785,7 +784,7 @@
 
     #text([Sekce "Studijní obory"], weight: "bold", size: 13pt)
 
-    Sekce sloužící pro správu studijních oborů. Každý obor má jméno, krátkou formu jména, délku studia a možnost nastavení, zda-li se jedná o obor, ve kterém začíná výuka brzy (tento fakt poté ovlivňuje samotné bodování přihlášky).
+    Sekce sloužící pro správu studijních oborů. Obsahuje tabulku s jednotlivými obory. Každý obor má jméno, krátkou formu jména, délku studia a možnost nastavení, zda-li se jedná o obor, ve kterém začíná výuka brzy (tento fakt poté ovlivňuje samotné bodování přihlášky).
 
     #text([Sekce "Účty"], weight: "bold", size: 13pt)
 
@@ -793,7 +792,7 @@
 
     #text([Sekce "Generace PDF"], weight: "bold", size: 13pt)
 
-    Sekce určená pro správu šablony PDF, která se používá pro generaci PDF dokumentů z přihlášek. Šablona je nahrána do systému a obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací a jsou následně vyplňována daty z přihlášky při generování PDF.
+    Sekce určená pro správu šablony PDF, která se používá pro generaci PDF dokumentů z přihlášek. Šablona je nahrána do systému a obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací a jsou následně vyplňována daty z přihlášky při generování PDF (více v @export-pdf).
 
     #figure(image("assets/image.png"), caption: [
       Vybraná jména polí, která lze do šablony PDF vložit pro následné vyplnění daty z přihlášky.
@@ -801,7 +800,7 @@
 
     === Zobrazení přijatých přihlášek
 
-    Vychovatelé mají přístup k přehlednému seznamu všech přihlášek. Seznam je zde implementován pomocí přehledné tabulky s podporou stránkování, filtrování a vyhledávání. Každá přihláška je zobrazena v řádku tabulky s možností rozkliknutí pro zobrazení detailních informací o přihlášce. Z této stránky lze také přihlášky mazat.
+    Vychovatelé mají přístup k přehlednému seznamu všech přihlášek. Seznam je zde implementován pomocí přehledné tabulky s podporou stránkování, filtrování a vyhledávání. Každá přihláška je zobrazena v řádku tabulky s možností rozkliknutí pro zobrazení detailních informací o přihlášce. Z této stránky lze také přihlášky mazat či provádět hromadné akce, jako je export do PDF pro více přihlášek najednou, nebo změna stavu více přihlášek najednou.
 
     === Detaily přihlášky
 
@@ -813,18 +812,16 @@
 
     Mezi vybrané funkce, které jsou dostupné v detailu přihlášky, patří například možnost zobrazení trvalého bydliště v aplikaci Mapy.com #footnote(link("https://mapy.com/")) nebo v aplikaci IDOS #footnote(link("https://idos.cz/")) (pro kontrolu vzdálenosti mezi trvalým bydlištěm a internátem). Kliknutím na individuální e-mailové adresy lze také odesílat e-maily přímo z aplikace, což usnadňuje komunikaci s žadateli a zákonnými zástupci.
 
-    #pagebreak()
-
-    === Export přihlášek do PDF
+    === Export přihlášek do PDF <export-pdf>
 
     Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci. Aktuální způsob řešení využívá funkce standardu PDF, polemi AcroForms, které umožňují definovat interaktivní formulářová pole přímo v PDF dokumentu. Tato pole jsou následně vyplňována daty z přihlášky při generování PDF. Tato pole jsou podporávna většinou moderních PDF editorů @iso32000.
 
-    Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné ani efektivní. Aktuálně existují dvě možná řešení pro generování PDF z předhotovené šablony, které by vyhovovali aktuálnímu systému na domově mládeže: přes vyplňování buněk v XLSX a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování, kvalitě a univerzalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB, která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí @pdf-lib. Celý proces generování PDF probíhá následovně:
+    Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné ani efektivní. Aktuálně existují dvě možná řešení pro generování PDF z předhotovené šablony, které by vyhovovali aktuálnímu systému na domově mládeže: přes vyplňování buněk v XLSX (což je původní formát, ve kterém je přihláška tvořena) a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování, kvalitě a univerzalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB, která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí @pdf-lib. Celý proces generování PDF probíhá následovně:
 
     - Předem je vytvořena šablona PDF, která obsahuje formulářová pole pro všechny potřebné údaje z přihlášky. Tato pole jsou předem definována webovou aplikací. Šablona je nahrána do systému přes nastavení aplikace.
     - Pro vygenerování PDF konkrétní přihlášky, či sady přihlášek lze použít tlačítko pro export do PDF, které se nachází jak ve stránce pro detaily přihlášky, tak i v přehledu přihlášek. Po kliknutí na tlačítko se spustí proces generování PDF, který načte šablonu PDF, vyplní formulářová pole daty z přihlášky a vygeneruje výsledný PDF dokument, který je následně odeslán uživateli ke stažení.
 
-    Interně je pro generování PDF vytvořena speciální API, která přijímá ID přihlášky (nebo skupiny ID) a vrací vyplněný PDF dokument. Všechny PDF jsou zpracovány v samostatném vlákně (_worker thread_), aby nedocházelo k blokování hlavního vlákna serveru a tím i zhoršení výkonu aplikace. Všechny přihlášky se zároveň ukládají do lokální cache, aby se zrychlil přístup k již vygenerovaným PDF dokumentům (cache se automaticky přepisuje při případných změnách přihlášek).
+    Interně je pro generování PDF vytvořena speciální API, která přijímá ID přihlášky (nebo skupiny ID) a vrací vyplněný PDF dokument. Všechny PDF jsou zpracovány v samostatném vlákně (_worker thread_), aby nedocházelo k blokování hlavního vlákna serveru a tím i zhoršení výkonu aplikace. Všechny přihlášky se zároveň ukládají do lokální cache, aby se zrychlil přístup k již vygenerovaným PDF dokumentům (cache se automaticky přepisuje při případných změnách přihlášek, aby se zajistila aktuálnost dat).
 
     #show math.equation: set text(size: 12pt);
 
@@ -838,9 +835,9 @@
 
     Archivace školního roku nemá vliv na již vygenerovaná evidenční čísla přihlášek, ta zůstávají nadále platná a jsou spojena s daným ročníkem. Archivace slouží tedy převážně k ochraně dat před nechtěnými úpravami a organizaci dat v systému.
 
-    === Evidenční čísla
+    === Evidenční čísla <evidencni-cisla>
 
-    Evidenční čísla jsou unikátní identifikátory přihlášek, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška, a pořadového čísla přihlášky v daném ročníku. To implikuje, že pro každé rodné číslo bude evidenční číslo vygenerováno pouze jednou a při opětovném podání přihlášky v dalším ročníku bude použito již existující evidenční číslo.
+    Evidenční čísla jsou unikátní identifikátory uchazečů, které mohou být generovány při odeslání přihlášky. Evidenční číslo je tvořeno kombinací prvního ročníku, ve kterém byla pro dané rodné číslo vygenerována přihláška, a pořadového čísla přihlášky v daném ročníku. To implikuje, že pro každé rodné číslo bude evidenční číslo vygenerováno pouze jednou a při opětovném podání přihlášky v dalším ročníku bude použito již existující evidenční číslo.
 
     #figure(
       $2025\/1$,
