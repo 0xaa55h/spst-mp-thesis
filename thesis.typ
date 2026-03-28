@@ -8,10 +8,10 @@
   author: "Jan Prokůpek",
   date: datetime.today().display("[day]. [month padding:none]. [year]"),
   abstract-cs: [
-    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Úvod krátce popisuje aktuální řešení a problémy s ním spojené. Problematika stávajícího řešení popisuje důvody nutnosti vytvoření nové aplikace a zmiňuje všechny typy řešení, které byly zvažovány pro použití. Stanovení požadavků na novou aplikaci popisuje funkce, které by měla aplikace obsahovat. Architektura webové aplikace popisuje architekturální vzory, které byly použity při návrhu a vývoji aplikace a další teoretické informace. Technologie použité při vývoji popisují technologie, které byly použity při vývoji a důvody, proč byly zvoleny. V kapitole o implementaci webové aplikace je popsána samotná aplikace a její funkce. Poslední kapitola, vývoj a nasazení, popisuje proces vývoje a nasazení aplikace na produkční prostředí.
+    Maturitní práce má za úkol usnadnit proces přihlašování žáků a správu přihlášek vychovateli vytvořením aplikace pro správu přihlašovacího procesu. Teoretická část se zaměřuje na analýzu stávajícího řešení, stanovení požadavků na novou aplikaci, architekturu webové aplikace, popis technologií použitých při vývoji a implementaci samotné aplikace. Praktická část pak popisuje samotné fungování aplikace a její funkce, včetně procesu vývoje a nasazení na produkční prostředí.
   ],
   abstract-en: [
-    The graduation thesis aims to streamline the student registration process and application management for educators by developing a dedicated management application. The introduction briefly describes the current solution and its associated issues. "The problem statement" section outlines the reasons why a new application is necessary and mentions all types of solutions that were considered. Requirements specification for the new application describes the features it should include. The web application architecture section details the architectural patterns used during design and development, along with other theoretical information. "Used technologies" describes the specific tools used during development and the reasons behind their selection. In the implementation chapter, the application itself and its functions are described. The final chapter, development and deployment, covers the development process and the transition of the application to a production environment.
+    This graduation thesis aims to streamline the student enrollment process and simplify application management for educators by developing a dedicated management application. The theoretical part focuses on analyzing the current solution, defining requirements for the new application, detailing the web application architecture, and describing the technologies used during development and implementation. The practical part then describes the actual operation of the application and its features, including the development process and deployment to a production environment.
   ],
   keywords-cs: [
     přihlašovací formulář, domov mládeže, webová aplikace, React, Next.js
@@ -35,7 +35,7 @@
       description: [Programové rozhraní, které definuje způsob komunikace mezi různými částmi aplikace nebo mezi různými službami.],
     ),
     (
-      key: "ci/cd",
+      key: "cicd",
       short: "CI/CD",
       long: "Continuous Integration / Continuous Deployment",
       description: [Soubor postupů a nástrojů pro průběžnou integraci změn, automatizované testování a nasazování aplikace.],
@@ -135,7 +135,7 @@
       short: "ACID",
       long: "Atomicity, Consistency, Isolation, Durability",
       description: [Sada vlastností zajišťujících spolehlivost transakcí v databázových systémech.],
-    )
+    ),
   ),
   body: [
     = Úvod
@@ -306,17 +306,31 @@
     #figure(
       table(
         columns: 3,
-        [*Vlastnost*], [*JWT Token*], [*Session*],
-        [Uchovávání stavu na serveru], [ne], [ano],
-        [Možnost odhlášení uživatele před vypršením platnosti], [složitější], [ano],
-        [Škálovatelnost], [vysoká], [nízká],
+        align: horizon,
+        [*Vlastnost*], [*JWT Token*], [*Session (Cookie)*],
+        
+        [Uchovávání stavu], [Ne (Stateless)], [Ano (Stateful)],
+        
+        [Uložení dat], [Klient (LocalStorage/Cookie)], [Server (RAM/Databáze/Redis)],
+        
+        [Velikost přenosu], [Větší (obsahuje data i podpis)], [Minimální (pouze ID sessiony)],
+        
+        [Škálovatelnost], [Vysoká (není třeba sdílet stav)], [Nižší (vyžaduje sdílenou DB/Sticky sessions)],
+        
+        [Okamžitá revokace], [Složitější (vyžaduje Blacklist)], [Jednoduchá (smazání na serveru)],
+        
+        [Změna oprávnění], [Projeví se až po novém tokenu], [Projeví se okamžitě],
+        
+        [Hlavní riziko], [XSS (krádež tokenu)], [CSRF (podvržení požadavku)],
+        
+        [Vhodné pro], [Mobilní aplikace, Mikroslužby], [Tradiční webové monolity],
       ),
       caption: [Porovnání standardů pro autentizaci a autorizaci],
     )
 
     Důležité je zmínit i zabezpečení těchto autentizačních mechanismů. Oba způsoby vyžadují uložení dat na straně klienta (JWT token nebo session ID), což dokáže být jednoduše zneužito. Pro zabezpečení těchto dat je důležité použít bezpečné úložiště (např. Cookies s parametry `Secure`, `HttpOnly`), které zabrání čtení cookies přímo z klientského JavaScriptu a implementovat další bezpečnostní opatření, jako je například ochrana proti CSRF útokům, použití HTTPS pro šifrování komunikace a pravidelná rotace klíčů pro JWT tokeny (což nadále komplikuji implementaci JWT autentizace) @owasp-authentication.
 
-    V obecné rovině lze říct, že zatímco JWT představuje průmyslový standard pro autorizaci v rámci distribuovaných systémů (např. aplikace s více instancemi či aplikaci využívající mikroslužby) a API, session-based přístup zůstává optimálním řešením pro monolitické webové aplikace, a to především díky vyšší bezpečnosti při ukládání citlivých údajů a jednodušší invalidaci aktivních relací.
+    V obecné rovině lze říct, že zatímco JWT představuje průmyslový standard pro autorizaci v rámci distribuovaných systémů (např. aplikace s více instancemi či aplikaci využívající mikroslužby) a @api:short, session-based přístup zůstává optimálním řešením pro monolitické webové aplikace, a to především díky vyšší bezpečnosti při ukládání citlivých údajů a jednodušší invalidaci aktivních relací.
 
     #pagebreak()
 
@@ -339,7 +353,6 @@
     - `number` pro číselné hodnoty
     - `boolean` pro logické hodnoty (true/false)
     - `array` pro pole hodnot
-    - `enum` pro výčtové typy
     - `any` pro hodnoty, které mohou být jakéhokoliv typu #footnote([Použití typu `any` se nedoporučuje @ts-dos-donts. Jeho použití vede k vypnutí statické kontroly typů pro danou proměnnou, což může vést k chybám, které by jinak mohly být odhaleny během vývoje.])
     - `void` pro funkce, které nevracejí žádnou hodnotu
     - `null` a `undefined` pro reprezentaci neexistujících nebo nedefinovaných hodnot
@@ -369,7 +382,7 @@
 
     === Standard ECMAScript
 
-    Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi moderní funkce, které standard ECMAScript přinesl v posledních letech, patří zejména šipkové funkce, třídy, moduly a podpora asynchronního programování @ecma262_es6.
+    Vývoj syntaxe a funkcí v JavaScriptu (a tedy i TypeScriptu) je řízen standardem ECMAScript, který je pravidelně aktualizován a přináší modernizace syntaxe a funkcionalit do JavaScriptu @ecmascript_def. TypeScript nabízí zpětnou podporu pro verzi ECMAScript standardu až do ES5 @ts-targets. Mezi moderní funkce, které standard ECMAScript přinesl v posledních letech, patří zejména šipkové funkce, třídy, moduly a podpora asynchronního programování @ecma262_es6.
 
     #figure(
       table(
@@ -393,12 +406,13 @@
 
     Next.js je webový framework, který je postaven na Reactu a umožňuje tvorbu kompletních webových aplikací s podporou pokročilých funkcí, jako je _Server-Side Rendering_ (SSR), nebo _Server Actions_ @nextjs.
 
+    Jednou z důležitých a zároveň primárních funkcí je tzv. _File-based routing_, který umožňuje vytváření stránek a @api:short endpointů jednoduše pomocí struktury souborů a složek v projektu. Tento přístup výrazně zjednodušuje organizaci kódu a umožňuje rychlý vývoj bez nutnosti manuální konfigurace routování. Každý soubor se jménem `page.tsx` umístěný ve složce `app` představuje samostatnou webovou stránku, přičemž v souboru musí být vyexportovaná funkce, která vrací React komponentu, jež bude vykreslena jako obsah dané stránky #footnote([Všechny soubory s komponenty, které nejsou v Next.js explicitně označeny s `"use client"` jsou _serverové komponenty_ -- tj. komponenty, které jsou vykreslovány na straně serveru a nelze v nich používat. ]). Pro samotné @api:short endpointy pak je třeba vytvořit soubor se jménem `route.ts` a v něm vyexportovat funkce odpovídající HTTP metodám (např. `GET`, `POST`), které budou zpracovávat příchozí požadavky na danou URL adresu @nextjs.
+
+    #figure(image("assets/image-7.png"), caption: [Příklad routování v Next.js pomocí file-based routingu])
+
     === React
 
-    React je knihovna pro tvorbu uživatelských rozhraní, která umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu @reactjs.
-    Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
-
-    #pagebreak()
+    React je knihovna pro tvorbu uživatelských rozhraní, která umožňuje vytváření komponent založených na stavech a vlastnostech přímo v JavaScriptu či TypeScriptu @reactjs. Jedná se o jeden z nejpoužívanějších nástrojů pro vývoj webových aplikací. Díky přímé integraci v Next.js umožňuje efektivní tvorbu dynamických a interaktivních uživatelských rozhraní.
 
     React umožňuje tvorbu _znovupoužitelných komponent_ (viz @component-architecture). Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderních verzích knihovny React je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data (_props_, též známé v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
 
@@ -425,8 +439,6 @@
     === Správa stavu
 
     Správa stavu (_State Management_) je jedním z klíčových aspektů knihovny React. Stav představuje data v paměti, která se mohou měnit v průběhu života komponenty a ovlivňovat její chování a vzhled. React nejčastěji využívá pro správu stavu vestavěný hook #footnote([Hook je prostá JavaScriptová funkce, která začíná na "use". Používají se pro přidání logiky do funkčních komponent.]) `useState`, který umožňuje definovat a aktualizovat stav na úrovni funkční komponenty.
-
-    #pagebreak()
 
     Pro zamezení tzv. _prop-drillingu_ (situace, kdy je potřeba předávat stavová data z rodičovské komponenty do hluboko zanořených komponent přes několik úrovní atributů komponent), lze využít kontextu (_Context API_), který umožňuje sdílet data mezi komponentami bez nutnosti předávat je přes každou úroveň komponent.
 
@@ -459,7 +471,7 @@
         );
       }
       ```,
-      caption: "Ukázka využití Context API pro správu stavu v Reactu",
+      caption: [Ukázka využití Context @api:short pro správu stavu v Reactu],
     )
 
     #pagebreak()
@@ -488,7 +500,7 @@
 
     Tento speciální typ komponenty umožňuje vývojářům přistupovat ke zdrojům na serveru,
     jako je databáze nebo souborový systém přímo z komponenty, aniž by bylo nutné vytvářet
-    API rozhraní pro komunikaci. Jedním z úskalí RSC je, že tyto komponenty nemohou používat
+    @api:short rozhraní pro komunikaci. Jedním z úskalí RSC je, že tyto komponenty nemohou používat
     interaktivní prvky (např. `onClick` události nebo `useState` hook).
 
     Využití samotné RSC také prodlužuje dobu načítání stránky, protože React čeká na
@@ -535,8 +547,8 @@
 
     === Server Actions v Next.js
 
-    Server Actions (česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné API na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
-    volat přímo z komponent na straně klienta. Next.js interně automaticky vytvoří potřebné API na pozadí @nextjs-server-actions.
+    Server Actions (česky Serverové akce nebo Funkce na straně serveru) nahrazují potřebu vytváření samostatné @api:short na serveru, kterou by bylo nutné z klientské strany volat. Místo toho lze funkce, jež jsou definovány ve speciálním souboru
+    volat přímo z komponent na straně klienta. Next.js interně automaticky vytvoří potřebné @api:short na pozadí @nextjs-server-actions.
 
     Jako příklad můžeme vytvořit jednoduchou funkci, jejíž úkolem bude vrátit aktuální čas ze serveru. Server Actions jsou definovány v souborech, které začínají direktivou `"use server"`.
 
@@ -589,12 +601,12 @@
     == Prisma ORM
 
     Prisma je moderní ORM (Object-Relational Mapping) nástroj pro TypeScript,
-    který slouží k interakci s databází pomocí automaticky generovaného
-    typovaného API @prisma-orm. Jedná se o jednu z nejpopulárnějších možností pro práci s databázemi v TypeScriptu, a díky své jednoduchosti pro vykonávání jednoduchých CRUD operací byla ideální volbou pro tento projekt.
+    který slouží k interakci s databází pomocí automaticky generovaného,
+    typovaného @api:short @prisma-orm. Jedná se o jednu z nejpopulárnějších možností pro práci s databázemi v TypeScriptu, a díky své jednoduchosti pro vykonávání jednoduchých CRUD operací byla ideální volbou pro tento projekt.
 
     Každý projekt definuje své schéma databáze v souboru zakončeného příponou `.prisma`.
     Tento soubor obsahuje modely, které reprezentují tabulky a jejich vztahy v databázi.
-    Prisma následně na základě tohoto schématu generuje typované API pro interakci s databází.
+    Prisma následně na základě tohoto schématu generuje typované @api:short pro interakci s databází.
 
     #figure(
       ```prisma
@@ -622,17 +634,17 @@
       caption: [Ukázka použití generovaného kódu pro práci s modelem `User`],
     )
 
-    Prisma podporuje širokou škálu databázových systémů, včetně PostgreSQL, MySQL, SQLite a dalších @prisma-orm.
+    Prisma podporuje širokou škálu databázových systémů, včetně PostgreSQL, MySQL, SQLite a dalších. Zároveň také přidává tzv. migrace, tedy sbírání a správu změn v databázovém schématu. To umožňuje aktualizovat schéma bez nutnosti ručního zásahu při nutnosti opravovat data, o které by se mohlo změnou schématu přijít @prisma-orm.
 
     === PostgreSQL
 
     PostgreSQL je relační SQL databázový systém, který byl společně s Prismou zvolen jako hlavní databázové řešení pro tento projekt. Jedná se o jeden z nejpoužívanějších databázových systémů s pokročilými funkcemi, jako je podpora transakcí, bezpečnost pomocí Row-Level Security (@rls:short), pokročilé datové typy (JSON, UUID), či _Full-Text Search_ (fulltextové vyhledávání). PostgreSQL také dodržuje takzvaný @acid:short standard, který definuje garance přístupu a platnost dat v případě chybových událostí, jako jsou výpadky proudu, náhlé chyby či jiné externí okolnosti, které by mohly ovlivnit chod databáze @postgres.
 
-    Velkou výhodou databázového systému PostgreSQL je pak jeho rozšiřitelnost, jeho funkcionalitu lze pak jednoduše expandovat pomocí rozšíření @postgres. Mezi některá známá rozšíření pak patří například PgVector, který implementuje rozšířené vektorové vyhledávání, což je velkou výhodou pro optimalizované vyhledávání ve velkých datasetech @pgvector.
+    Velkou výhodou databázového systému PostgreSQL je pak jeho rozšiřitelnost, jeho funkcionalitu lze pak jednoduše expandovat pomocí rozšíření @postgres. Mezi některá známá rozšíření pak patří například PgVector, který implementuje rozšířené vektorové vyhledávání, což je velkou výhodou pro optimalizované vyhledávání ve velkých datasetech @pgvector. Vzhledem k potenciálnímu množství dat, které se časem v aplikaci nahromadí, by mohla rozšiřitelnost PostgreSQL být klíčovou funkcí databázového systému pro tento projekt.
 
     == TailwindCSS
 
-    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé a efektivní vytváření uživatelských rozhraní pomocí tříd s předdefinovanými styly @tailwindcss. Vývojářům je umožněno vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
+    TailwindCSS je podpůrný CSS framework pro moderní webový vývoj, který umožňuje rychlé a efektivní vytváření uživatelských rozhraní pomocí tříd s předdefinovanými styly @tailwindcss. Vývojářům mohou vytvářet responzivní a přizpůsobitelná rozhraní bez nutnosti psaní vlastního CSS kódu od nuly. Poskytuje širokou škálu tříd, které pokrývají různé aspekty stylování, jako je rozvržení, barvy, responzivita, typografie a další.
 
     #figure(
       ```html
@@ -669,7 +681,7 @@
 
     == Kontrola a validace dat
 
-    Protože jsou data zadaná uživateli často náchylná k chybovosti, je důležité zabezpečit formuláře a API rozhraní kontrolou a validací vstupních dat. Validaci je důležité provádět duálně -- jak na straně klienta (pro rychlou odezvu bez nutnosti komunikace se serverem), tak i na straně serveru (pro zajištění bezpečnosti a integrity dat). Důvodem pro dvojitý přístup k validaci je fakt, že validace na straně klienta může být snadno obejita (např. pomocí nástrojů pro vývojáře v prohlížeči), zatímco validace na straně serveru obejita být nemůže a zajišťuje správnost dat, která jsou uložena v databázi.
+    Protože jsou data zadaná uživateli často náchylná k chybovosti, je důležité zabezpečit formuláře a @api:short rozhraní kontrolou a validací vstupních dat. Validaci je důležité provádět duálně -- jak na straně klienta (pro rychlou odezvu bez nutnosti komunikace se serverem), tak i na straně serveru (pro zajištění bezpečnosti a integrity dat). Důvodem pro dvojitý přístup k validaci je fakt, že ji lze snadno obejít (např. pomocí nástrojů pro vývojáře v prohlížeči), zatímco validace na straně serveru obejita být nemůže a zajišťuje správnost dat, která jsou uložena v databázi.
 
     Pro práci s validací dat byla zvolena knihovna Zod. Pomocí Zodu lze jednoduše definovat schéma pro validaci dat a následně použít toto schéma pro validaci dat jak na straně klienta, tak i na straně serveru. Zod umožňuje definovat jak komplexní, tak jednoduché datové struktury, je jednoduše použitelný a nabízí širokou škálu vestavěných validací pro různé datové typy (např. e-mail, URL, čísla, atd.). Zod zároveň využívá výhod TypeScriptu a z modelu lze automaticky odvodit typy, což zajišťuje konzistenci mezi validací a typovou kontrolou v celé aplikaci @zod.
 
@@ -688,7 +700,28 @@
       caption: [Příklad užití knihovny Zod],
     )
 
-    == Přihlášovací formulář a autentizace<auth-betterauth>
+    == Získávání a revalidace dat
+
+    Získávání dat (nejen z databáze) je jeden z nejdůležitějších úkonů, které se vyskytují přes celou aplikaci. V Next.js existují 2 hlavní způsoby, kterým lze této akce dosáhnout:
+
+    + Načítání a revalidace na straně serveru; protože jsou komponenty v Next.js serverové, pokud není explicitně řečeno jinak, data na straně serveru lze získat vcelku jednoduše, a to prostým zavoláním databázového dotazu. Při případné změně dat a tedy nutnosti znovu vykreslit daný obsah serverové komponenty je užita funkce `revalidatePage`, která data na dané stránce zneplatní a vynutí znovuvykreslení daného obsahu. Funkce `revalidatePage` musí být volána na straně serveru, protože klient neví, zda-li jsou serverová data stále platná.
+    + Načítání a revalidace na straně klienta; tento způsob je hojně uživaný v aplikacích, které nepoužívají SSR a serverové komponenty nejsou k dispozici. Způsob probíhá klasickým HTTP požadavkem (nebo jiným protokolem aplikační vrstvy), který vrátí požadovaná data a těm je přiřazen tag. V případě zneplatnění datného tagu aplikace automaticky znovu požádá o daná data. V dnešní době jsou často preferovány různé knihovny pro získávání těchto dat, např. TanStack Query, která umožňuje jednoduchou správu informací z požadavku.
+
+    #figure(
+      ```ts
+      const query = useQuery({
+        queryKey: ["people"],
+        queryFn: () => fetch("...").then(it => it.json())
+      })
+      const data = query.data; // JSON
+      query.invalidate(); // Invalidace dat
+      ```,
+      caption: [Použití TanStack Query],
+    )
+
+    I když samotná Next.js dokumentace preferuje využití serverových komponent @nextjs, a tedy i načítání dat na straně serveru, v projektu se vyskytují obě kombinace, a to například v místech, kde serverové komponenty nelze využít (interaktivní komponenty -- např. dialogy, popup okna, atd.)
+
+    == Přihlášovací formulář a autentizace
 
     Po úvodním otevření aplikace je uživatel automaticky přesměrován na přihlašovací stránku, kde se lze přihlásit nebo zaregistrovat nový účet. Pro úspěšnou registraci je potřeba zadat platnou e-mailovou adresu, uživatelské jméno a heslo. Uživatel má také možnost vybrat si, zda si má prohlížeč zapamatovat heslo pro příští návštěvy aplikace. Po úspěšné registraci je uživatel přesměrován do samotného uživatelského rozhraní aplikace.
 
@@ -698,7 +731,7 @@
 
     V případě, že je v nastavení aplikace povolena možnost přijímání přihlášek bez vytváření účtu, lze úspěšně odeslat přihlášku i bez přihlášení. V tomto případě odesílatele přihlášky ale nelze identifikovat, není tedy možné přihlášku spojit s konkrétním uživatelem, což znamená, že odeslané přihlášky nelze později upravovat ani prohlížet. Tato funkce je určena pro případy, kdy je potřeba umožnit odesílání přihlášek i pro uživatele, kteří nechtějí nebo nemohou vytvořit účet. V případě povolení této funkce se pod tlačítkem na registraci objeví možnost odeslat přihlášku bez registrace, což otevře jednorázový formulář.
 
-    === Autentizace a autorizace pomocí knihovny Better Auth
+    === Autentizace a autorizace pomocí knihovny Better Auth<auth-betterauth>
 
     Pro implementaci přihlašovacího formuláře, autentizace i autorizace byla zvolena knihovna Better Auth. Ta nabízí jednoduché a rychlé řešení přihlašování v aplikacích postavených nejen na Reactu a Next.js. Better Auth využívá session-based autentizaci, takže se do cookies ukládá session identifikátor, který server ověřuje při každém požadavku @better-auth.
 
@@ -712,7 +745,7 @@
 
     === Middleware pro ochranu veřejné API<nsa-middleware>
 
-    Je nutno zmínit, že aplikace obsahuje API, k němuž lze přistupovat z veřejné sítě. Toto API je vygenerované Next.js ze serverových akcí a je tedy přístupné z klientské části aplikace. API je nutno ochránit před neoprávněným přístupem, což je zajištěno pomocí knihovny Next-Safe-Action. Jedná se o knihovnu, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
+    Je nutno zmínit, že aplikace obsahuje API, k němuž lze přistupovat z veřejné sítě. Toto @api:short je vygenerované Next.js ze serverových akcí a je tedy přístupné z klientské části aplikace. @api:short je nutno ochránit před neoprávněným přístupem, což je zajištěno pomocí knihovny Next-Safe-Action. Jedná se o knihovnu, která abstrahuje serverové akce v Next.js a přidává jim možnost validace, zachycování chyb a zachycování požadavků za chodu @next-safe-action.
 
     V konfiguraci Next-Safe-Action lze použít funkci `.use()` pro definování _middleware_ (prostředník pro zachycování požadavků). Tento _middleware_ je vykonán před samotnou serverovou akcí a může být použit pro různé účely, jako je kontrola autentizace uživatele, logování požadavků, či manipulace s daty požadavku.
 
@@ -741,6 +774,8 @@
 
     Při každém odeslání formuláře je formulář zařazen do ročníku, jenž je aktuálně otevřen pro přijímání přihlášek. K rodnému číslu žadatele je také přiřazeno _evidenční číslo_, které je automaticky vygenerováno (nebo při opětovném podání přihlášky znovu použito) na základě počtu již přijatých přihlášek v daném ročníku (viz @evidencni-cisla).
 
+    Celý formulář používá knihovnu React Hook Form pro globální správu stavu formáláře a je napojen na knihovnu Zod pro validaci dat.
+
     === Nastavení profilu
 
     Sekce je určena pro správu uživatelského profilu. Uživatel zde může měnit své osobní údaje, jako je jméno, e-mailová adresa a heslo. Pro změnu hesla je potřeba zadat aktuální heslo a nové heslo.
@@ -757,9 +792,13 @@
       Úvodní přehled pro vychovatele s grafy a statistikami o aktuálním ročníku
     ])
 
+    Grafy jsou implementovány pomocí knihovny Recharts, která je obalená komponentou z balíčku Shadcn UI pro zajištění jednotného vzhledu s ostatními prvky celé aplikace.
+
     === Nastavení chování aplikace
 
     Nastavení aplikace se nadále dělí na několik podčástí (sekcí). Většina těchto nastavení je dostupná pouze pro uživatele s rolí `admin` (hlavní vychovatel).
+
+    V celé stránce pro nastavování aplikací je použita knihovna TanStack Table, která umožňuje vytvářet přehledné a funkční tabulky s nativní podporou stránkování, filtrování a dalších funkcí. Tabulky jsou použity zejména pro zobrazení nastavení školních roků, studijních oborů a uživatelů.
 
     #text([Sekce "Obecné"], weight: "bold", size: 13pt)
 
@@ -814,7 +853,7 @@
 
     === Export přihlášek do PDF <export-pdf>
 
-    Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci. Aktuální způsob řešení využívá funkce standardu PDF, polemi AcroForms, které umožňují definovat interaktivní formulářová pole přímo v PDF dokumentu. Tato pole jsou následně vyplňována daty z přihlášky při generování PDF. Tato pole jsou podporávna většinou moderních PDF editorů @iso32000.
+    Jednou z klíčových funkcí pro vychovatele je možnost exportovat přihlášky do PDF formátu. Tento export umožňuje snadné sdílení a archivaci přihlášek mimo samotnou aplikaci. Aktuální způsob řešení využívá funkce standardu PDF, polemi AcroForms, které umožňují definovat interaktivní formulářová pole přímo v PDF dokumentu. Tato pole jsou následně vyplňována daty z přihlášky při generování PDF. Funkce AcroForms je podporávna většinou moderních PDF editorů @iso32000.
 
     Export přihlášky do PDF formátu je ale poněkud záludná záležitost, jelikož generování PDF na straně serveru v prostředí Node.js není příliš běžné ani efektivní. Aktuálně existují dvě možná řešení pro generování PDF z předhotovené šablony, které by vyhovovali aktuálnímu systému na domově mládeže: přes vyplňování buněk v XLSX (což je původní formát, ve kterém je přihláška tvořena) a přes vyplňování formulářových polí přímo v PDF. V jednoduchosti, efektivitě zpracování, kvalitě a univerzalitě výsledného PDF se ukázalo druhé řešení jako lepší, a proto také bylo zvoleno pro implementaci této funkce. Pro tento účel byla zvolena knihovna PDF-LIB, která umožňuje jednoduchou manipulaci s PDF dokumenty, včetně vyplňování formulářových polí @pdf-lib. Celý proces generování PDF probíhá následovně:
 
@@ -850,6 +889,8 @@
 
     _Massmail_, neboli hromadná korespondence, je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
 
+    Posílání e-mailů je realizováno pomocí knihovny Nodemailer, která umožňuje odesílání e-mailů z Node.js aplikací. Parametry pro připojení k SMTP serveru jsou konfigurovatelné pomocí proměnných prostředí, což umožňuje snadné přizpůsobení pro různé prostředí (např. vývojové, testovací, produkční).
+
     === Bodování přihlášek
 
     Další důležitou funkcí v aplikaci je automatické bodování příchozím přihlášek. Přihlášky jsou po odeslání automaticky obodovány a jejich bodový stav se automaticky reflektuje v detailech, kde lze i body manuálně později přepočítat, samotní uchazeči s touto hodnotou však seznámeni nejsou, neboť se v jejich případě považuje za nerelevantní. Bodování je v implementováno přímo v aplikaci a pro jakoukoliv změnu je potřeba změnit aplikaci znovu sestavit. Tento stav není finální a v průběhu přechodu k větší univerzalitě je nutné aby tato funkce šla přímo konfigurovat z nastavení aplikace.
@@ -866,7 +907,12 @@
     )
 
     == Vývojové nástroje
+
+    Pro zajištění efektivního vývojového procesu byly do projektu integrovány různé nástroje, které usnadňují lokální vývoj, zajišťují kvalitu kódu a umožňují monitorování aplikace po nasazení.
+
     === Docker
+
+    Docker je virtualizační technologie, která umožňuje vytvářet, nasazovat a spouštět aplikace v izolovaných prostředích zvaných kontejnery. Kontejnery jsou lehké, přenosné a obsahují všechny potřebné závislosti pro běh aplikace, což usnadňuje vývoj, testování a nasazení aplikací v různých prostředích. Všechny kontejnery jsou tvořeny ze znovupoužitelných Docker obrazů, které jsou sestavovány na základě souboru `Dockerfile`, jenž obsahuje instrukce pro sestavení obrazu, jako je instalace závislostí, kopírování souborů a nastavení prostředí @docker.
 
     Ve vývojovém prostředí lze aplikaci i služby nutné pro její běh (např. databáze) spustit pomocí Dockeru. Pro tento účel je v kořenovém adresáři projektu umístěn soubor `docker-compose.dev.yml`, který definuje potřebné služby a jejich konfiguraci. Tento soubor lze použít pro rychlé a jednotné spuštění databáze Postgres a podpůrného SMTP serveru MailHog.
 
@@ -879,7 +925,7 @@
 
     #text([Biome], weight: "bold", size: 13pt)
 
-    Biome je moderní nástroj pro statickou analýzu kódu, který podporuje různé programovací jazyky, včetně TypeScriptu. Biome nabízí funkce, jako je formátování kódu podle předem stanovených pravidel, detekce chyb v syntaxi, analýza kvality kódu podle definovaných standardů pro statickou analýzu webových aplikací #footnote([Tato pravidla jsou často převzata z jiných nástrojů, jako je ESLint. Kompletní seznam pravidel a jejich odůvodnění lze nalézt v oficiální dokumentaci Biome.]) a další @biomejs.
+    Biome je moderní nástroj pro statickou analýzu kódu, který podporuje různé formáty souborů a programovacích jazyků, včetně TypeScriptu. Biome nabízí funkce, jako je formátování kódu podle předem stanovených pravidel, detekce chyb v syntaxi, analýza kvality kódu podle definovaných standardů pro statickou analýzu webových aplikací #footnote([Tato pravidla jsou často převzata z jiných nástrojů, jako je ESLint. Kompletní seznam pravidel a jejich odůvodnění lze nalézt v oficiální dokumentaci Biome.]) a další @biomejs.
 
     Součástí lokální konfigurace Biome je i integrace s verzovacím systémem Git pomocí _pre-commit hooku_. Z názvu je patrné, že se jedná o skript nebo jinou akci, která bude vykonána před tím, než dojde k vytvoření nového _commitu_ v lokálním repozitáři. V případě Biome je tento _hook_ použit pro automatické spuštění analýzy kódu a případné opravy nalezených problémů.
 
@@ -939,7 +985,7 @@
 
     == GitHub Actions
 
-    GitHub Actions je sada nástrojů pro automatizaci pracovních postupů přímo v rámci platformy GitHub. Jedná se o takzvané _CI/CD_ (Continuous Integration/Continuous Deployment) nástroje, které umožňují automatizovat různé úkoly, jako je testování kódu, nasazení aplikace, nebo jiné opakující se úkoly @github-actions.
+    GitHub Actions je sada nástrojů pro automatizaci pracovních postupů přímo v rámci platformy GitHub. Jedná se o takzvané @cicd:short (Continuous Integration/Continuous Deployment) nástroje, které umožňují automatizovat různé úkoly, jako je testování kódu, nasazení aplikace, nebo jiné opakující se úkoly @github-actions.
 
     V tomto projektu by se použité GitHub akce daly rozdělit do 2 kategorií:
     + Akce pro zajištění kvality kódu -- tyto akce jsou nastaveny tak, aby se spouštěly při každé aktualizaci kódu, jedná se o kontrolu sestavení projektu, spuštění testů a analýzu kódu pomocí SonarQube. Zároveň akce kontroluje zranitelnosti v závislostech projektu.
@@ -953,7 +999,7 @@
 
     Nasazení aplikace na produkční systém probíhá pomocí automatizovaného procesu, který je spuštěn při každé aktualizaci hlavní větve v repozitáři na platformě GitHub. Tento proces je implementován pomocí GitHub Actions.
 
-    V prvním kroku procesu nasazení je spuštěna akce, která ověří spustitelnost kódu testovacím sestavením. Pokud je sestavení úspěšné, akce odešle HTTP požadavek na otevřené API jednoduchého webového serveru běžícího na produkčním serveru. Tento požadavek slouží jako spouštěč skriptu, který je zodpovědný za znovunasazení aplikace. Skript následně vykoná následující kroky, přesně v tomto pořadí:
+    V prvním kroku procesu nasazení je spuštěna akce, která ověří spustitelnost kódu testovacím sestavením. Pokud je sestavení úspěšné, akce odešle HTTP požadavek na otevřené @api:short jednoduchého webového serveru běžícího na produkčním serveru. Tento požadavek slouží jako spouštěč skriptu, který je zodpovědný za znovunasazení aplikace. Skript následně vykoná následující kroky, přesně v tomto pořadí:
 
     - Zastaví běžící instance aplikace (pokud existuje), vypne pm2 proces.
     - Aktualizuje zdrojový kód aplikace uložený na serveru pomocí `git pull` pro získání nejnovějších změn z repozitáře.
@@ -967,7 +1013,7 @@
 
     === Architektura produkčního serveru
 
-    Produkční server je hostován jako LXC kontejner na hlavním školním serveru. Tento kontejner je nakonfigurován tak, aby poskytoval izolované prostředí pro běh aplikace, což zajišťuje bezpečnost a stabilitu aplikace. Kontejner obsahuje všechny potřebné závislosti a konfigurace pro běh aplikace, včetně databázového serveru PostgreSQL a přístupu na SMTP server pro odesílání e-mailů přes školní doménu.
+    Produkční server je hostován jako @lxc:short kontejner na hlavním školním serveru. Tento kontejner je nakonfigurován tak, aby poskytoval izolované prostředí pro běh aplikace, což zajišťuje bezpečnost a stabilitu aplikace. Kontejner obsahuje všechny potřebné závislosti a konfigurace pro běh aplikace, včetně databázového serveru PostgreSQL a přístupu na SMTP server pro odesílání e-mailů přes školní doménu.
 
     Pro přístup k aplikaci z veřejné sítě je na školním serveru nastavena služba Nginx, která poskytuje reverzní proxy pro směrování HTTP požadavků na správný port, na kterém aplikace běží. V případě služby pro znovunasazení je pak v konfiguraci reverzní proxy nastaveno směrování požadavků na specifickou cestu a přístup je omezen na klíč pro ověření. Pro bezpečnostní účely je také implementována cesta pro _kill-switch_, která umožňuje pouhým posláním HTTP požadavku na specifickou cestu okamžitě vzdáleně zastavit běh aplikace, což je užitečné v případě zjištění závažné chyby, nebo bezpečnostního incidentu.
 
