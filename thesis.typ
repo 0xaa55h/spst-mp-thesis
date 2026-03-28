@@ -171,7 +171,7 @@
 
     Mezi hlavní výhody Google Forms patří hlavně intuitivní uživatelské rozhraní, jednoduché
     nastavení a možnost rychlého sdílení formulářů prostřednictvím odkazu. Dále nabízí
-    automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak existují i funkce, které jsou zásadní a chybí. Pro školní rok 2025/2026 byly Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote("Tento krok byl řešen automaticky pomocí zautomatizovaného skriptu v Google Sheets, z vlastní zkušenosti však bylo toto řešení velice chybové a často se muselo upravovat."), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
+    automatický export dat do tabulek. Všechny tyto funkce výrazně usnadňují přihlašovací proces, avšak existují i funkce, které jsou zásadní a chybí. Pro školní rok 2025/2026 byly Google Forms pilotně využity jako nástroj pro sběr přihlášek. Část procesu přihlašování z administrativní strany tvoří např. archivace přijatých přihlášek ve formátu PDF #footnote([Tento krok byl řešen automaticky pomocí zautomatizovaného skriptu v tabulkovém procesoru, z vlastní zkušenosti však bylo toto řešení velice chybové a často se muselo upravovat.]), či komunikace se žadateli. Tyto funkce však Google Forms nenabízí, což vede k nutnosti manuálního zpracování.
 
     == Externí řešení
 
@@ -261,7 +261,7 @@
 
     Komunikace mezi klientem a serverem na aplikační vrstvě může používat různé protokoly, mezi nejběžněji používané protokoly patří HTTP (HyperText Transfer Protocol), WebSocket a GraphQL. V této práci probíhá komunikace mezi klientem a serverem primárně pomocí protokolu HTTP.
 
-    Protokol HTTP dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient (prohlížeč) odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace.
+    Protokol HTTP dělí komunikaci na dvě hlavní části: požadavek (_request_) a odpověď (_response_). Klient (prohlížeč) odešle požadavek na server, který tento požadavek zpracuje a následně odešle zpět odpověď. Požadavek i odpověď obsahují různé informace @rfc2616.
 
     HTTP požadavek je definován především metodou (např. GET pro čtení či POST pro zápis), která určuje typ operace, a cílovou adresou URL identifikující konkrétní zdroj. Nedílnou součást tvoří hlavičky, nesoucí metadata typu autentizačních údajů či formátu dat, a volitelně také tělo požadavku obsahující samotná data k odeslání. Server následně na tento podnět reaguje strukturou, jejímž klíčovým prvkem je stavový kód (např. 200 OK či 404 Not Found), ten poskytuje okamžitou informaci o výsledku zpracování. Obdobně jako u požadavku, i odpověď obsahuje specifické hlavičky a zpravidla i tělo, které nese klientem vyžádaný obsah, nejčastěji ve formátu JSON nebo HTML @rfc2616.
 
@@ -308,21 +308,21 @@
         columns: 3,
         align: horizon,
         [*Vlastnost*], [*JWT Token*], [*Session (Cookie)*],
-        
+
         [Uchovávání stavu], [Ne (Stateless)], [Ano (Stateful)],
-        
+
         [Uložení dat], [Klient (LocalStorage/Cookie)], [Server (RAM/Databáze/Redis)],
-        
+
         [Velikost přenosu], [Větší (obsahuje data i podpis)], [Minimální (pouze ID sessiony)],
-        
+
         [Škálovatelnost], [Vysoká (není třeba sdílet stav)], [Nižší (vyžaduje sdílenou DB/Sticky sessions)],
-        
+
         [Okamžitá revokace], [Složitější (vyžaduje Blacklist)], [Jednoduchá (smazání na serveru)],
-        
+
         [Změna oprávnění], [Projeví se až po novém tokenu], [Projeví se okamžitě],
-        
+
         [Hlavní riziko], [XSS (krádež tokenu)], [CSRF (podvržení požadavku)],
-        
+
         [Vhodné pro], [Mobilní aplikace, Mikroslužby], [Tradiční webové monolity],
       ),
       caption: [Porovnání standardů pro autentizaci a autorizaci],
@@ -406,7 +406,7 @@
 
     Next.js je webový framework, který je postaven na Reactu a umožňuje tvorbu kompletních webových aplikací s podporou pokročilých funkcí, jako je _Server-Side Rendering_ (SSR), nebo _Server Actions_ @nextjs.
 
-    Jednou z důležitých a zároveň primárních funkcí je tzv. _File-based routing_, který umožňuje vytváření stránek a @api:short endpointů jednoduše pomocí struktury souborů a složek v projektu. Tento přístup výrazně zjednodušuje organizaci kódu a umožňuje rychlý vývoj bez nutnosti manuální konfigurace routování. Každý soubor se jménem `page.tsx` umístěný ve složce `app` představuje samostatnou webovou stránku, přičemž v souboru musí být vyexportovaná funkce, která vrací React komponentu, jež bude vykreslena jako obsah dané stránky #footnote([Všechny soubory s komponenty, které nejsou v Next.js explicitně označeny s `"use client"` jsou _serverové komponenty_ -- tj. komponenty, které jsou vykreslovány na straně serveru a nelze v nich používat. ]). Pro samotné @api:short endpointy pak je třeba vytvořit soubor se jménem `route.ts` a v něm vyexportovat funkce odpovídající HTTP metodám (např. `GET`, `POST`), které budou zpracovávat příchozí požadavky na danou URL adresu @nextjs.
+    Jednou z důležitých a zároveň primárních funkcí je tzv. _File-based routing_, který umožňuje vytváření stránek a @api:short endpointů jednoduše pomocí struktury souborů a složek v projektu. Tento přístup výrazně zjednodušuje organizaci kódu a umožňuje rychlý vývoj bez nutnosti manuální konfigurace routování. Každý soubor se jménem `page.tsx` umístěný ve složce `app` představuje samostatnou webovou stránku, přičemž v souboru musí být vyexportovaná funkce, která vrací React komponentu, jež bude vykreslena jako obsah dané stránky #footnote([Všechny soubory s komponenty, které nejsou v Next.js explicitně označeny s `"use client"` jsou _serverové komponenty_ -- tj. komponenty, které jsou vykreslovány na straně serveru a nelze v nich používat React funkce. ]). Pro samotné @api:short endpointy pak je třeba vytvořit soubor se jménem `route.ts` a v něm vyexportovat funkce odpovídající HTTP metodám (např. `GET`, `POST`), které budou zpracovávat příchozí požadavky na danou URL adresu @nextjs.
 
     #figure(image("assets/image-7.png"), caption: [Příklad routování v Next.js pomocí file-based routingu])
 
@@ -416,7 +416,7 @@
 
     React umožňuje tvorbu _znovupoužitelných komponent_ (viz @component-architecture). Tyto komponenty jsou prosté funkce nebo třídy #footnote("V moderních verzích knihovny React je doporučeno používat výhradně funkční komponenty."), které přijímají vstupní data (_props_, též známé v HTML jako atributy). Komponenty mohou také spravovat svůj vlastní stav -- _state_, což umožňuje vytváření interaktivních prvků uživatelského rozhraní.
 
-    Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi JSX, ta umožňuje kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
+    Každý soubor s příponou `.tsx` nebo `.jsx` představuje soubor podporující speciální syntaxi @jsx:short, ta umožňuje kombinovat kód podobný HTML přímo do JavaScriptu/TypeScriptu. Tento kód je následně přeložen do nativního JavaScriptu, který je vykonáván v prohlížeči.
 
     #figure(
       ```tsx
@@ -586,12 +586,12 @@
 
     === Kompilace Next.js
 
-    Pro optimalizaci výkonu a zajištění kompatibility se širokou škálou prohlížečů, framework Next.js využívá pro kompilaci kódu nástroj SWC a Turbopack. Při spuštění příkazu, který kompiluje a zajištuje přípravu kódu na produkčním prostředí (typicky `next build`), se odehraje několik zásadních kroků. Lze je pozorovat při samotném běhu tohoto příkazu (v terminálu se zobrazí informace o jednotlivých krocích kompilace):
+    Pro optimalizaci výkonu a zajištění kompatibility se širokou škálou prohlížečů, framework Next.js využívá pro kompilaci kódu nástroj SWC a Turbopack. Při spuštění příkazu, který kompiluje a zajištuje přípravu kódu na produkčním prostředí (typicky `next build`), se odehraje několik zásadních kroků. Lze je pozorovat při samotném běhu tohoto příkazu (v terminálu se zobrazí informace o jednotlivých krocích kompilace) @nextjs:
 
     + Validace JavaScriptu a TypeScriptu pro zajištění správnosti kódu.
     + Transformace kódu do podoby optimalizované pro produkční prostředí (odstraňování mrtvého kódu, optimalizace importů, atd.).
-    + Transpilace kódu z TypeScriptu do JavaScriptu. (TSC/Bun)
-    + Spuštění předkompilovatelných funkcí (pre-rendering), jako jsou React Server Components a Server Actions. (Turbopack)
+    + Transpilace kódu z TypeScriptu do JavaScriptu. (SWC)
+    + Spuštění předkompilovatelných funkcí (pre-rendering), jako jsou React Server Components a Server Actions. (SWC)
     + Vytvoření produkčního balíčku připraveného pro nasazení.
 
     #figure(image("assets/image-5.png", width: 70%), caption: [
@@ -704,22 +704,27 @@
 
     Získávání dat (nejen z databáze) je jeden z nejdůležitějších úkonů, které se vyskytují přes celou aplikaci. V Next.js existují 2 hlavní způsoby, kterým lze této akce dosáhnout:
 
-    + Načítání a revalidace na straně serveru; protože jsou komponenty v Next.js serverové, pokud není explicitně řečeno jinak, data na straně serveru lze získat vcelku jednoduše, a to prostým zavoláním databázového dotazu. Při případné změně dat a tedy nutnosti znovu vykreslit daný obsah serverové komponenty je užita funkce `revalidatePage`, která data na dané stránce zneplatní a vynutí znovuvykreslení daného obsahu. Funkce `revalidatePage` musí být volána na straně serveru, protože klient neví, zda-li jsou serverová data stále platná.
+    + Načítání a revalidace na straně serveru; protože jsou komponenty v Next.js serverové, pokud není explicitně řečeno jinak, data na straně serveru lze získat vcelku jednoduše, a to prostým zavoláním databázového dotazu. Při případné změně dat a tedy nutnosti znovu vykreslit daný obsah serverové komponenty je užita funkce `revalidatePage`, která data na dané stránce zneplatní a vynutí znovuvykreslení daného obsahu. Funkce `revalidatePage` musí být volána na straně serveru, protože klient neví, zda-li jsou serverová data stále platná @nextjs.
     + Načítání a revalidace na straně klienta; tento způsob je hojně uživaný v aplikacích, které nepoužívají SSR a serverové komponenty nejsou k dispozici. Způsob probíhá klasickým HTTP požadavkem (nebo jiným protokolem aplikační vrstvy), který vrátí požadovaná data a těm je přiřazen tag. V případě zneplatnění datného tagu aplikace automaticky znovu požádá o daná data. V dnešní době jsou často preferovány různé knihovny pro získávání těchto dat, např. TanStack Query, která umožňuje jednoduchou správu informací z požadavku.
+
+    I když samotná Next.js dokumentace preferuje využití serverových komponent @nextjs, a tedy i načítání dat na straně serveru, v projektu se vyskytují obě kombinace, a to například v místech, kde serverové komponenty nelze využít (interaktivní komponenty -- např. dialogy, popup okna, atd.)
 
     #figure(
       ```ts
-      const query = useQuery({
-        queryKey: ["people"],
-        queryFn: () => fetch("...").then(it => it.json())
-      })
-      const data = query.data; // JSON
-      query.invalidate(); // Invalidace dat
+      const { data, isLoading } = useQuery({
+        queryKey: ["evidence-numbers"],
+        queryFn: () => api.ev.get(),
+      });
+      return (
+        {!data?.data && isLoading ? (
+          <Skeleton className="w-full h-full flex items-center justify-center">
+            <h3 className="font-semibold">Načítání evidenčních čísel...</h3>
+          </Skeleton>
+        ) : (...)
+      )
       ```,
-      caption: [Použití TanStack Query],
+      caption: [Příklad užití TanStack Query -- načítání dat a zobrazení skeletonu během načítání dat],
     )
-
-    I když samotná Next.js dokumentace preferuje využití serverových komponent @nextjs, a tedy i načítání dat na straně serveru, v projektu se vyskytují obě kombinace, a to například v místech, kde serverové komponenty nelze využít (interaktivní komponenty -- např. dialogy, popup okna, atd.)
 
     == Přihlášovací formulář a autentizace
 
@@ -883,6 +888,8 @@
       caption: [Příklad evidenčního čísla přihlášky -- první přihláška v roce 2025],
     )
 
+    #pagebreak()
+
     V programu lze importovat existující evidenční čísla pro předem definovaná rodná čísla. Tento import je užitečný v případech, kdy docházelo k tvoření evidenčních čísel mimo systém (např. ručně) a je potřeba tato čísla synchronizovat s databází aplikace. Import probíhá pomocí CSV souboru, který obsahuje 3 sloupce: rodné číslo, evidenční číslo a první ročník, ve kterém byla přihláška s daným rodným číslem odeslána (tento ročník musí v aplikaci předem existovat, jinak bude proces neúspěšný).
 
     === Massmail
@@ -890,6 +897,12 @@
     _Massmail_, neboli hromadná korespondence, je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
 
     Posílání e-mailů je realizováno pomocí knihovny Nodemailer, která umožňuje odesílání e-mailů z Node.js aplikací. Parametry pro připojení k SMTP serveru jsou konfigurovatelné pomocí proměnných prostředí, což umožňuje snadné přizpůsobení pro různé prostředí (např. vývojové, testovací, produkční).
+
+    === Informační e-maily
+
+    Jednou z funkcí aplikace jsou informační e-maily, které jsou automaticky zasílány při různých úkonech v aplikaci (resetování hesla, registrace, odesílání přihlášky, atd.) Tato funkce využívá, stejně jako Massmail, knihovnu Nodemailer pro odesílání e-mailů a předvytvořených React komponent (použitím knihovny `react-email`) pro samotný obsah. Všechny e-maily jsou odesílány asynchroně aby se předešlo časovým a enumeračním zranitelnostem.
+
+    #pagebreak()
 
     === Bodování přihlášek
 
@@ -958,6 +971,8 @@
       Panel pro sledování nastalých problémů při běhu projektu v platformě PostHog
     ])
 
+    #pagebreak()
+
     == Plánování vývoje pomocí GitHub Projects
 
     Správné plánování vývoje je jednou z klíčových činností pro úspěšný a nezanedbaný vývoj jakéhokoliv softwarového projektu. Pro tento účel byla zvolena platforma GitHub Projects, která umožňuje vytváření projektů, úkolů a sledování jejich stavu přímo v rámci repozitáře na GitHubu @github-projects.
@@ -1006,6 +1021,8 @@
     - Nainstaluje všechny potřebné závislosti (pokud došlo k jejich změně).
     - Aplikuje případné změny v databázovém schématu pomocí migrací.
     - Nastartuje aplikaci pomocí pm2 a znovu ji zpřístupní uživatelům.
+
+    #pagebreak()
 
     === Inicializace aplikace
 
