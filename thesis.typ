@@ -896,7 +896,7 @@
 
     _Massmail_, neboli hromadná korespondence, je funkce, která umožňuje hromadné odesílání e-mailů všem žadatelům, nebo vybraným skupinám žadatelů na základě různých kritérií (např. stav přihlášky, ročník, atd.). Tato funkce je užitečná pro komunikaci s velkým počtem žadatelů najednou, například pro informování o změnách v přijímacím řízení, nebo pro zasílání potvrzení o přijetí přihlášky. K funkci lze přistoupit pomocí bočního navigačního menu. E-maily nabízí základní funkce formátování, jako je tučný text, kurzíva a odrážky.
 
-    Posílání e-mailů je realizováno pomocí knihovny Nodemailer, která umožňuje odesílání e-mailů z Node.js aplikací. Parametry pro připojení k SMTP serveru jsou konfigurovatelné pomocí proměnných prostředí, což umožňuje snadné přizpůsobení pro různé prostředí (např. vývojové, testovací, produkční).
+    Posílání e-mailů je realizováno pomocí knihovny Nodemailer, která umožňuje odesílání e-mailů z Node.js aplikací. Parametry pro připojení k SMTP serveru jsou konfigurovatelné pomocí proměnných prostředí, což umožňuje snadné přizpůsobení pro různé prostředí (např. vývojové, testovací, produkční). Pro samotné formátování obsahu e-mailů je použit interaktivní editor založený na knihovně Tiptap, který umožňuje využívat standardní funkce pro formátování textu, jako je tučný text, kurzíva, odrážky a další.
 
     === Informační e-maily
 
